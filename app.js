@@ -366,6 +366,34 @@ document.addEventListener('DOMContentLoaded', () => {
         radio.addEventListener('change', updateEmpChart);
     });
 
+    // CPI 데이터 초기화(삭제) 버튼
+    document.getElementById('cpi-clear-btn').addEventListener('click', () => {
+        document.getElementById('cpi-file').value = '';
+        if (cpiChartInstance) cpiChartInstance.destroy();
+        document.getElementById('cpi-placeholder').classList.remove('hidden');
+        document.getElementById('cpi-slider-container').classList.add('hidden');
+        document.getElementById('cpi-filter-container').classList.add('hidden');
+        document.getElementById('cpi-clear-btn').classList.add('hidden');
+        document.getElementById('cpi-error').classList.add('hidden');
+        cpiGlobalData = { labels: [], datasets: [] };
+    });
+
+    // 고용 지표 데이터 초기화(삭제) 버튼
+    document.getElementById('emp-clear-btn').addEventListener('click', () => {
+        document.getElementById('emp-file').value = '';
+        if (empChartInstance) empChartInstance.destroy();
+        document.getElementById('emp-placeholder').classList.remove('hidden');
+        document.getElementById('emp-slider-container').classList.add('hidden');
+        document.getElementById('emp-filter-container').classList.add('hidden');
+        document.getElementById('emp-clear-btn').classList.add('hidden');
+        document.getElementById('emp-error').classList.add('hidden');
+        empGlobalData = { labels: [], datasets: [] };
+        // 분석 조건 UI 초기화 (옵션)
+        document.getElementById('emp-indicator-select').value = '경제활동참가율';
+        document.querySelector('input[name="emp-explore-radio"][value="all"]').checked = true;
+        document.getElementById('emp-custom-checkbox-area').classList.add('hidden');
+    });
+
     // CPI 차트 그리기 버튼
     document.getElementById('cpi-process-btn').addEventListener('click', () => {
         const fileInput = document.getElementById('cpi-file');
@@ -407,6 +435,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     document.getElementById('cpi-placeholder').classList.add('hidden');
                     document.getElementById('cpi-slider-container').classList.remove('hidden');
                     document.getElementById('cpi-filter-container').classList.remove('hidden');
+                    document.getElementById('cpi-clear-btn').classList.remove('hidden'); // 추가: 삭제 버튼 표시
                     
                     // 차트 렌더링
                     updateCpiChart();
@@ -459,6 +488,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     document.getElementById('emp-placeholder').classList.add('hidden');
                     document.getElementById('emp-slider-container').classList.remove('hidden');
                     document.getElementById('emp-filter-container').classList.remove('hidden');
+                    document.getElementById('emp-clear-btn').classList.remove('hidden'); // 추가: 삭제 버튼 표시
                     
                     // 차트 렌더링
                     updateEmpChart();

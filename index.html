@@ -136,13 +136,18 @@
                     </div>
                     <div class="mb-4">
                         <label class="block text-sm font-medium text-gray-700 mb-2">KOSIS에서 다운로드한 CSV 파일</label>
-                        <input type="file" id="cpi-file" accept=".csv" class="block w-full text-sm text-gray-500
-                            file:mr-4 file:py-2 file:px-4
-                            file:rounded-md file:border-0
-                            file:text-sm file:font-semibold
-                            file:bg-emerald-50 file:text-emerald-700
-                            hover:file:bg-emerald-100
-                            cursor-pointer border border-gray-300 rounded-md p-1" />
+                        <div class="flex items-center gap-2">
+                            <input type="file" id="cpi-file" accept=".csv" class="block w-full text-sm text-gray-500
+                                file:mr-4 file:py-2 file:px-4
+                                file:rounded-md file:border-0
+                                file:text-sm file:font-semibold
+                                file:bg-emerald-50 file:text-emerald-700
+                                hover:file:bg-emerald-100
+                                cursor-pointer border border-gray-300 rounded-md p-1" />
+                            <button id="cpi-clear-btn" class="hidden shrink-0 bg-white hover:bg-red-50 text-red-500 font-bold py-1.5 px-3 rounded-md text-sm transition border border-red-200 shadow-sm">
+                                <i class="fa-solid fa-trash-can mr-1"></i>삭제
+                            </button>
+                        </div>
                     </div>
                     <button id="cpi-process-btn" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-2 px-4 rounded transition">
                         <i class="fa-solid fa-chart-simple mr-2"></i>그래프 그리기
@@ -275,13 +280,18 @@
                     </div>
                     <div class="mb-4">
                         <label class="block text-sm font-medium text-gray-700 mb-2">KOSIS에서 다운로드한 CSV 파일</label>
-                        <input type="file" id="emp-file" accept=".csv" class="block w-full text-sm text-gray-500
-                            file:mr-4 file:py-2 file:px-4
-                            file:rounded-md file:border-0
-                            file:text-sm file:font-semibold
-                            file:bg-blue-50 file:text-blue-700
-                            hover:file:bg-blue-100
-                            cursor-pointer border border-gray-300 rounded-md p-1" />
+                        <div class="flex items-center gap-2">
+                            <input type="file" id="emp-file" accept=".csv" class="block w-full text-sm text-gray-500
+                                file:mr-4 file:py-2 file:px-4
+                                file:rounded-md file:border-0
+                                file:text-sm file:font-semibold
+                                file:bg-blue-50 file:text-blue-700
+                                hover:file:bg-blue-100
+                                cursor-pointer border border-gray-300 rounded-md p-1" />
+                            <button id="emp-clear-btn" class="hidden shrink-0 bg-white hover:bg-red-50 text-red-500 font-bold py-1.5 px-3 rounded-md text-sm transition border border-red-200 shadow-sm">
+                                <i class="fa-solid fa-trash-can mr-1"></i>삭제
+                            </button>
+                        </div>
                     </div>
                     <button id="emp-process-btn" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition">
                         <i class="fa-solid fa-chart-line mr-2"></i>그래프 그리기
