@@ -5,36 +5,83 @@ let empChartInstance = null;
 let cpiGlobalData = { labels: [], datasets: [] };
 let empGlobalData = { labels: [], datasets: [] };
 
-// 필터 UI 생성 함수
+// 필터 UI 생성 함수 (카테고리별 분류 기능 추가)
 function renderFilterCheckboxes(containerId, datasets, updateCallback, colorClass) {
     const container = document.getElementById(containerId);
     container.innerHTML = ''; // 초기화
     
-    datasets.forEach(ds => {
-        // 단위가 다른 지표 중 비율(%) 지표만 기본으로 체크되도록 설정 (특히 고용 지표에서 유용)
-        let isChecked = true;
-        if (datasets.length > 3) {
-            isChecked = ds.label.includes('%') || ds.label.includes('율');
-        }
+    // 카테고리 정의
+    const categories = {
+        '전체 종합': [],
+        '성별 데이터 (남자/여자)': [],
+        '농가 데이터': [],
+        '비농가 데이터': [],
+        '기타': []
+    };
 
-        const label = document.createElement('label');
-        label.className = 'flex items-center space-x-2 cursor-pointer p-2 bg-white border border-gray-200 rounded-lg shadow-sm hover:bg-gray-50 transition';
-        
-        const checkbox = document.createElement('input');
-        checkbox.type = 'checkbox';
-        checkbox.value = ds.label;
-        checkbox.checked = isChecked;
-        checkbox.className = `form-checkbox text-${colorClass}-600 rounded w-4 h-4`;
-        checkbox.addEventListener('change', updateCallback);
-        
-        const span = document.createElement('span');
-        span.className = 'text-sm text-gray-700 font-medium';
-        span.textContent = ds.label;
-        
-        label.appendChild(checkbox);
-        label.appendChild(span);
-        container.appendChild(label);
+    // 데이터셋 분류
+    datasets.forEach(ds => {
+        if (ds.label.startsWith('계')) {
+            categories['전체 종합'].push(ds);
+        } else if (ds.label.startsWith('남자') || ds.label.startsWith('여자')) {
+            categories['성별 데이터 (남자/여자)'].push(ds);
+        } else if (ds.label.startsWith('농가')) {
+            categories['농가 데이터'].push(ds);
+        } else if (ds.label.startsWith('비농가')) {
+            categories['비농가 데이터'].push(ds);
+        } else {
+            categories['기타'].push(ds);
+        }
     });
+
+    // 카테고리별로 렌더링
+    for (const [categoryName, items] of Object.entries(categories)) {
+        if (items.length === 0) continue; // 데이터가 없는 카테고리는 건너뜀
+
+        // 카테고리 제목
+        const categoryHeader = document.createElement('h5');
+        categoryHeader.className = 'w-full text-sm font-bold text-gray-800 border-b border-gray-200 pb-1 mt-4 mb-2 first:mt-0';
+        categoryHeader.textContent = `■ ${categoryName}`;
+        container.appendChild(categoryHeader);
+
+        // 체크박스 컨테이너
+        const groupContainer = document.createElement('div');
+        groupContainer.className = 'flex flex-wrap gap-2 mb-2 w-full';
+
+        items.forEach(ds => {
+            // 처음에는 모든 체크박스를 해제 상태로 둡니다 (너무 많아서 복잡해짐 방지)
+            // 비율(%) 지표 중 '전체 종합(계)'인 것만 기본으로 몇 개 켜둡니다.
+            let isChecked = false;
+            if (datasets.length > 3) {
+                if (ds.label.includes('계') && (ds.label.includes('%') || ds.label.includes('율'))) {
+                    isChecked = true;
+                }
+            } else {
+                isChecked = true; // CPI처럼 항목이 적은 경우는 모두 켜둠
+            }
+
+            const label = document.createElement('label');
+            label.className = 'flex items-center space-x-2 cursor-pointer p-1.5 px-3 bg-white border border-gray-200 rounded-lg shadow-sm hover:bg-gray-50 transition text-sm';
+            
+            const checkbox = document.createElement('input');
+            checkbox.type = 'checkbox';
+            checkbox.value = ds.label;
+            checkbox.checked = isChecked;
+            checkbox.className = `form-checkbox text-${colorClass}-600 rounded w-4 h-4 focus:ring-0`;
+            checkbox.addEventListener('change', updateCallback);
+            
+            const span = document.createElement('span');
+            span.className = 'text-gray-700 font-medium truncate max-w-[200px] md:max-w-none';
+            span.textContent = ds.label;
+            span.title = ds.label; // 마우스 올렸을 때 전체 이름 보이기
+            
+            label.appendChild(checkbox);
+            label.appendChild(span);
+            groupContainer.appendChild(label);
+        });
+
+        container.appendChild(groupContainer);
+    }
 }
 
 // 필터링된 데이터셋 가져오는 함수
