@@ -550,12 +550,28 @@ document.addEventListener('DOMContentLoaded', () => {
     // 퀴즈 채점 기능
     document.getElementById('quiz-submit-btn').addEventListener('click', () => {
         let score = 0;
-        const totalQuestions = 10;
+        const totalQuestions = 12;
         let wrongQuestions = [];
         
         // 문제 확인 함수
         const checkQuestion = (qName, qNumber, feedbackText) => {
+            const allRadios = document.querySelectorAll(`input[name="${qName}"]`);
+            if (!allRadios.length) return;
+            const parentQuizItem = allRadios[0].closest('.quiz-item');
+            
+            // 기존 피드백 요소 찾기 또는 생성
+            let feedbackDiv = parentQuizItem.querySelector('.quiz-feedback');
+            if (!feedbackDiv) {
+                feedbackDiv = document.createElement('div');
+                feedbackDiv.className = 'quiz-feedback mt-4 p-4 rounded-lg text-sm font-bold hidden';
+                parentQuizItem.appendChild(feedbackDiv);
+            }
+
             const q = document.querySelector(`input[name="${qName}"]:checked`);
+            
+            // 클래스 초기화
+            feedbackDiv.classList.remove('hidden', 'bg-emerald-100', 'text-emerald-700', 'bg-red-100', 'text-red-700', 'bg-gray-100', 'text-gray-700');
+
             if (q) {
                 const parent = q.closest('.space-y-3').querySelectorAll('label');
                 parent.forEach(lbl => {
@@ -564,21 +580,31 @@ document.addEventListener('DOMContentLoaded', () => {
                     if (inp.value === 'correct') lbl.classList.add('correct-answer');
                     else if (inp.checked) lbl.classList.add('wrong-answer');
                 });
+                
                 if (q.value === 'correct') {
                     score++;
+                    feedbackDiv.classList.add('bg-emerald-100', 'text-emerald-700');
+                    feedbackDiv.innerHTML = `✅ 정답입니다! <div class="font-normal mt-1 text-emerald-800">${feedbackText}</div>`;
                 } else {
-                    wrongQuestions.push(`${qNumber}번: ${feedbackText}`);
+                    wrongQuestions.push(`${qNumber}번`);
+                    feedbackDiv.classList.add('bg-red-100', 'text-red-700');
+                    feedbackDiv.innerHTML = `❌ 틀렸습니다. <div class="font-normal mt-1 text-red-800"><strong>해설:</strong> ${feedbackText}</div>`;
                 }
             } else {
-                wrongQuestions.push(`${qNumber}번: 문제를 풀지 않았습니다.`);
+                wrongQuestions.push(`${qNumber}번`);
+                feedbackDiv.classList.add('bg-gray-200', 'text-gray-700');
+                feedbackDiv.innerHTML = `⚠️ 문제를 풀지 않았습니다. <div class="font-normal mt-1 text-gray-800"><strong>해설:</strong> ${feedbackText}</div>`;
             }
         };
 
         checkQuestion('q1', 1, '소비자물가지수(CPI)는 가구가 소비생활을 유지하기 위해 구입하는 상품과 서비스의 가격 변동을 측정한 것입니다.');
         checkQuestion('q2', 2, '실업률은 (실업자 수 ÷ 경제활동인구) × 100 입니다.');
         checkQuestion('q3', 3, '인플레이션이 발생하면 화폐 가치가 떨어지므로 갚을 돈의 가치도 떨어져 채무자에게 유리해집니다.');
-        checkQuestion('q4', 4, '2018년 지수(99.1)를 2020년(100.0)으로 나누면 0.991배, 2022년 지수(107.7)를 나누면 1.077배 입니다.');
-        checkQuestion('q5', 5, '실업률의 분모는 15세 이상 인구가 아니라 "경제활동인구(90명)" 입니다.');
+        checkQuestion('q4_1', '4-1', '2018년 지수를 기준 연도(2020년) 지수로 나누면 99.1 / 100.0 = 0.991배입니다.');
+        checkQuestion('q4_2', '4-2', '2022년 지수를 기준 연도(2020년) 지수로 나누면 107.7 / 100.0 = 1.077배입니다.');
+        checkQuestion('q5_1', '5-1', '3월의 실업률 분모는 경제활동인구(100명), 참가율과 고용률 분모는 15세 이상 인구(120명)입니다.');
+        checkQuestion('q5_2', '5-2', '4월의 실업률 분모는 경제활동인구(90명)입니다.');
+        checkQuestion('q5_3', '5-3', '4월의 고용률 분모는 15세 이상 인구(120명), 분자는 취업자 수(60명)입니다.');
         checkQuestion('q6', 6, '구직 단념자는 일할 능력은 있으나 의사가 없어진 상태이므로 비경제활동인구에 속합니다.');
         checkQuestion('q7', 7, '고용 지표를 계산할 때 노동 가능 인구는 "15세 이상 인구"를 기준으로 합니다.');
         checkQuestion('q8', 8, '실업률만 분모가 "경제활동인구"이고, 참가율과 고용률의 분모는 "15세 이상 인구"입니다.');
@@ -591,17 +617,19 @@ document.addEventListener('DOMContentLoaded', () => {
         
         const finalScore = (score / totalQuestions) * 100;
         
+        // 소수점 처리 (예: 91.666... -> 91.7)
+        const displayScore = Number.isInteger(finalScore) ? finalScore : finalScore.toFixed(1);
+        
         if (score === totalQuestions) {
-            resultDiv.innerHTML = `<div class="mb-4">🎉 대단해요! ${finalScore}점 만점입니다! 💯</div>`;
+            resultDiv.innerHTML = `<div class="mb-2">🎉 대단해요! ${displayScore}점 만점입니다! 💯</div><div class="text-sm font-normal text-emerald-700">모든 문제의 해설을 위에서 확인할 수 있습니다.</div>`;
             resultDiv.className = "mt-6 text-xl font-bold text-emerald-600 bg-emerald-50 p-6 rounded-xl";
         } else {
-            let feedbackHTML = `<div class="mb-4 text-purple-700">📝 ${finalScore}점 입니다. 초록색으로 표시된 정답을 다시 한번 확인해보세요.</div>`;
-            feedbackHTML += `<div class="text-left text-sm text-gray-700 bg-white p-4 rounded border border-purple-200 mt-4"><h5 class="font-bold mb-2">💡 오답 노트 및 피드백</h5><ul class="list-disc list-inside space-y-1">`;
-            
-            wrongQuestions.forEach(msg => {
-                feedbackHTML += `<li>${msg}</li>`;
-            });
-            feedbackHTML += `</ul></div>`;
+            let feedbackHTML = `<div class="mb-4 text-purple-700">📝 ${displayScore}점 입니다.</div>`;
+            feedbackHTML += `<div class="text-left text-sm text-gray-700 bg-white p-4 rounded border border-purple-200 mt-4">
+                <h5 class="font-bold mb-2">💡 오답 노트</h5>
+                <p class="mb-2 text-red-600 font-bold">틀린 문제 또는 안 푼 문제: ${wrongQuestions.join(', ')}</p>
+                <p>각 문제 바로 아래에 표시된 <strong>해설(피드백)</strong>과 초록색으로 표시된 정답을 다시 한번 확인해보세요!</p>
+            </div>`;
             
             resultDiv.innerHTML = feedbackHTML;
             resultDiv.className = "mt-6 text-xl font-bold bg-purple-50 p-6 rounded-xl";
