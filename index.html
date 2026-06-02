@@ -13,6 +13,9 @@
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="styles.css">
+    <!-- MathJax for rendering math formulas -->
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 </head>
 <body class="bg-gray-50 text-gray-800 font-sans">
     
@@ -156,8 +159,8 @@
                     <div id="cpi-error" class="hidden mt-4 p-3 bg-red-100 text-red-700 rounded-md text-sm"></div>
                     
                     <div class="mt-6">
-                        <h4 class="font-bold text-sm text-gray-700 mb-2">데이터 분석 포인트</h4>
-                        <ul class="list-disc list-inside text-sm text-gray-600 space-y-1">
+                        <h4 class="font-bold text-lg text-gray-800 mb-3"><i class="fa-solid fa-magnifying-glass mr-2"></i>데이터 분석 포인트</h4>
+                        <ul class="list-disc list-inside text-base text-gray-700 space-y-2">
                             <li>물가가 전반적으로 오르고 있나요, 내리고 있나요?</li>
                             <li>가장 물가 상승폭이 컸던 시기는 언제이며, 그 원인은 무엇일까요?</li>
                             <li>인플레이션이 나의 실생활에 미치는 영향은 무엇일까요?</li>
@@ -201,8 +204,8 @@
             </div>
             
             <div class="mt-6">
-                <label class="block text-sm font-bold text-gray-700 mb-2">나의 분석 결과 메모하기:</label>
-                <textarea class="w-full border-gray-300 rounded-md shadow-sm focus:border-emerald-500 focus:ring-emerald-500 p-3" rows="3" placeholder="그래프를 보고 알 수 있는 점을 자유롭게 적어보세요..."></textarea>
+                <label class="block text-lg font-bold text-gray-800 mb-3"><i class="fa-solid fa-pen mr-2"></i>나의 분석 결과 메모하기:</label>
+                <textarea class="w-full border-gray-300 rounded-md shadow-sm focus:border-emerald-500 focus:ring-emerald-500 p-4 text-base" rows="4" placeholder="그래프를 보고 알 수 있는 점을 자유롭게 적어보세요..."></textarea>
             </div>
         </section>
 
@@ -300,8 +303,8 @@
                     <div id="emp-error" class="hidden mt-4 p-3 bg-red-100 text-red-700 rounded-md text-sm"></div>
 
                     <div class="mt-6">
-                        <h4 class="font-bold text-sm text-gray-700 mb-2">데이터 분석 포인트</h4>
-                        <ul class="list-disc list-inside text-sm text-gray-600 space-y-2">
+                        <h4 class="font-bold text-lg text-gray-800 mb-3"><i class="fa-solid fa-magnifying-glass mr-2"></i>데이터 분석 포인트</h4>
+                        <ul class="list-disc list-inside text-base text-gray-700 space-y-3">
                             <li><strong>시계열 분석:</strong> 시점에 따라 경제활동 참가율, 실업률, 고용률이 어떻게 변하고 있나요?</li>
                             <li><strong>지표 간 비교:</strong> 실업률과 고용률은 항상 반대로 움직일까요? (실망실업자 개념과 연결해 보세요)</li>
                             <li><strong>성별 분석:</strong> 남성과 여성의 성별 고용률 차이는 어떠하며, 여성의 경제활동 참가율은 과거에 비해 어떻게 변화해 왔나요?</li>
@@ -396,8 +399,8 @@
             </div>
 
             <div class="mt-6">
-                <label class="block text-sm font-bold text-gray-700 mb-2">나의 분석 결과 메모하기:</label>
-                <textarea class="w-full border-gray-300 rounded-md shadow-sm focus:border-blue-500 focus:ring-blue-500 p-3" rows="3" placeholder="그래프를 보고 알 수 있는 점을 자유롭게 적어보세요..."></textarea>
+                <label class="block text-lg font-bold text-gray-800 mb-3"><i class="fa-solid fa-pen mr-2"></i>나의 분석 결과 메모하기:</label>
+                <textarea class="w-full border-gray-300 rounded-md shadow-sm focus:border-blue-500 focus:ring-blue-500 p-4 text-base" rows="4" placeholder="그래프를 보고 알 수 있는 점을 자유롭게 적어보세요..."></textarea>
             </div>
         </section>
 
@@ -459,6 +462,173 @@
                         <label class="flex items-center space-x-3 cursor-pointer p-2 hover:bg-white rounded transition">
                             <input type="radio" name="q3" value="wrong2" class="form-radio text-purple-600 w-5 h-5">
                             <span>월급이 고정되어 있는 직장인</span>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Quiz Item 4 -->
+                <div class="quiz-item bg-purple-50 p-6 rounded-xl">
+                    <p class="font-bold text-lg mb-4">4. 다음 표를 보고, 2018년과 2022년의 소비자 물가 지수는 기준 연도인 2020년의 각각 몇 배인지 알맞은 것을 고르시오.</p>
+                    <div class="my-4 flex justify-center bg-white p-4 rounded-lg border border-purple-100">
+                        <img src="assets/77.png" alt="소비자 물가 지수 계산 문제" class="max-w-full rounded">
+                    </div>
+                    <div class="space-y-3">
+                        <label class="flex items-center space-x-3 cursor-pointer p-2 hover:bg-white rounded transition">
+                            <input type="radio" name="q4" value="wrong1" class="form-radio text-purple-600 w-5 h-5">
+                            <span>0.099배, 1.077배</span>
+                        </label>
+                        <label class="flex items-center space-x-3 cursor-pointer p-2 hover:bg-white rounded transition">
+                            <input type="radio" name="q4" value="correct" class="form-radio text-purple-600 w-5 h-5">
+                            <span>0.991배, 1.077배</span>
+                        </label>
+                        <label class="flex items-center space-x-3 cursor-pointer p-2 hover:bg-white rounded transition">
+                            <input type="radio" name="q4" value="wrong2" class="form-radio text-purple-600 w-5 h-5">
+                            <span>0.991배, 1.770배</span>
+                        </label>
+                        <label class="flex items-center space-x-3 cursor-pointer p-2 hover:bg-white rounded transition">
+                            <input type="radio" name="q4" value="wrong3" class="form-radio text-purple-600 w-5 h-5">
+                            <span>9.91배, 10.77배</span>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Quiz Item 5 -->
+                <div class="quiz-item bg-purple-50 p-6 rounded-xl">
+                    <p class="font-bold text-lg mb-4">5. 다음은 A 국가의 고용 지표를 나타낸 표이다. 4월의 경제 활동 참가율, 실업률, 고용률을 구하는 계산 과정으로 올바른 식을 고르시오.</p>
+                    <div class="my-4 flex justify-center bg-white p-4 rounded-lg border border-purple-100">
+                        <img src="assets/88.png" alt="경제활동참가율 등 고용지표 계산 문제" class="max-w-full rounded">
+                    </div>
+                    <div class="space-y-3">
+                        <label class="flex items-center space-x-3 cursor-pointer p-2 hover:bg-white rounded transition">
+                            <input type="radio" name="q5" value="wrong1" class="form-radio text-purple-600 w-5 h-5">
+                            <span class="text-sm md:text-base">경제활동참가율: $\frac{90}{120}\times100$, 실업률: $\frac{30}{120}\times100$, 고용률: $\frac{60}{120}\times100$</span>
+                        </label>
+                        <label class="flex items-center space-x-3 cursor-pointer p-2 hover:bg-white rounded transition">
+                            <input type="radio" name="q5" value="correct" class="form-radio text-purple-600 w-5 h-5">
+                            <span class="text-sm md:text-base">경제활동참가율: $\frac{90}{120}\times100$, 실업률: $\frac{30}{90}\times100$, 고용률: $\frac{60}{120}\times100$</span>
+                        </label>
+                        <label class="flex items-center space-x-3 cursor-pointer p-2 hover:bg-white rounded transition">
+                            <input type="radio" name="q5" value="wrong2" class="form-radio text-purple-600 w-5 h-5">
+                            <span class="text-sm md:text-base">경제활동참가율: $\frac{90}{120}\times100$, 실업률: $\frac{30}{90}\times100$, 고용률: $\frac{60}{90}\times100$</span>
+                        </label>
+                        <label class="flex items-center space-x-3 cursor-pointer p-2 hover:bg-white rounded transition">
+                            <input type="radio" name="q5" value="wrong3" class="form-radio text-purple-600 w-5 h-5">
+                            <span class="text-sm md:text-base">경제활동참가율: $\frac{100}{120}\times100$, 실업률: $\frac{35}{100}\times100$, 고용률: $\frac{65}{120}\times100$</span>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Quiz Item 6 -->
+                <div class="quiz-item bg-purple-50 p-6 rounded-xl">
+                    <p class="font-bold text-lg mb-4">6. 다음 중 '비경제활동인구'에 속하는 사람으로 가장 적절한 것은?</p>
+                    <div class="space-y-3">
+                        <label class="flex items-center space-x-3 cursor-pointer p-2 hover:bg-white rounded transition">
+                            <input type="radio" name="q6" value="wrong1" class="form-radio text-purple-600 w-5 h-5">
+                            <span class="text-sm md:text-base">일할 능력과 의사가 있어 적극적으로 구직 활동을 하는 사람</span>
+                        </label>
+                        <label class="flex items-center space-x-3 cursor-pointer p-2 hover:bg-white rounded transition">
+                            <input type="radio" name="q6" value="correct" class="form-radio text-purple-600 w-5 h-5">
+                            <span class="text-sm md:text-base">취업난이 장기간 지속되어 일자리 찾기를 포기한 구직 단념자</span>
+                        </label>
+                        <label class="flex items-center space-x-3 cursor-pointer p-2 hover:bg-white rounded transition">
+                            <input type="radio" name="q6" value="wrong2" class="form-radio text-purple-600 w-5 h-5">
+                            <span class="text-sm md:text-base">주 15시간 이상 일하며 급여를 받고 있는 직장인</span>
+                        </label>
+                        <label class="flex items-center space-x-3 cursor-pointer p-2 hover:bg-white rounded transition">
+                            <input type="radio" name="q6" value="wrong3" class="form-radio text-purple-600 w-5 h-5">
+                            <span class="text-sm md:text-base">질병이 나으면 곧바로 취업할 예정인 일시적 휴직자</span>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Quiz Item 7 -->
+                <div class="quiz-item bg-purple-50 p-6 rounded-xl">
+                    <p class="font-bold text-lg mb-4">7. 고용 지표를 계산할 때 '노동 가능 인구'의 기준으로 삼는 연령은?</p>
+                    <div class="space-y-3">
+                        <label class="flex items-center space-x-3 cursor-pointer p-2 hover:bg-white rounded transition">
+                            <input type="radio" name="q7" value="correct" class="form-radio text-purple-600 w-5 h-5">
+                            <span class="text-sm md:text-base">15세 이상 인구</span>
+                        </label>
+                        <label class="flex items-center space-x-3 cursor-pointer p-2 hover:bg-white rounded transition">
+                            <input type="radio" name="q7" value="wrong1" class="form-radio text-purple-600 w-5 h-5">
+                            <span class="text-sm md:text-base">18세 이상 인구</span>
+                        </label>
+                        <label class="flex items-center space-x-3 cursor-pointer p-2 hover:bg-white rounded transition">
+                            <input type="radio" name="q7" value="wrong2" class="form-radio text-purple-600 w-5 h-5">
+                            <span class="text-sm md:text-base">20세 이상 인구</span>
+                        </label>
+                        <label class="flex items-center space-x-3 cursor-pointer p-2 hover:bg-white rounded transition">
+                            <input type="radio" name="q7" value="wrong3" class="form-radio text-purple-600 w-5 h-5">
+                            <span class="text-sm md:text-base">총 인구</span>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Quiz Item 8 -->
+                <div class="quiz-item bg-purple-50 p-6 rounded-xl">
+                    <p class="font-bold text-lg mb-4">8. 경제 활동 참가율, 실업률, 고용률의 분모로 쓰이는 인구 집단을 바르게 짝지은 것은?</p>
+                    <div class="space-y-3">
+                        <label class="flex items-center space-x-3 cursor-pointer p-2 hover:bg-white rounded transition">
+                            <input type="radio" name="q8" value="wrong1" class="form-radio text-purple-600 w-5 h-5">
+                            <span class="text-sm md:text-base">경제활동참가율: 총인구, 실업률: 15세 이상 인구, 고용률: 총인구</span>
+                        </label>
+                        <label class="flex items-center space-x-3 cursor-pointer p-2 hover:bg-white rounded transition">
+                            <input type="radio" name="q8" value="wrong2" class="form-radio text-purple-600 w-5 h-5">
+                            <span class="text-sm md:text-base">경제활동참가율: 15세 이상 인구, 실업률: 15세 이상 인구, 고용률: 15세 이상 인구</span>
+                        </label>
+                        <label class="flex items-center space-x-3 cursor-pointer p-2 hover:bg-white rounded transition">
+                            <input type="radio" name="q8" value="correct" class="form-radio text-purple-600 w-5 h-5">
+                            <span class="text-sm md:text-base">경제활동참가율: 15세 이상 인구, 실업률: 경제활동인구, 고용률: 15세 이상 인구</span>
+                        </label>
+                        <label class="flex items-center space-x-3 cursor-pointer p-2 hover:bg-white rounded transition">
+                            <input type="radio" name="q8" value="wrong3" class="form-radio text-purple-600 w-5 h-5">
+                            <span class="text-sm md:text-base">경제활동참가율: 경제활동인구, 실업률: 15세 이상 인구, 고용률: 경제활동인구</span>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Quiz Item 9 -->
+                <div class="quiz-item bg-purple-50 p-6 rounded-xl">
+                    <p class="font-bold text-lg mb-4">9. 구직 단념자가 늘어나 실업자에서 비경제활동인구로 이동했을 때, 실업률과 고용률의 변화로 옳은 것은?</p>
+                    <div class="space-y-3">
+                        <label class="flex items-center space-x-3 cursor-pointer p-2 hover:bg-white rounded transition">
+                            <input type="radio" name="q9" value="wrong1" class="form-radio text-purple-600 w-5 h-5">
+                            <span class="text-sm md:text-base">실업률 상승, 고용률 하락</span>
+                        </label>
+                        <label class="flex items-center space-x-3 cursor-pointer p-2 hover:bg-white rounded transition">
+                            <input type="radio" name="q9" value="correct" class="form-radio text-purple-600 w-5 h-5">
+                            <span class="text-sm md:text-base">실업률 하락, 고용률 변함 없음</span>
+                        </label>
+                        <label class="flex items-center space-x-3 cursor-pointer p-2 hover:bg-white rounded transition">
+                            <input type="radio" name="q9" value="wrong2" class="form-radio text-purple-600 w-5 h-5">
+                            <span class="text-sm md:text-base">실업률 하락, 고용률 상승</span>
+                        </label>
+                        <label class="flex items-center space-x-3 cursor-pointer p-2 hover:bg-white rounded transition">
+                            <input type="radio" name="q9" value="wrong3" class="form-radio text-purple-600 w-5 h-5">
+                            <span class="text-sm md:text-base">실업률 상승, 고용률 변함 없음</span>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Quiz Item 10 -->
+                <div class="quiz-item bg-purple-50 p-6 rounded-xl">
+                    <p class="font-bold text-lg mb-4">10. 경제활동인구에 대한 설명으로 옳은 것은?</p>
+                    <div class="space-y-3">
+                        <label class="flex items-center space-x-3 cursor-pointer p-2 hover:bg-white rounded transition">
+                            <input type="radio" name="q10" value="wrong1" class="form-radio text-purple-600 w-5 h-5">
+                            <span class="text-sm md:text-base">총인구에서 비경제활동인구를 뺀 숫자이다.</span>
+                        </label>
+                        <label class="flex items-center space-x-3 cursor-pointer p-2 hover:bg-white rounded transition">
+                            <input type="radio" name="q10" value="correct" class="form-radio text-purple-600 w-5 h-5">
+                            <span class="text-sm md:text-base">취업자와 실업자를 합한 인구로, 일할 능력과 의사가 있는 사람을 의미한다.</span>
+                        </label>
+                        <label class="flex items-center space-x-3 cursor-pointer p-2 hover:bg-white rounded transition">
+                            <input type="radio" name="q10" value="wrong2" class="form-radio text-purple-600 w-5 h-5">
+                            <span class="text-sm md:text-base">15세 미만 인구도 일할 의사가 있다면 경제활동인구에 포함된다.</span>
+                        </label>
+                        <label class="flex items-center space-x-3 cursor-pointer p-2 hover:bg-white rounded transition">
+                            <input type="radio" name="q10" value="wrong3" class="form-radio text-purple-600 w-5 h-5">
+                            <span class="text-sm md:text-base">가사와 육아에 전념하는 주부도 경제활동인구에 속한다.</span>
                         </label>
                     </div>
                 </div>

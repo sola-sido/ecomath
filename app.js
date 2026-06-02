@@ -550,57 +550,61 @@ document.addEventListener('DOMContentLoaded', () => {
     // 퀴즈 채점 기능
     document.getElementById('quiz-submit-btn').addEventListener('click', () => {
         let score = 0;
-        const totalQuestions = 3;
+        const totalQuestions = 10;
+        let wrongQuestions = [];
         
-        // 문제 1
-        const q1 = document.querySelector('input[name="q1"]:checked');
-        if (q1) {
-            const parent = q1.closest('.space-y-3').querySelectorAll('label');
-            parent.forEach(lbl => {
-                lbl.classList.remove('correct-answer', 'wrong-answer');
-                const inp = lbl.querySelector('input');
-                if (inp.value === 'correct') lbl.classList.add('correct-answer');
-                else if (inp.checked) lbl.classList.add('wrong-answer');
-            });
-            if (q1.value === 'correct') score++;
-        }
+        // 문제 확인 함수
+        const checkQuestion = (qName, qNumber, feedbackText) => {
+            const q = document.querySelector(`input[name="${qName}"]:checked`);
+            if (q) {
+                const parent = q.closest('.space-y-3').querySelectorAll('label');
+                parent.forEach(lbl => {
+                    lbl.classList.remove('correct-answer', 'wrong-answer');
+                    const inp = lbl.querySelector('input');
+                    if (inp.value === 'correct') lbl.classList.add('correct-answer');
+                    else if (inp.checked) lbl.classList.add('wrong-answer');
+                });
+                if (q.value === 'correct') {
+                    score++;
+                } else {
+                    wrongQuestions.push(`${qNumber}번: ${feedbackText}`);
+                }
+            } else {
+                wrongQuestions.push(`${qNumber}번: 문제를 풀지 않았습니다.`);
+            }
+        };
 
-        // 문제 2
-        const q2 = document.querySelector('input[name="q2"]:checked');
-        if (q2) {
-            const parent = q2.closest('.space-y-3').querySelectorAll('label');
-            parent.forEach(lbl => {
-                lbl.classList.remove('correct-answer', 'wrong-answer');
-                const inp = lbl.querySelector('input');
-                if (inp.value === 'correct') lbl.classList.add('correct-answer');
-                else if (inp.checked) lbl.classList.add('wrong-answer');
-            });
-            if (q2.value === 'correct') score++;
-        }
+        checkQuestion('q1', 1, '소비자물가지수(CPI)는 가구가 소비생활을 유지하기 위해 구입하는 상품과 서비스의 가격 변동을 측정한 것입니다.');
+        checkQuestion('q2', 2, '실업률은 (실업자 수 ÷ 경제활동인구) × 100 입니다.');
+        checkQuestion('q3', 3, '인플레이션이 발생하면 화폐 가치가 떨어지므로 갚을 돈의 가치도 떨어져 채무자에게 유리해집니다.');
+        checkQuestion('q4', 4, '2018년 지수(99.1)를 2020년(100.0)으로 나누면 0.991배, 2022년 지수(107.7)를 나누면 1.077배 입니다.');
+        checkQuestion('q5', 5, '실업률의 분모는 15세 이상 인구가 아니라 "경제활동인구(90명)" 입니다.');
+        checkQuestion('q6', 6, '구직 단념자는 일할 능력은 있으나 의사가 없어진 상태이므로 비경제활동인구에 속합니다.');
+        checkQuestion('q7', 7, '고용 지표를 계산할 때 노동 가능 인구는 "15세 이상 인구"를 기준으로 합니다.');
+        checkQuestion('q8', 8, '실업률만 분모가 "경제활동인구"이고, 참가율과 고용률의 분모는 "15세 이상 인구"입니다.');
+        checkQuestion('q9', 9, '실업자가 구직을 단념하면 경제활동인구(분모)와 실업자(분자)가 같이 줄어 실업률은 하락하지만, 취업자 수는 변함이 없어 고용률은 변함없습니다.');
+        checkQuestion('q10', 10, '경제활동인구는 15세 이상 인구 중에서 일할 능력과 의사가 모두 있는 취업자와 실업자를 합한 것입니다.');
 
-        // 문제 3
-        const q3 = document.querySelector('input[name="q3"]:checked');
-        if (q3) {
-            const parent = q3.closest('.space-y-3').querySelectorAll('label');
-            parent.forEach(lbl => {
-                lbl.classList.remove('correct-answer', 'wrong-answer');
-                const inp = lbl.querySelector('input');
-                if (inp.value === 'correct') lbl.classList.add('correct-answer');
-                else if (inp.checked) lbl.classList.add('wrong-answer');
-            });
-            if (q3.value === 'correct') score++;
-        }
-
-        // 결과 표시
+        // 결과 및 피드백 표시
         const resultDiv = document.getElementById('quiz-result');
         resultDiv.classList.remove('hidden');
         
+        const finalScore = (score / totalQuestions) * 100;
+        
         if (score === totalQuestions) {
-            resultDiv.innerHTML = `🎉 대단해요! ${score}/${totalQuestions}점 만점입니다! 💯`;
-            resultDiv.className = "mt-6 text-xl font-bold text-emerald-600";
+            resultDiv.innerHTML = `<div class="mb-4">🎉 대단해요! ${finalScore}점 만점입니다! 💯</div>`;
+            resultDiv.className = "mt-6 text-xl font-bold text-emerald-600 bg-emerald-50 p-6 rounded-xl";
         } else {
-            resultDiv.innerHTML = `📝 ${score}/${totalQuestions}점 입니다. 초록색으로 표시된 정답을 다시 한번 확인해보세요.`;
-            resultDiv.className = "mt-6 text-xl font-bold text-purple-600";
+            let feedbackHTML = `<div class="mb-4 text-purple-700">📝 ${finalScore}점 입니다. 초록색으로 표시된 정답을 다시 한번 확인해보세요.</div>`;
+            feedbackHTML += `<div class="text-left text-sm text-gray-700 bg-white p-4 rounded border border-purple-200 mt-4"><h5 class="font-bold mb-2">💡 오답 노트 및 피드백</h5><ul class="list-disc list-inside space-y-1">`;
+            
+            wrongQuestions.forEach(msg => {
+                feedbackHTML += `<li>${msg}</li>`;
+            });
+            feedbackHTML += `</ul></div>`;
+            
+            resultDiv.innerHTML = feedbackHTML;
+            resultDiv.className = "mt-6 text-xl font-bold bg-purple-50 p-6 rounded-xl";
         }
     });
 });
