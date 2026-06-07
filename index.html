@@ -221,11 +221,69 @@
                     
                     <div class="mt-6">
                         <h4 class="font-bold text-lg text-gray-800 mb-3"><i class="fa-solid fa-magnifying-glass mr-2"></i>데이터 분석 포인트</h4>
-                        <ul class="list-disc list-inside text-base text-gray-700 space-y-2">
+                        <ul class="list-disc list-inside text-base text-gray-700 space-y-2 mb-4">
                             <li>물가가 전반적으로 오르고 있나요, 내리고 있나요?</li>
                             <li>가장 물가 상승폭이 컸던 시기는 언제이며, 그 원인은 무엇일까요?</li>
                             <li>인플레이션이 나의 실생활에 미치는 영향은 무엇일까요?</li>
                         </ul>
+
+                        <div class="bg-emerald-50 border-2 border-emerald-200 rounded-xl p-5 md:p-6">
+                            <h5 class="font-bold text-emerald-800 text-lg mb-2"><i class="fa-solid fa-lightbulb mr-2"></i>그래프 분석으로 알 수 있는 것 — 작성 예시</h5>
+                            <p class="text-sm text-gray-600 mb-4">그래프를 보며 아래처럼 번호를 매겨 정리해 보세요. 본인 데이터의 수치·연도는 업로드한 CSV에 맞게 바꿔 쓰면 됩니다.</p>
+
+                            <div class="bg-emerald-100/80 border border-emerald-300 rounded-lg p-4 mb-4">
+                                <p class="font-bold text-emerald-900 mb-2 text-sm"><i class="fa-solid fa-book-open mr-1"></i>종합 분석 요약 (모범 답안 예시)</p>
+                                <ul class="text-sm md:text-base text-gray-800 space-y-2 leading-relaxed list-none">
+                                    <li>• 소비자물가지수는 <strong>1965년 이후 지속적으로 상승</strong>하였다.</li>
+                                    <li>• 물가 상승 속도는 일정하지 않았으며, <strong>1980년 전후</strong>와 <strong>2021~2023년</strong>에 급격한 상승이 나타났다.</li>
+                                    <li>• 최근에도 물가는 상승하고 있지만, <strong>상승 속도는 다소 둔화</strong>되고 있다.</li>
+                                    <li>• 경제 현상을 분석할 때는 단순 <strong>증가량</strong>보다 <strong>증가율</strong>(기울기·전년 대비 변화)을 살펴보는 것이 중요하다.</li>
+                                    <li>• CPI는 <strong>화폐 가치 하락</strong>과 <strong>인플레이션</strong>을 이해하는 대표적인 경제 지표이다.</li>
+                                </ul>
+                            </div>
+
+                            <div class="space-y-4 text-sm md:text-base text-gray-800">
+                                <div class="bg-white rounded-lg p-4 border border-emerald-100 shadow-sm">
+                                    <p class="font-bold text-emerald-700 mb-1">① 전체 추세 (장기)</p>
+                                    <p class="text-gray-700 leading-relaxed">1965년 이후 CPI 그래프는 전반적으로 <strong>우상향</strong>합니다. 지수가 한 번도 크게 꺾이지 않고 올라갔다면, 우리나라 물가는 장기간 <strong>지속적으로 상승</strong>해 왔다고 말할 수 있습니다. 다만 선이 곧게만 오른 것은 아니고, 구간마다 <strong>기울기(상승 속도)</strong>가 달라집니다.</p>
+                                </div>
+
+                                <div class="bg-white rounded-lg p-4 border border-emerald-100 shadow-sm">
+                                    <p class="font-bold text-emerald-700 mb-2">② 급격한 상승 구간 — 1980년 전후 &amp; 2021~2023년</p>
+                                    <p class="text-gray-700 mb-3">물가는 항상 같은 속도로 오르지 않습니다. 그래프에서 기울기가 특히 가파른 구간을 찾아 번호를 매겨 보세요.</p>
+                                    <p class="font-semibold text-gray-800 mb-1">▸ 1980년 전후</p>
+                                    <p class="text-gray-700 mb-3 leading-relaxed">1970~80년대 <strong>오일 쇼크</strong>·세계적 인플레이션 등으로 국내 물가도 크게 요동친 시기입니다. 슬라이더로 이 구간을 확대해 1970년대 말~1980년대 초의 급등을 관찰해 보세요.</p>
+                                    <p class="font-semibold text-gray-800 mb-1">▸ 2021~2023년 (최근 급상승)</p>
+                                    <ul class="list-none space-y-1.5 text-gray-700 mb-2">
+                                        <li><i class="fa-solid fa-calculator text-emerald-500 mr-2 w-4"></i><strong>수치 예:</strong> 2020년 <strong>100</strong> → 2023년 <strong>111.59</strong></li>
+                                        <li><i class="fa-solid fa-percent text-emerald-500 mr-2 w-4"></i><strong>변화:</strong> 약 3년 동안 <strong>11% 이상</strong> 상승 (111.59 − 100 = 11.59p)</li>
+                                    </ul>
+                                    <p class="font-bold text-gray-800 mt-2 mb-1.5">가능한 원인 (추정 — 뉴스·교과서와 연결)</p>
+                                    <ul class="list-disc list-inside text-gray-700 space-y-1 ml-1">
+                                        <li>코로나19 이후 <strong>공급망 차질</strong></li>
+                                        <li><strong>에너지·유가</strong> 급등</li>
+                                        <li><strong>러시아-우크라이나 전쟁</strong> 등 지정학적 요인</li>
+                                    </ul>
+                                </div>
+
+                                <div class="bg-white rounded-lg p-4 border border-emerald-100 shadow-sm">
+                                    <p class="font-bold text-emerald-700 mb-1">③ 최근 추세 — 상승은 지속, 속도는 둔화</p>
+                                    <p class="text-gray-700 leading-relaxed">2023년 이후 그래프를 보면 CPI는 여전히 오르지만, 2021~2023년만큼 <strong>가파르지 않을</strong> 수 있습니다. "물가가 안 오른다"가 아니라 <strong>"오르는 속도가 느려진다"</strong>고 표현하는 것이 정확합니다. 이때는 연도별 <strong>증가율</strong>(전년 대비 몇 % 올랐는지)을 비교해 보세요.</p>
+                                </div>
+
+                                <div class="bg-white rounded-lg p-4 border border-emerald-100 shadow-sm">
+                                    <p class="font-bold text-emerald-700 mb-1">④ 분석 포인트 — 증가량 vs 증가율</p>
+                                    <p class="text-gray-700 leading-relaxed">CPI가 100→110→120으로 올랐다면, 두 번 모두 <strong>10p 증가</strong>지만 100→110은 <strong>10%</strong>, 110→120은 약 <strong>9.1%</strong>입니다. 그래프의 <strong>기울기</strong>와 <strong>증가율</strong>을 함께 보면 "물가 압력이 강해지는지·약해지는지"를 더 정확히 설명할 수 있습니다.</p>
+                                </div>
+
+                                <div class="bg-white rounded-lg p-4 border border-emerald-100 shadow-sm">
+                                    <p class="font-bold text-emerald-700 mb-1">⑤ 의미 정리 — CPI가 알려 주는 것</p>
+                                    <p class="text-gray-700 leading-relaxed">CPI가 꾸준히 오르면 같은 돈으로 살 수 있는 재화·서비스가 줄어듭니다. 즉 <strong>화폐 가치 하락</strong>과 <strong>인플레이션</strong>을 눈으로 확인하는 대표 지표입니다. 마트·교통비 등 <strong>체감 물가</strong>와 그래프의 급등·둔화 구간이 겹치는지도 연결해 보세요.</p>
+                                </div>
+                            </div>
+
+                            <p class="text-xs text-emerald-700 mt-4 pt-3 border-t border-emerald-200"><i class="fa-solid fa-pen mr-1"></i>위 예시를 참고해 오른쪽 메모란에 본인 분석을 적어 보세요. 슬라이더로 <strong>1980년 전후</strong>, <strong>2021~2023</strong>, <strong>최근 구간</strong>을 각각 확대해 비교하면 더 풍부한 분석이 됩니다.</p>
+                        </div>
                     </div>
                 </div>
 
@@ -264,7 +322,7 @@
 
                     <div class="w-full mt-6 pt-6 border-t border-gray-100">
                         <label class="block text-lg font-bold text-gray-800 mb-3"><i class="fa-solid fa-pen mr-2"></i>나의 분석 결과 메모하기:</label>
-                        <textarea id="cpi-memo" class="w-full border border-gray-300 rounded-md shadow-sm focus:border-emerald-500 focus:ring-emerald-500 p-4 text-base bg-emerald-50/30" rows="4" placeholder="그래프를 보고 알 수 있는 점을 자유롭게 적어보세요..."></textarea>
+                        <textarea id="cpi-memo" class="w-full border border-gray-300 rounded-md shadow-sm focus:border-emerald-500 focus:ring-emerald-500 p-4 text-base bg-emerald-50/30" rows="7" placeholder="예) 1965년 이후 지속 상승, 1980년 전후·2021~2023 급등, 최근 속도 둔화&#10;증가량보다 증가율(기울기) 비교&#10;CPI = 화폐가치 하락·인플레이션 지표"></textarea>
                     </div>
                 </div>
             </div>
@@ -325,6 +383,168 @@
                         실업률과 고용률은 함께 살펴볼 필요가 있다. 실업률이 떨어진다고 해서 고용 상황이 안정되는 것이 아닐 수 있기 때문이다. 예를 들어 취업난이 장기간 지속되어 실업자 중 상당수가 일자리 찾기를 포기하면 이들은 실업자가 아니라 비경제 활동 인구로 분류하고, 이때 실업률은 낮아지지만 고용률은 높아지지 않는다.
                     </p>
                 </div>
+
+                <!-- 고용 지표 탐구·분석 가이드 -->
+                <div id="emp-analysis-guide" class="p-6 md:p-8 bg-gradient-to-br from-blue-50 to-indigo-50 rounded-2xl border-2 border-blue-200 shadow-sm">
+                    <h3 class="font-bold text-xl md:text-2xl text-blue-900 mb-2"><i class="fa-solid fa-compass mr-2"></i>고용 지표 탐구·분석 가이드</h3>
+                    <p class="text-gray-600 mb-6 text-sm md:text-base">KOSIS 데이터를 업로드한 뒤, 아래 질문과 예시를 참고해 그래프를 해석하고 메모에 정리해 보세요. CPI 분석과 연결하면 경제 전반을 설명할 수 있습니다.</p>
+
+                    <!-- ① 고용률 -->
+                    <div class="bg-white rounded-xl p-5 md:p-6 border border-blue-100 shadow-sm mb-5">
+                        <h4 class="font-bold text-lg text-blue-800 mb-3">① 고용률 변화 추이</h4>
+                        <div class="grid md:grid-cols-2 gap-4 mb-4 text-sm">
+                            <div class="bg-blue-50 rounded-lg p-4">
+                                <p class="font-bold text-blue-700 mb-2"><i class="fa-solid fa-chart-line mr-1"></i>그래프 설정</p>
+                                <ul class="text-gray-700 space-y-1 list-none">
+                                    <li>• 유형: <strong>선그래프</strong></li>
+                                    <li>• X축: 연도 / Y축: 고용률(%)</li>
+                                    <li>• 선 3개: <strong>계, 남자, 여자</strong> (체크박스·탐구 질문 「남녀 비교」 활용)</li>
+                                </ul>
+                            </div>
+                            <div class="bg-amber-50 rounded-lg p-4 border border-amber-100">
+                                <p class="font-bold text-amber-800 mb-2"><i class="fa-solid fa-circle-question mr-1"></i>분석 질문</p>
+                                <ul class="text-gray-700 space-y-1 list-disc list-inside">
+                                    <li>고용률은 장기적으로 증가하는가?</li>
+                                    <li>남녀 고용률 격차는 줄어들고 있는가?</li>
+                                    <li>코로나 시기(2020년)에 어떤 변화가 나타났는가?</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <p class="text-gray-700 text-sm md:text-base leading-relaxed mb-3">학생들은 이 그래프를 보고 <strong>격차가 줄어드는가?</strong> · <strong>증가 속도는 어떠한가?</strong> · <strong>사회 변화와 어떤 관련이 있는가?</strong>를 분석할 수 있습니다.</p>
+                        <div class="bg-emerald-50 border border-emerald-200 rounded-lg p-4 text-sm">
+                            <p class="font-bold text-emerald-800 mb-1"><i class="fa-solid fa-lightbulb mr-1"></i>시사점 (최근 20년)</p>
+                            <p class="text-gray-700">여성 고용률 <strong>상승</strong>, 남녀 격차 <strong>감소</strong> 추세를 확인할 수 있습니다. 슬라이더로 최근 20년만 확대해 보세요.</p>
+                        </div>
+                    </div>
+
+                    <!-- ② 실업률 -->
+                    <div class="bg-white rounded-xl p-5 md:p-6 border border-blue-100 shadow-sm mb-5">
+                        <h4 class="font-bold text-lg text-blue-800 mb-3">② 실업률 변화 추이</h4>
+                        <div class="grid md:grid-cols-2 gap-4 mb-3 text-sm">
+                            <div class="bg-blue-50 rounded-lg p-4">
+                                <p class="font-bold text-blue-700 mb-2">그래프</p>
+                                <p class="text-gray-700">선그래프 — <strong>전체·남자·여자</strong> 실업률 비교 (지표 선택 → 실업률, 남녀 비교)</p>
+                            </div>
+                            <div class="bg-amber-50 rounded-lg p-4 border border-amber-100">
+                                <p class="font-bold text-amber-800 mb-2">분석 질문</p>
+                                <ul class="text-gray-700 space-y-1 list-disc list-inside">
+                                    <li>실업률이 가장 높았던 시기는 언제인가?</li>
+                                    <li>코로나 시기에 실업률은 어떻게 변했는가?</li>
+                                    <li>남녀 실업률 차이는 존재하는가?</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <p class="text-xs text-gray-500"><i class="fa-solid fa-triangle-exclamation mr-1 text-yellow-600"></i>실업률 하락만으로 고용 개선을 단정하지 말고, <strong>고용률·참가율</strong>을 함께 보세요.</p>
+                    </div>
+
+                    <!-- ③ 참가율 -->
+                    <div class="bg-white rounded-xl p-5 md:p-6 border border-blue-100 shadow-sm mb-5">
+                        <h4 class="font-bold text-lg text-blue-800 mb-3">③ 경제활동참가율 분석</h4>
+                        <p class="text-gray-700 text-sm mb-3 bg-gray-50 p-3 rounded-lg">경제활동참가율 = (경제활동인구 ÷ 15세 이상 인구) × 100</p>
+                        <div class="grid md:grid-cols-2 gap-4 text-sm">
+                            <div class="bg-blue-50 rounded-lg p-4">
+                                <p class="font-bold text-blue-700 mb-1">그래프</p>
+                                <p class="text-gray-700">선그래프 (지표 → 경제활동참가율)</p>
+                            </div>
+                            <div class="bg-amber-50 rounded-lg p-4 border border-amber-100">
+                                <p class="font-bold text-amber-800 mb-2">분석 질문</p>
+                                <ul class="text-gray-700 space-y-1 list-disc list-inside">
+                                    <li>경제활동에 참여하는 비율은 증가하는가?</li>
+                                    <li>여성의 경제활동참가율은 어떻게 변화했는가?</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- ④ 취업자 -->
+                    <div class="bg-white rounded-xl p-5 md:p-6 border border-blue-100 shadow-sm mb-5">
+                        <h4 class="font-bold text-lg text-blue-800 mb-3">④ 취업자 수 변화</h4>
+                        <div class="grid md:grid-cols-2 gap-4 text-sm">
+                            <div class="bg-blue-50 rounded-lg p-4">
+                                <p class="font-bold text-blue-700 mb-1">그래프</p>
+                                <p class="text-gray-700">선그래프 — <strong>전체·남성·여성</strong> 취업자 수 (지표 → 취업자)</p>
+                            </div>
+                            <div class="bg-amber-50 rounded-lg p-4 border border-amber-100">
+                                <p class="font-bold text-amber-800 mb-2">분석 질문</p>
+                                <ul class="text-gray-700 space-y-1 list-disc list-inside">
+                                    <li>취업자는 꾸준히 증가하는가?</li>
+                                    <li>어느 성별이 더 빠르게 증가하는가?</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- ⑤ 비경제활동인구 -->
+                    <div class="bg-white rounded-xl p-5 md:p-6 border border-blue-100 shadow-sm mb-6">
+                        <h4 class="font-bold text-lg text-blue-800 mb-3">⑤ 비경제활동인구 변화</h4>
+                        <div class="grid md:grid-cols-2 gap-4 mb-3 text-sm">
+                            <div class="bg-blue-50 rounded-lg p-4">
+                                <p class="font-bold text-blue-700 mb-1">그래프</p>
+                                <p class="text-gray-700">선그래프 (해당 항목 체크)</p>
+                            </div>
+                            <div class="bg-amber-50 rounded-lg p-4 border border-amber-100">
+                                <p class="font-bold text-amber-800 mb-2">분석 질문</p>
+                                <ul class="text-gray-700 space-y-1 list-disc list-inside">
+                                    <li>경제활동을 하지 않는 사람은 늘어나는가?</li>
+                                    <li>고령화와 관련이 있는가?</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="bg-purple-50 border border-purple-200 rounded-lg p-4 text-sm">
+                            <p class="font-bold text-purple-800 mb-1"><i class="fa-solid fa-comments mr-1"></i>토론 주제</p>
+                            <p class="text-gray-700 italic">「비경제활동인구 증가가 반드시 나쁜 현상일까?」</p>
+                        </div>
+                    </div>
+
+                    <!-- 탐구 프로젝트 -->
+                    <div class="bg-white rounded-xl p-5 md:p-6 border-2 border-indigo-200 shadow-sm mb-5">
+                        <h4 class="font-bold text-lg text-indigo-900 mb-4"><i class="fa-solid fa-flask mr-2"></i>경제수학 프로젝트 — 발전시키기 좋은 탐구 주제</h4>
+                        <div class="space-y-3 text-sm md:text-base">
+                            <div class="flex gap-3 p-3 bg-indigo-50 rounded-lg">
+                                <span class="font-bold text-indigo-700 shrink-0">주제 1</span>
+                                <p class="text-gray-700">「고용률과 실업률은 어떤 관계가 있을까?」→ <strong>산점도</strong> → <strong>상관계수</strong> 계산</p>
+                            </div>
+                            <div class="flex gap-3 p-3 bg-indigo-50 rounded-lg">
+                                <span class="font-bold text-indigo-700 shrink-0">주제 2</span>
+                                <p class="text-gray-700">「코로나19는 노동시장에 어떤 영향을 주었을까?」→ <strong>2018~2022년</strong> 확대 분석</p>
+                            </div>
+                            <div class="flex gap-3 p-3 bg-indigo-50 rounded-lg">
+                                <span class="font-bold text-indigo-700 shrink-0">주제 3</span>
+                                <p class="text-gray-700">「남녀 고용률 격차는 사라지고 있을까?」→ 선그래프 + <strong>추세선</strong> + <strong>감소율</strong> 계산</p>
+                            </div>
+                            <div class="flex gap-3 p-3 bg-indigo-50 rounded-lg">
+                                <span class="font-bold text-indigo-700 shrink-0">주제 4</span>
+                                <p class="text-gray-700">「취업자 수 증가 속도는 일정한가?」→ <strong>증가량</strong> vs <strong>증가율</strong> 비교</p>
+                            </div>
+                            <div class="flex gap-3 p-3 bg-indigo-50 rounded-lg">
+                                <span class="font-bold text-indigo-700 shrink-0">주제 5</span>
+                                <p class="text-gray-700">「고용률과 CPI는 관련이 있을까?」→ CPI 상승 + 고용률 변화 <strong>동시 시각화</strong> → 경제 전반 분석</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 추천 -->
+                    <div class="grid md:grid-cols-2 gap-4">
+                        <div class="bg-yellow-50 border-2 border-yellow-300 rounded-xl p-5">
+                            <h4 class="font-bold text-yellow-900 mb-2"><i class="fa-solid fa-star mr-1"></i>고등학교 경제수학 — 가장 추천하는 3가지</h4>
+                            <ol class="list-decimal list-inside text-gray-800 space-y-1.5 text-sm md:text-base">
+                                <li><strong>남녀 고용률 변화</strong></li>
+                                <li><strong>실업률 변화</strong></li>
+                                <li><strong>코로나 전후 노동시장 비교</strong></li>
+                            </ol>
+                            <p class="text-gray-600 text-xs mt-3 leading-relaxed">그래프만 보고도 사회·경제적 해석이 가능하고, 증가율·평균·상관관계 등 수학적 분석까지 연결하기 쉽습니다.</p>
+                        </div>
+                        <div class="bg-blue-100 border-2 border-blue-300 rounded-xl p-5">
+                            <h4 class="font-bold text-blue-900 mb-2"><i class="fa-solid fa-chart-area mr-1"></i>가장 추천하는 시각화</h4>
+                            <p class="text-gray-800 font-semibold mb-2">남녀 고용률 비교</p>
+                            <ul class="text-gray-700 text-sm space-y-1 list-none">
+                                <li>① 지표: <strong>고용률</strong> 선택</li>
+                                <li>② 탐구 질문: <strong>남녀 비교</strong> 또는 체크박스에서 계·남·여 선택</li>
+                                <li>③ 슬라이더로 2000년대~현재 구간 확대 → 격차·추세 관찰</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
             </div>
 
             <!-- KOSIS 바로가기 (상세 안내는 소개 섹션에 통합) -->
@@ -370,12 +590,14 @@
 
                     <div class="mt-6">
                         <h4 class="font-bold text-lg text-gray-800 mb-3"><i class="fa-solid fa-magnifying-glass mr-2"></i>데이터 분석 포인트</h4>
-                        <ul class="list-disc list-inside text-base text-gray-700 space-y-3">
-                            <li><strong>시계열 분석:</strong> 시점에 따라 경제활동 참가율, 실업률, 고용률이 어떻게 변하고 있나요?</li>
-                            <li><strong>지표 간 비교:</strong> 실업률과 고용률은 항상 반대로 움직일까요? (실망실업자 개념과 연결해 보세요)</li>
-                            <li><strong>성별 분석:</strong> 남성과 여성의 성별 고용률 차이는 어떠하며, 여성의 경제활동 참가율은 과거에 비해 어떻게 변화해 왔나요?</li>
-                            <li><strong>계절성 분석 (심화):</strong> 농가/비농가 고용 지표는 계절의 영향을 크게 받습니다. KOSIS에서 데이터를 연 단위가 아닌 <strong>'월별' 또는 '분기별'</strong>로 설정하여 다운로드해 보세요. 매년 농번기(봄/가을)와 농한기(겨울)마다 그래프가 어떻게 일정한 패턴으로 오르내리는지 관찰할 수 있습니다.</li>
+                        <ul class="list-disc list-inside text-base text-gray-700 space-y-2 mb-3">
+                            <li>지표별(고용률·실업률·참가율·취업자)로 그래프를 바꿔 가며 비교해 보세요.</li>
+                            <li>「남녀 비교」「남녀 격차」 탐구 질문으로 성별 분석을 시작해 보세요.</li>
+                            <li>2020년 전후 구간을 슬라이더로 확대해 코로나 충격을 관찰하세요.</li>
                         </ul>
+                        <a href="#emp-analysis-guide" class="inline-flex items-center text-sm font-bold text-blue-700 hover:text-blue-900 bg-blue-50 px-4 py-2 rounded-lg border border-blue-200 transition">
+                            <i class="fa-solid fa-book-open mr-2"></i>①~⑤ 탐구 가이드·프로젝트 주제 보기
+                        </a>
                     </div>
                 </div>
 
@@ -465,7 +687,7 @@
 
                     <div class="w-full mt-6 pt-6 border-t border-gray-100">
                         <label class="block text-lg font-bold text-gray-800 mb-3"><i class="fa-solid fa-pen mr-2"></i>나의 분석 결과 메모하기:</label>
-                        <textarea id="emp-memo" class="w-full border border-gray-300 rounded-md shadow-sm focus:border-blue-500 focus:ring-blue-500 p-4 text-base bg-blue-50/30" rows="4" placeholder="그래프를 보고 알 수 있는 점을 자유롭게 적어보세요..."></textarea>
+                        <textarea id="emp-memo" class="w-full border border-gray-300 rounded-md shadow-sm focus:border-blue-500 focus:ring-blue-500 p-4 text-base bg-blue-50/30" rows="7" placeholder="예) ① 고용률: 남녀 격차 감소, 여성 고용률 상승&#10;② 실업률: 2020년 코로나 충격&#10;③ 참가율·취업자·사회 변화 연결"></textarea>
                     </div>
                 </div>
             </div>
@@ -815,9 +1037,15 @@
             <div class="px-3 py-2 border-t border-gray-100 bg-white shrink-0">
                 <div class="flex flex-wrap gap-1.5 mb-2 max-h-16 overflow-y-auto">
                     <button type="button" class="chatbot-chip" data-prompt="CPI가 뭐야?">CPI란?</button>
-                    <button type="button" class="chatbot-chip" data-prompt="그래프 어떻게 분석해?">그래프 분석</button>
+                    <button type="button" class="chatbot-chip" data-prompt="2021~2023년 CPI 급상승 구간을 어떻게 분석해?">CPI 급상승 예시</button>
                     <button type="button" class="chatbot-chip" data-prompt="내 그래프 분석">내 그래프 분석</button>
-                    <button type="button" class="chatbot-chip" data-prompt="실업률과 고용률 차이">실업·고용률</button>
+                    <button type="button" class="chatbot-chip" data-prompt="고용 탐구 가이드 ①부터 ⑤까지 알려줘">고용 탐구 가이드</button>
+                    <button type="button" class="chatbot-chip" data-prompt="남녀 고용률 그래프는 어떻게 분석해?">남녀 고용률</button>
+                    <button type="button" class="chatbot-chip" data-prompt="코로나19가 노동시장에 미친 영향은?">코로나·노동</button>
+                    <button type="button" class="chatbot-chip" data-prompt="경제활동참가율은 어떻게 분석해?">참가율</button>
+                    <button type="button" class="chatbot-chip" data-prompt="실업률 변화 추이는 어떻게 분석해?">실업률</button>
+                    <button type="button" class="chatbot-chip" data-prompt="고용 탐구 프로젝트 주제 추천해줘">탐구 주제</button>
+                    <button type="button" class="chatbot-chip" data-prompt="구직단논자가 뭐예요?">구직단논자</button>
                     <button type="button" class="chatbot-chip" data-prompt="KOSIS 다운로드 방법">KOSIS 안내</button>
                 </div>
                 <div class="flex gap-2">
@@ -834,6 +1062,6 @@
     <script>window.ECOMATH_CONFIG = window.ECOMATH_CONFIG || {};</script>
     <script src="config.js"></script>
     <script src="app.js?v=2"></script>
-    <script src="chatbot.js?v=2"></script>
+    <script src="chatbot.js?v=7"></script>
 </body>
 </html>
