@@ -33,7 +33,8 @@
                     <a href="#intro" class="nav-link px-6 py-3 rounded-full font-semibold text-xl hover:bg-white/20 transition" data-section="intro"><i class="fa-solid fa-house mr-2 text-lg"></i>소개</a>
                     <a href="#cpi" class="nav-link px-6 py-3 rounded-full font-semibold text-xl hover:bg-white/20 transition" data-section="cpi"><i class="fa-solid fa-coins mr-2 text-lg"></i>CPI</a>
                     <a href="#employment" class="nav-link px-6 py-3 rounded-full font-semibold text-xl hover:bg-white/20 transition" data-section="employment"><i class="fa-solid fa-briefcase mr-2 text-lg"></i>고용</a>
-                    <a href="#quiz" class="nav-link px-6 py-3 rounded-full font-semibold text-xl bg-yellow-400 text-indigo-900 hover:bg-yellow-300 transition shadow-md" data-section="quiz"><i class="fa-solid fa-circle-question mr-2 text-lg"></i>퀴즈</a>
+                    <a href="#quiz" class="nav-link px-6 py-3 rounded-full font-semibold text-xl hover:bg-white/20 transition" data-section="quiz"><i class="fa-solid fa-circle-question mr-2 text-lg"></i>퀴즈</a>
+                    <button type="button" id="nav-chatbot-btn" class="nav-link px-6 py-3 rounded-full font-semibold text-xl bg-violet-400 text-indigo-900 hover:bg-violet-300 transition shadow-md" data-section="chatbot"><i class="fa-solid fa-robot mr-2 text-lg"></i>챗봇</button>
                 </div>
                 <button id="nav-mobile-toggle" class="md:hidden p-3 rounded-lg bg-white/20 hover:bg-white/30 transition" aria-label="메뉴 열기">
                     <i class="fa-solid fa-bars text-3xl"></i>
@@ -43,14 +44,15 @@
                 <a href="#intro" class="nav-link block px-6 py-4 rounded-lg font-semibold text-xl bg-white/10 hover:bg-white/20 transition" data-section="intro"><i class="fa-solid fa-house mr-3"></i>소개</a>
                 <a href="#cpi" class="nav-link block px-6 py-4 rounded-lg font-semibold text-xl bg-white/10 hover:bg-white/20 transition" data-section="cpi"><i class="fa-solid fa-coins mr-3"></i>소비자물가지수(CPI)</a>
                 <a href="#employment" class="nav-link block px-6 py-4 rounded-lg font-semibold text-xl bg-white/10 hover:bg-white/20 transition" data-section="employment"><i class="fa-solid fa-briefcase mr-3"></i>고용 지표</a>
-                <a href="#quiz" class="nav-link block px-6 py-4 rounded-lg font-semibold text-xl bg-yellow-400 text-indigo-900 hover:bg-yellow-300 transition" data-section="quiz"><i class="fa-solid fa-circle-question mr-3"></i>확인 퀴즈</a>
+                <a href="#quiz" class="nav-link block px-6 py-4 rounded-lg font-semibold text-xl bg-white/10 hover:bg-white/20 transition" data-section="quiz"><i class="fa-solid fa-circle-question mr-3"></i>확인 퀴즈</a>
+                <button type="button" id="nav-chatbot-btn-mobile" class="nav-link w-full text-left block px-6 py-4 rounded-lg font-semibold text-xl bg-violet-400 text-indigo-900 hover:bg-violet-300 transition" data-section="chatbot"><i class="fa-solid fa-robot mr-3"></i>학습 챗봇</button>
             </div>
         </div>
     </nav>
 
     <!-- 모바일 하단 빠른 이동 바 -->
     <div id="bottom-nav" class="md:hidden fixed bottom-0 left-0 right-0 z-50 bg-indigo-800 border-t-2 border-yellow-400 shadow-2xl">
-        <div class="grid grid-cols-4 text-center text-xs">
+        <div class="grid grid-cols-5 text-center text-xs">
             <a href="#intro" class="bottom-nav-link py-3 text-white/80 hover:text-yellow-300 transition" data-section="intro">
                 <i class="fa-solid fa-house block text-lg mb-1"></i>소개
             </a>
@@ -60,9 +62,12 @@
             <a href="#employment" class="bottom-nav-link py-3 text-white/80 hover:text-yellow-300 transition" data-section="employment">
                 <i class="fa-solid fa-briefcase block text-lg mb-1"></i>고용
             </a>
-            <a href="#quiz" class="bottom-nav-link py-3 text-yellow-300 font-bold transition" data-section="quiz">
+            <a href="#quiz" class="bottom-nav-link py-3 text-white/80 hover:text-yellow-300 transition" data-section="quiz">
                 <i class="fa-solid fa-circle-question block text-lg mb-1"></i>퀴즈
             </a>
+            <button type="button" id="bottom-nav-chatbot" class="bottom-nav-link py-3 text-violet-300 hover:text-violet-200 transition w-full" data-section="chatbot">
+                <i class="fa-solid fa-robot block text-lg mb-1"></i>챗봇
+            </button>
         </div>
     </div>
 
@@ -785,6 +790,56 @@
         <p>고등학교 경제수학 프로젝트 - 경제 지표 분석</p>
     </footer>
 
+    <!-- 학습 도우미 챗봇 -->
+    <button id="chatbot-toggle" type="button" aria-label="학습 도우미 열기" title="학습 도우미">
+        <i class="fa-solid fa-robot"></i>
+    </button>
+
+    <div id="chatbot-panel" class="chatbot-closed" role="dialog" aria-label="경제 지표 학습 도우미" aria-hidden="true">
+        <div id="chatbot-header" class="bg-gradient-to-r from-indigo-600 to-purple-600 text-white px-4 py-3 flex items-center justify-between shrink-0 cursor-pointer select-none">
+            <div class="flex items-center gap-2 font-bold text-sm md:text-base">
+                <i class="fa-solid fa-robot"></i>
+                <span>경제 지표 학습 도우미</span>
+            </div>
+            <div class="flex items-center gap-1" onclick="event.stopPropagation()">
+                <button id="chatbot-minimize" type="button" class="p-1.5 rounded-lg hover:bg-white/20 transition" aria-label="최소화" title="최소화">
+                    <i class="fa-solid fa-minus text-sm"></i>
+                </button>
+                <button id="chatbot-close" type="button" class="p-1.5 rounded-lg hover:bg-white/20 transition" aria-label="닫기" title="닫기">
+                    <i class="fa-solid fa-xmark text-lg"></i>
+                </button>
+            </div>
+        </div>
+        <div id="chatbot-body">
+            <div id="chatbot-messages"></div>
+            <div class="px-3 py-2 border-t border-gray-100 bg-white shrink-0">
+                <div class="flex flex-wrap gap-1.5 mb-2 max-h-16 overflow-y-auto">
+                    <button type="button" class="chatbot-chip" data-prompt="CPI가 뭐야?">CPI란?</button>
+                    <button type="button" class="chatbot-chip" data-prompt="그래프 어떻게 분석해?">그래프 분석</button>
+                    <button type="button" class="chatbot-chip" data-prompt="내 그래프 분석">내 그래프 분석</button>
+                    <button type="button" class="chatbot-chip" data-prompt="실업률과 고용률 차이">실업·고용률</button>
+                    <button type="button" class="chatbot-chip" data-prompt="KOSIS 다운로드 방법">KOSIS 안내</button>
+                </div>
+                <div class="flex gap-2">
+                    <input type="text" id="chatbot-input" placeholder="궁금한 것을 입력하세요..." class="flex-1 text-sm border border-gray-300 rounded-lg px-3 py-2 focus:ring-indigo-500 focus:border-indigo-500" autocomplete="off">
+                    <button id="chatbot-send" type="button" class="shrink-0 bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-lg text-sm font-bold transition">
+                        <i class="fa-solid fa-paper-plane"></i>
+                    </button>
+                </div>
+                <p id="chatbot-status" class="text-[10px] text-gray-400 mt-1.5 text-center">연결 상태 확인 중...</p>
+            </div>
+        </div>
+    </div>
+
+    <script>window.ECOMATH_CONFIG = window.ECOMATH_CONFIG || {};</script>
+    <script src="config.js"></script>
+    <script>
+        // config.js 로드 확인 (개발자 도구 콘솔에서도 확인 가능)
+        if (!window.ECOMATH_CONFIG.geminiApiKey) {
+            console.warn('[ecomath] config.js가 비어 있습니다. index.html과 같은 폴더에 config.js가 있는지 확인하세요.');
+        }
+    </script>
     <script src="app.js"></script>
+    <script src="chatbot.js"></script>
 </body>
 </html>

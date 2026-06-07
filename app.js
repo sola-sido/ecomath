@@ -487,7 +487,7 @@ function setupNavigation() {
         mobileMenu.classList.toggle('hidden');
     });
 
-    document.querySelectorAll('#main-nav a, #bottom-nav a').forEach(link => {
+    document.querySelectorAll('#main-nav a, #main-nav button.nav-link, #bottom-nav a, #bottom-nav button').forEach(link => {
         link.addEventListener('click', () => mobileMenu?.classList.add('hidden'));
     });
 
@@ -505,13 +505,8 @@ function setupNavigation() {
         }
 
         document.querySelectorAll('.nav-link, .bottom-nav-link').forEach(link => {
-            const isActive = link.dataset.section === current;
-            link.classList.toggle('active', isActive);
-            if (link.classList.contains('nav-link') && link.dataset.section === 'quiz' && !isActive) {
-                link.classList.remove('bg-yellow-400', 'text-indigo-900');
-            } else if (link.classList.contains('nav-link') && link.dataset.section === 'quiz' && isActive) {
-                link.classList.add('bg-yellow-400', 'text-indigo-900');
-            }
+            if (link.dataset.section === 'chatbot') return;
+            link.classList.toggle('active', link.dataset.section === current);
         });
     };
 
@@ -798,3 +793,48 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('cpi-save-btn')?.addEventListener('click', () => captureArea('cpi-capture-area', '소비자물가지수_분석결과.png'));
     document.getElementById('emp-save-btn')?.addEventListener('click', () => captureArea('emp-capture-area', '고용관련지표_분석결과.png'));
 });
+
+// 챗봇용 — 현재 그래프·슬라이더 상태 공유
+window.getEcomathContext = function() {
+    const cpiStart = parseInt(document.getElementById('cpi-slider-start')?.value || '0', 10);
+    const cpiEnd = parseInt(document.getElementById('cpi-slider-end')?.value || '0', 10);
+    const empStart = parseInt(document.getElementById('emp-slider-start')?.value || '0', 10);
+    const empEnd = parseInt(document.getElementById('emp-slider-end')?.value || '0', 10);
+
+    const cpiHas = cpiGlobalData.labels.length > 0;
+    const empHas = empGlobalData.labels.length > 0;
+
+    let empDatasets = [];
+    if (empHas) {
+        const indicator = document.getElementById('emp-indicator-select')?.value || '';
+        const exploreType = document.querySelector('input[name="emp-explore-radio"]:checked')?.value || 'all';
+        if (exploreType === 'custom') {
+            empDatasets = getFilteredDatasets('emp-filter-checkboxes', empGlobalData.datasets);
+        } else {
+            empDatasets = empGlobalData.datasets.filter(d => d.label.includes(indicator)).slice(0, 3);
+        }
+    }
+
+    const cpiLabels = cpiGlobalData.labels;
+    const empLabels = empGlobalData.labels;
+
+    return {
+        cpi: cpiHas ? {
+            hasData: true,
+            labels: cpiGlobalData.labels,
+            datasets: getFilteredDatasets('cpi-filter-checkboxes', cpiGlobalData.datasets).slice(0, 3),
+            startIdx: cpiStart,
+            endIdx: cpiEnd,
+            rangeLabel: cpiLabels.length ? `${cpiLabels[cpiStart]} ~ ${cpiLabels[cpiEnd]}` : ''
+        } : { hasData: false },
+        emp: empHas ? {
+            hasData: true,
+            labels: empGlobalData.labels,
+            datasets: empDatasets.length ? empDatasets : empGlobalData.datasets.slice(0, 3),
+            startIdx: empStart,
+            endIdx: empEnd,
+            indicator: document.getElementById('emp-indicator-select')?.value || '',
+            rangeLabel: empLabels.length ? `${empLabels[empStart]} ~ ${empLabels[empEnd]}` : ''
+        } : { hasData: false }
+    };
+};
