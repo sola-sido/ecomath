@@ -498,7 +498,7 @@ function setupNavigation() {
 
     const updateActiveNav = () => {
         let current = sections[0].id;
-        const scrollY = window.scrollY + 120;
+        const scrollY = window.scrollY + 180;
 
         for (const section of sections) {
             if (section.el.offsetTop <= scrollY) current = section.id;
