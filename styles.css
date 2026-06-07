@@ -20,3 +20,15 @@ textarea {
     background-color: #fee2e2; /* Tailwind red-100 */
     border: 1px solid #ef4444; /* Tailwind red-500 */
 }
+
+/* 네비게이션 활성 섹션 표시 */
+.nav-link.active,
+.bottom-nav-link.active {
+    background-color: rgba(255, 255, 255, 0.25);
+    color: #fde047; /* yellow-300 */
+}
+
+.bottom-nav-link.active {
+    background-color: rgba(253, 224, 71, 0.15);
+    font-weight: 700;
+}

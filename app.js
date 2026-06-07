@@ -5,48 +5,59 @@ let empChartInstance = null;
 let cpiGlobalData = { labels: [], datasets: [] };
 let empGlobalData = { labels: [], datasets: [] };
 
-// 필터 UI 생성 함수 (카테고리별 분류 기능 추가)
+// 데이터셋 라벨 정렬 우선순위 (지표 종류 → 세부 분류)
+function getDatasetSortKey(label) {
+    const indicatorOrder = ['경제활동참가율', '실업률', '고용률', '취업자', '실업자', '경제활동인구', '비경제활동인구'];
+    const groupOrder = ['계', '남자', '여자', '농가', '비농가'];
+
+    let indicatorIdx = indicatorOrder.findIndex(k => label.includes(k));
+    if (indicatorIdx === -1) indicatorIdx = 99;
+
+    let groupIdx = groupOrder.findIndex(k => label.startsWith(k) || label.includes(` ${k}`));
+    if (groupIdx === -1) groupIdx = 50;
+
+    const isPercent = label.includes('%') || label.includes('율') ? 0 : 1;
+
+    return `${String(groupIdx).padStart(2, '0')}_${String(indicatorIdx).padStart(2, '0')}_${isPercent}_${label}`;
+}
+
+function sortDatasets(datasets) {
+    return [...datasets].sort((a, b) => getDatasetSortKey(a.label).localeCompare(getDatasetSortKey(b.label), 'ko'));
+}
+
+function categorizeDataset(label) {
+    if (label.startsWith('계') || label.includes(' 계 ')) return '전체 종합';
+    if (label.startsWith('남자') || label.startsWith('여자')) return '성별 (남자/여자)';
+    if (label.startsWith('농가')) return '농가';
+    if (label.startsWith('비농가')) return '비농가';
+    return '기타';
+}
+
+// 필터 UI 생성 함수 (카테고리별 분류 + 정렬)
 function renderFilterCheckboxes(containerId, datasets, updateCallback, colorClass) {
     const container = document.getElementById(containerId);
-    container.innerHTML = ''; // 초기화
-    
-    // 카테고리 정의
-    const categories = {
-        '전체 종합': [],
-        '성별 데이터 (남자/여자)': [],
-        '농가 데이터': [],
-        '비농가 데이터': [],
-        '기타': []
-    };
+    container.innerHTML = '';
 
-    // 데이터셋 분류
-    datasets.forEach(ds => {
-        if (ds.label.startsWith('계')) {
-            categories['전체 종합'].push(ds);
-        } else if (ds.label.startsWith('남자') || ds.label.startsWith('여자')) {
-            categories['성별 데이터 (남자/여자)'].push(ds);
-        } else if (ds.label.startsWith('농가')) {
-            categories['농가 데이터'].push(ds);
-        } else if (ds.label.startsWith('비농가')) {
-            categories['비농가 데이터'].push(ds);
-        } else {
-            categories['기타'].push(ds);
-        }
+    const categoryOrder = ['전체 종합', '성별 (남자/여자)', '농가', '비농가', '기타'];
+    const categories = Object.fromEntries(categoryOrder.map(name => [name, []]));
+
+    sortDatasets(datasets).forEach(ds => {
+        categories[categorizeDataset(ds.label)].push(ds);
     });
 
-    // 카테고리별로 렌더링
-    for (const [categoryName, items] of Object.entries(categories)) {
-        if (items.length === 0) continue; // 데이터가 없는 카테고리는 건너뜀
+    for (const categoryName of categoryOrder) {
+        const items = categories[categoryName];
+        if (items.length === 0) continue;
 
-        // 카테고리 제목
         const categoryHeader = document.createElement('h5');
-        categoryHeader.className = 'w-full text-sm font-bold text-gray-800 border-b border-gray-200 pb-1 mt-4 mb-2 first:mt-0';
+        categoryHeader.className = 'filter-category w-full text-sm font-bold text-gray-800 border-b border-gray-200 pb-1 mt-4 mb-2 first:mt-0';
         categoryHeader.textContent = `■ ${categoryName}`;
+        categoryHeader.dataset.category = categoryName;
         container.appendChild(categoryHeader);
 
-        // 체크박스 컨테이너
         const groupContainer = document.createElement('div');
-        groupContainer.className = 'flex flex-wrap gap-2 mb-2 w-full';
+        groupContainer.className = 'filter-group flex flex-wrap gap-2 mb-2 w-full';
+        groupContainer.dataset.category = categoryName;
 
         items.forEach(ds => {
             // 처음에는 모든 체크박스를 해제 상태로 둡니다 (너무 많아서 복잡해짐 방지)
@@ -61,7 +72,8 @@ function renderFilterCheckboxes(containerId, datasets, updateCallback, colorClas
             }
 
             const label = document.createElement('label');
-            label.className = 'flex items-center space-x-2 cursor-pointer p-1.5 px-3 bg-white border border-gray-200 rounded-lg shadow-sm hover:bg-gray-50 transition text-sm';
+            label.className = 'filter-item flex items-center space-x-2 cursor-pointer p-1.5 px-3 bg-white border border-gray-200 rounded-lg shadow-sm hover:bg-gray-50 transition text-sm';
+            label.dataset.label = ds.label;
             
             const checkbox = document.createElement('input');
             checkbox.type = 'checkbox';
@@ -71,9 +83,9 @@ function renderFilterCheckboxes(containerId, datasets, updateCallback, colorClas
             checkbox.addEventListener('change', updateCallback);
             
             const span = document.createElement('span');
-            span.className = 'text-gray-700 font-medium truncate max-w-[200px] md:max-w-none';
+            span.className = 'text-gray-700 font-medium';
             span.textContent = ds.label;
-            span.title = ds.label; // 마우스 올렸을 때 전체 이름 보이기
+            span.title = ds.label;
             
             label.appendChild(checkbox);
             label.appendChild(span);
@@ -82,6 +94,25 @@ function renderFilterCheckboxes(containerId, datasets, updateCallback, colorClas
 
         container.appendChild(groupContainer);
     }
+}
+
+function setupFilterSearch(searchInputId, containerId) {
+    const searchInput = document.getElementById(searchInputId);
+    if (!searchInput) return;
+
+    searchInput.value = '';
+    searchInput.oninput = () => {
+        const query = searchInput.value.trim().toLowerCase();
+        const container = document.getElementById(containerId);
+        container.querySelectorAll('.filter-item').forEach(item => {
+            const text = (item.dataset.label || '').toLowerCase();
+            item.classList.toggle('hidden', query !== '' && !text.includes(query));
+        });
+        container.querySelectorAll('.filter-category, .filter-group').forEach(group => {
+            const visible = group.querySelectorAll('.filter-item:not(.hidden)').length > 0;
+            group.classList.toggle('hidden', query !== '' && !visible);
+        });
+    };
 }
 
 // 필터링된 데이터셋 가져오는 함수
@@ -93,111 +124,162 @@ function getFilteredDatasets(containerId, datasets) {
     return datasets.filter(ds => checkedValues.includes(ds.label));
 }
 
-// KOSIS 데이터 파싱 유틸리티 함수 (가로/세로 포맷 모두 지원)
-function parseKosisData(data, meta, defaultColor) {
-    let labels = [];
-    let datasets = [];
-    
-    // 차트 선 색상 팔레트 (여러 줄이 나올 경우 순차적으로 사용)
-    const colors = [defaultColor, '#f59e0b', '#ef4444', '#8b5cf6', '#ec4899', '#14b8a6', '#6366f1', '#f97316', '#3b82f6', '#10b981'];
+const CHART_COLORS = ['#10b981', '#f59e0b', '#ef4444', '#8b5cf6', '#ec4899', '#14b8a6', '#6366f1', '#f97316', '#3b82f6', '#10b981'];
 
-    // 1. 와이드 포맷 (Wide Format) 감지: 연도로 시작하는 컬럼이 있는지 확인 (예: "1999.06 월", "2025.11")
-    const wideTimeCols = meta.fields.filter(f => /^[0-9]{4}/.test(f));
+function parseNumeric(val) {
+    if (val === null || val === undefined || val === '') return null;
+    const num = parseFloat(String(val).replace(/,/g, '').replace(/%/g, ''));
+    return isNaN(num) ? null : num;
+}
 
-    if (wideTimeCols.length > 0) {
-        // --- 와이드 포맷 처리 (예: 고용관련지표 기본 다운로드 파일) ---
-        labels = [...wideTimeCols].sort((a, b) => a.localeCompare(b));
-        const nonTimeCols = meta.fields.filter(f => !wideTimeCols.includes(f));
-        
-        let colorIdx = 0;
-        data.forEach((row, i) => {
-            // 값이 전혀 없는 빈 행은 무시
-            if (wideTimeCols.every(col => !row[col] || row[col].trim() === '')) return;
-            
-            // "계", "경제활동참가율[%]", "천명" 등의 비시간 컬럼 값을 합쳐서 범례 이름으로 사용
-            let rowLabel = nonTimeCols.map(c => row[c]).filter(v => v).join(' ');
-            if (!rowLabel) rowLabel = `데이터 ${i+1}`;
-            
-            // 값 추출 및 콤마 제거
-            const values = labels.map(col => {
-                const val = parseFloat(String(row[col]).replace(/,/g, ''));
-                return isNaN(val) ? null : val;
-            });
-            
-            datasets.push({
-                label: rowLabel,
-                data: values,
-                borderColor: colors[colorIdx % colors.length],
-                backgroundColor: colors[colorIdx % colors.length] + '33',
-                fill: false, // 선이 여러 개면 겹치지 않게 투명 처리
-                tension: 0.1,
-                pointRadius: 2
-            });
-            colorIdx++;
+function isTimeLikeValue(val) {
+    const s = String(val).trim();
+    return /^[0-9]{4}(\.[0-9]{1,2})?(\s*(년|월|분기|Q))?/i.test(s) || /^[0-9]{4}$/.test(s);
+}
+
+function isTimeFieldName(field) {
+    if (!field) return false;
+    const f = String(field);
+    return f.includes('시점') || f.includes('기간') || f.includes('연도') || (f.includes('년') && !f.includes('천명'));
+}
+
+function sortTimeLabels(labels) {
+    return [...labels].sort((a, b) => String(a).localeCompare(String(b)));
+}
+
+function makeDataset(label, values, colorIdx, defaultColor, fill = false) {
+    const color = CHART_COLORS[colorIdx % CHART_COLORS.length] || defaultColor;
+    return {
+        label,
+        data: values,
+        borderColor: color,
+        backgroundColor: color + '33',
+        fill,
+        tension: 0.1,
+        pointRadius: 2
+    };
+}
+
+function scoreParseResult(result) {
+    if (!result.labels.length || !result.datasets.length) return 0;
+    const numericCount = result.datasets.reduce((sum, ds) =>
+        sum + ds.data.filter(v => v !== null).length, 0);
+    return numericCount + result.datasets.length * 10 + result.labels.length;
+}
+
+// 와이드 포맷: 시간이 열 헤더 (고용 기본 다운로드)
+function parseWideColumns(data, fields, defaultColor) {
+    const wideTimeCols = fields.filter(f => /^[0-9]{4}/.test(String(f)));
+    if (wideTimeCols.length === 0) return null;
+
+    const labels = sortTimeLabels(wideTimeCols);
+    const nonTimeCols = fields.filter(f => !wideTimeCols.includes(f));
+    const datasets = [];
+    let colorIdx = 0;
+
+    data.forEach((row, i) => {
+        if (wideTimeCols.every(col => !row[col] || String(row[col]).trim() === '')) return;
+        const rowLabel = nonTimeCols.map(c => row[c]).filter(v => v).join(' ') || `데이터 ${i + 1}`;
+        const values = labels.map(col => parseNumeric(row[col]));
+        if (values.some(v => v !== null)) {
+            datasets.push(makeDataset(rowLabel, values, colorIdx++, defaultColor));
+        }
+    });
+
+    return datasets.length ? { labels, datasets } : null;
+}
+
+// 시점이 행(세로)인 포맷: 첫 열이 시점, 나머지 열이 항목
+function parseTimeRows(data, fields, defaultColor) {
+    const timeField = fields.find(isTimeFieldName) || fields[0];
+    const timeRows = data.filter(r => isTimeLikeValue(r[timeField]));
+    if (timeRows.length < data.length * 0.5) return null;
+
+    const labels = sortTimeLabels([...new Set(timeRows.map(r => String(r[timeField])))]);
+    const valueCols = fields.filter(f => f !== timeField && data.some(r => parseNumeric(r[f]) !== null));
+    if (!valueCols.length) return null;
+
+    const datasets = valueCols.map((col, i) => {
+        const values = labels.map(l => {
+            const row = timeRows.find(r => String(r[timeField]) === l);
+            return row ? parseNumeric(row[col]) : null;
         });
-    } else {
-        // --- 롱 포맷 처리 (행렬 전환하여 다운로드한 파일, 예: 소비자물가지수) ---
-        // 시점(X축) 찾기
-        const xField = meta.fields.find(f => f.includes('시점') || f.includes('기간') || f.includes('년')) || meta.fields[0];
-        // 값(Y축) 찾기
-        const yField = meta.fields.includes('데이터') ? '데이터' : meta.fields[meta.fields.length - 1];
-        
-        // 항목(범례) 찾기 (시점과 데이터가 아닌 나머지 컬럼들)
-        const groupFields = meta.fields.filter(f => f !== xField && f !== yField);
-        
-        // 중복 없는 시점 라벨 생성 후 과거->최신 정렬
-        labels = [...new Set(data.map(r => String(r[xField])))].sort((a, b) => a.localeCompare(b));
-        
-        if (groupFields.length > 0) {
-            // 여러 항목이 섞여 있는 경우 (예: 전국, 서울, 부산...)
-            const grouped = {};
-            data.forEach(row => {
-                const groupKey = groupFields.map(f => row[f]).filter(v => v).join(' ');
-                if (!grouped[groupKey]) grouped[groupKey] = {};
-                grouped[groupKey][row[xField]] = parseFloat(String(row[yField]).replace(/,/g, ''));
-            });
-            
-            let colorIdx = 0;
-            for (const [key, valObj] of Object.entries(grouped)) {
-                const values = labels.map(l => isNaN(valObj[l]) ? null : valObj[l]);
-                datasets.push({
-                    label: key || yField,
-                    data: values,
-                    borderColor: colors[colorIdx % colors.length],
-                    backgroundColor: colors[colorIdx % colors.length] + '33',
-                    fill: false,
-                    tension: 0.1,
-                    pointRadius: 2
-                });
-                colorIdx++;
+        return makeDataset(col, values, i, defaultColor);
+    }).filter(ds => ds.data.some(v => v !== null));
+
+    return datasets.length ? { labels, datasets } : null;
+}
+
+// 롱 포맷: 시점 + 항목 + 데이터 (행렬 전환 후)
+function parseLongFormat(data, fields, defaultColor) {
+    const xField = fields.find(isTimeFieldName) || fields.find(f => data.some(r => isTimeLikeValue(r[f]))) || fields[0];
+    const yField = fields.includes('데이터') ? '데이터' : fields.find(f => f !== xField && data.some(r => parseNumeric(r[f]) !== null)) || fields[fields.length - 1];
+    const groupFields = fields.filter(f => f !== xField && f !== yField);
+
+    const labels = sortTimeLabels([...new Set(data.map(r => String(r[xField])).filter(v => v && v !== 'undefined'))]);
+    if (!labels.length) return null;
+
+    const datasets = [];
+
+    if (groupFields.length > 0) {
+        const grouped = {};
+        data.forEach(row => {
+            const groupKey = groupFields.map(f => row[f]).filter(v => v).join(' ');
+            if (!groupKey) return;
+            if (!grouped[groupKey]) grouped[groupKey] = {};
+            grouped[groupKey][row[xField]] = parseNumeric(row[yField]);
+        });
+
+        let colorIdx = 0;
+        for (const [key, valObj] of Object.entries(grouped)) {
+            const values = labels.map(l => valObj[l] ?? null);
+            if (values.some(v => v !== null)) {
+                datasets.push(makeDataset(key, values, colorIdx++, defaultColor));
             }
-        } else {
-            // 항목 구분이 없는 단순 데이터
-            const values = labels.map(l => {
-                const row = data.find(r => String(r[xField]) === l);
-                return row ? parseFloat(String(row[yField]).replace(/,/g, '')) : null;
-            });
-            datasets.push({
-                label: yField,
-                data: values,
-                borderColor: defaultColor,
-                backgroundColor: defaultColor + '33',
-                fill: true,
-                tension: 0.1,
-                pointRadius: 2
-            });
+        }
+    } else {
+        const values = labels.map(l => {
+            const row = data.find(r => String(r[xField]) === l);
+            return row ? parseNumeric(row[yField]) : null;
+        });
+        datasets.push(makeDataset(yField, values, 0, defaultColor, true));
+    }
+
+    return datasets.length ? { labels, datasets } : null;
+}
+
+// KOSIS 데이터 파싱 (여러 포맷 자동 감지)
+function parseKosisData(data, meta, defaultColor) {
+    const fields = meta.fields.filter(f => f && !f.startsWith('_'));
+
+    const strategies = [
+        () => parseWideColumns(data, fields, defaultColor),
+        () => parseTimeRows(data, fields, defaultColor),
+        () => parseLongFormat(data, fields, defaultColor)
+    ];
+
+    let best = null;
+    let bestScore = 0;
+
+    for (const strategy of strategies) {
+        const result = strategy();
+        if (!result) continue;
+        const s = scoreParseResult(result);
+        if (s > bestScore) {
+            bestScore = s;
+            best = result;
         }
     }
-    
-    // 데이터셋이 1개뿐이라면 배경색을 채워 예쁘게 보임
-    if (datasets.length === 1) {
-        datasets[0].fill = true;
-        // 색상도 기본 색상으로 강제 지정
-        datasets[0].borderColor = defaultColor;
-        datasets[0].backgroundColor = defaultColor + '33';
+
+    if (!best) throw new Error('지원하지 않는 CSV 형식입니다. KOSIS에서 행렬을 세로로 전환했는지 확인해 주세요.');
+
+    if (best.datasets.length === 1) {
+        best.datasets[0].fill = true;
+        best.datasets[0].borderColor = defaultColor;
+        best.datasets[0].backgroundColor = defaultColor + '33';
     }
 
-    return { labels, datasets };
+    return best;
 }
 
 function showError(element, message) {
@@ -397,8 +479,49 @@ function updateEmpChart() {
     });
 }
 
+function setupNavigation() {
+    const mobileToggle = document.getElementById('nav-mobile-toggle');
+    const mobileMenu = document.getElementById('nav-mobile-menu');
+
+    mobileToggle?.addEventListener('click', () => {
+        mobileMenu.classList.toggle('hidden');
+    });
+
+    document.querySelectorAll('#main-nav a, #bottom-nav a').forEach(link => {
+        link.addEventListener('click', () => mobileMenu?.classList.add('hidden'));
+    });
+
+    const sections = ['intro', 'cpi', 'employment', 'quiz'].map(id => ({
+        id,
+        el: document.getElementById(id)
+    })).filter(s => s.el);
+
+    const updateActiveNav = () => {
+        let current = sections[0].id;
+        const scrollY = window.scrollY + 120;
+
+        for (const section of sections) {
+            if (section.el.offsetTop <= scrollY) current = section.id;
+        }
+
+        document.querySelectorAll('.nav-link, .bottom-nav-link').forEach(link => {
+            const isActive = link.dataset.section === current;
+            link.classList.toggle('active', isActive);
+            if (link.classList.contains('nav-link') && link.dataset.section === 'quiz' && !isActive) {
+                link.classList.remove('bg-yellow-400', 'text-indigo-900');
+            } else if (link.classList.contains('nav-link') && link.dataset.section === 'quiz' && isActive) {
+                link.classList.add('bg-yellow-400', 'text-indigo-900');
+            }
+        });
+    };
+
+    window.addEventListener('scroll', updateActiveNav, { passive: true });
+    updateActiveNav();
+}
+
 document.addEventListener('DOMContentLoaded', () => {
-    
+    setupNavigation();
+
     // CPI 슬라이더 이벤트
     document.getElementById('cpi-slider-start').addEventListener('input', updateCpiChart);
     document.getElementById('cpi-slider-end').addEventListener('input', updateCpiChart);
@@ -531,6 +654,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
                     // 체크박스 필터 렌더링
                     renderFilterCheckboxes('emp-filter-checkboxes', parsed.datasets, updateEmpChart, 'blue');
+                    setupFilterSearch('emp-filter-search', 'emp-filter-checkboxes');
 
                     document.getElementById('emp-placeholder').classList.add('hidden');
                     document.getElementById('emp-slider-container').classList.remove('hidden');
@@ -573,10 +697,10 @@ document.addEventListener('DOMContentLoaded', () => {
             feedbackDiv.classList.remove('hidden', 'bg-emerald-100', 'text-emerald-700', 'bg-red-100', 'text-red-700', 'bg-gray-100', 'text-gray-700');
 
             if (q) {
-                const parent = q.closest('.space-y-3').querySelectorAll('label');
-                parent.forEach(lbl => {
+                parentQuizItem.querySelectorAll('label').forEach(lbl => {
+                    const inp = lbl.querySelector('input[type="radio"]');
+                    if (!inp) return;
                     lbl.classList.remove('correct-answer', 'wrong-answer');
-                    const inp = lbl.querySelector('input');
                     if (inp.value === 'correct') lbl.classList.add('correct-answer');
                     else if (inp.checked) lbl.classList.add('wrong-answer');
                 });
@@ -620,11 +744,28 @@ document.addEventListener('DOMContentLoaded', () => {
         // 소수점 처리 (예: 91.666... -> 91.7)
         const displayScore = Number.isInteger(finalScore) ? finalScore : finalScore.toFixed(1);
         
-        if (score === totalQuestions) {
-            resultDiv.innerHTML = `<div class="mb-2">🎉 대단해요! ${displayScore}점 만점입니다! 💯</div><div class="text-sm font-normal text-emerald-700">모든 문제의 해설을 위에서 확인할 수 있습니다.</div>`;
-            resultDiv.className = "mt-6 text-xl font-bold text-emerald-600 bg-emerald-50 p-6 rounded-xl";
+        // 등급 판정 로직
+        let gradeMessage = '';
+        let gradeColor = '';
+        if (score >= 8) {
+            gradeMessage = '🏆 경제지표 해석 우수';
+            gradeColor = 'text-emerald-600';
+        } else if (score >= 5) {
+            gradeMessage = '📚 공식과 개념 확인';
+            gradeColor = 'text-blue-600';
         } else {
-            let feedbackHTML = `<div class="mb-4 text-purple-700">📝 ${displayScore}점 입니다.</div>`;
+            gradeMessage = '💡 개념 복습 필요';
+            gradeColor = 'text-red-600';
+        }
+        
+        if (score === totalQuestions) {
+            resultDiv.innerHTML = `<div class="mb-2">🎉 대단해요! ${displayScore}점 만점입니다! 💯</div>
+                                   <div class="mb-4 text-2xl font-black ${gradeColor}">${gradeMessage}</div>
+                                   <div class="text-sm font-normal text-emerald-700">모든 문제의 해설을 위에서 확인할 수 있습니다.</div>`;
+            resultDiv.className = "mt-6 text-xl font-bold text-emerald-600 bg-emerald-50 p-6 rounded-xl text-center";
+        } else {
+            let feedbackHTML = `<div class="mb-2 text-purple-700">📝 ${displayScore}점 입니다.</div>
+                                <div class="mb-4 text-2xl font-black ${gradeColor}">${gradeMessage}</div>`;
             feedbackHTML += `<div class="text-left text-sm text-gray-700 bg-white p-4 rounded border border-purple-200 mt-4">
                 <h5 class="font-bold mb-2">💡 오답 노트</h5>
                 <p class="mb-2 text-red-600 font-bold">틀린 문제 또는 안 푼 문제: ${wrongQuestions.join(', ')}</p>
@@ -632,7 +773,28 @@ document.addEventListener('DOMContentLoaded', () => {
             </div>`;
             
             resultDiv.innerHTML = feedbackHTML;
-            resultDiv.className = "mt-6 text-xl font-bold bg-purple-50 p-6 rounded-xl";
+            resultDiv.className = "mt-6 text-xl font-bold bg-purple-50 p-6 rounded-xl text-center";
         }
     });
+
+    // 분석 결과 캡처(이미지 저장) 기능
+    const captureArea = (areaId, filename) => {
+        const area = document.getElementById(areaId);
+        if (!area) return;
+        
+        // html2canvas 호출
+        html2canvas(area, {
+            scale: 2, // 고화질 저장
+            backgroundColor: '#ffffff' // 배경색 흰색 보장
+        }).then(canvas => {
+            const link = document.createElement('a');
+            link.download = filename;
+            link.href = canvas.toDataURL('image/png');
+            link.click();
+        });
+    };
+
+    // 이미지 저장 버튼 이벤트 리스너
+    document.getElementById('cpi-save-btn')?.addEventListener('click', () => captureArea('cpi-capture-area', '소비자물가지수_분석결과.png'));
+    document.getElementById('emp-save-btn')?.addEventListener('click', () => captureArea('emp-capture-area', '고용관련지표_분석결과.png'));
 });

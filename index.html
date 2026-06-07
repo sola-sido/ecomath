@@ -13,48 +13,139 @@
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="styles.css">
+    <!-- html2canvas for saving as image -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <!-- MathJax for rendering math formulas -->
     <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 </head>
 <body class="bg-gray-50 text-gray-800 font-sans">
     
     <!-- Navigation -->
-    <nav class="bg-indigo-600 text-white shadow-lg sticky top-0 z-50">
+    <nav id="main-nav" class="bg-gradient-to-r from-indigo-700 via-indigo-600 to-purple-600 text-white shadow-xl sticky top-0 z-50 border-b-4 border-yellow-400">
         <div class="max-w-7xl mx-auto px-4">
-            <div class="flex justify-between items-center h-16">
-                <div class="flex items-center space-x-2 font-bold text-xl">
-                    <i class="fa-solid fa-chart-line"></i>
-                    <span>고등 경제수학 지표 분석실</span>
+            <div class="flex justify-between items-center h-18 py-3">
+                <a href="#intro" class="flex items-center space-x-2 font-bold text-lg md:text-xl hover:text-yellow-200 transition">
+                    <i class="fa-solid fa-chart-line text-yellow-300"></i>
+                    <span class="hidden sm:inline">고등 경제수학 지표 분석실</span>
+                    <span class="sm:hidden">경제수학</span>
+                </a>
+                <div class="hidden md:flex items-center gap-2">
+                    <a href="#intro" class="nav-link px-4 py-2 rounded-full font-semibold text-sm hover:bg-white/20 transition" data-section="intro"><i class="fa-solid fa-house mr-1"></i>소개</a>
+                    <a href="#cpi" class="nav-link px-4 py-2 rounded-full font-semibold text-sm hover:bg-white/20 transition" data-section="cpi"><i class="fa-solid fa-coins mr-1"></i>CPI</a>
+                    <a href="#employment" class="nav-link px-4 py-2 rounded-full font-semibold text-sm hover:bg-white/20 transition" data-section="employment"><i class="fa-solid fa-briefcase mr-1"></i>고용</a>
+                    <a href="#quiz" class="nav-link px-4 py-2 rounded-full font-semibold text-sm bg-yellow-400 text-indigo-900 hover:bg-yellow-300 transition shadow-md" data-section="quiz"><i class="fa-solid fa-circle-question mr-1"></i>퀴즈</a>
                 </div>
-                <div class="hidden md:flex space-x-6">
-                    <a href="#intro" class="hover:text-indigo-200 transition">소개</a>
-                    <a href="#cpi" class="hover:text-indigo-200 transition">소비자물가지수(CPI)</a>
-                    <a href="#employment" class="hover:text-indigo-200 transition">고용 지표</a>
-                    <a href="#quiz" class="hover:text-indigo-200 transition">확인 퀴즈</a>
-                </div>
+                <button id="nav-mobile-toggle" class="md:hidden p-2 rounded-lg bg-white/20 hover:bg-white/30 transition" aria-label="메뉴 열기">
+                    <i class="fa-solid fa-bars text-xl"></i>
+                </button>
+            </div>
+            <div id="nav-mobile-menu" class="hidden md:hidden pb-4 space-y-2">
+                <a href="#intro" class="nav-link block px-4 py-3 rounded-lg font-semibold bg-white/10 hover:bg-white/20 transition" data-section="intro"><i class="fa-solid fa-house mr-2"></i>소개</a>
+                <a href="#cpi" class="nav-link block px-4 py-3 rounded-lg font-semibold bg-white/10 hover:bg-white/20 transition" data-section="cpi"><i class="fa-solid fa-coins mr-2"></i>소비자물가지수(CPI)</a>
+                <a href="#employment" class="nav-link block px-4 py-3 rounded-lg font-semibold bg-white/10 hover:bg-white/20 transition" data-section="employment"><i class="fa-solid fa-briefcase mr-2"></i>고용 지표</a>
+                <a href="#quiz" class="nav-link block px-4 py-3 rounded-lg font-semibold bg-yellow-400 text-indigo-900 hover:bg-yellow-300 transition" data-section="quiz"><i class="fa-solid fa-circle-question mr-2"></i>확인 퀴즈</a>
             </div>
         </div>
     </nav>
 
-    <main class="max-w-7xl mx-auto px-4 py-8 space-y-16">
+    <!-- 모바일 하단 빠른 이동 바 -->
+    <div id="bottom-nav" class="md:hidden fixed bottom-0 left-0 right-0 z-50 bg-indigo-800 border-t-2 border-yellow-400 shadow-2xl">
+        <div class="grid grid-cols-4 text-center text-xs">
+            <a href="#intro" class="bottom-nav-link py-3 text-white/80 hover:text-yellow-300 transition" data-section="intro">
+                <i class="fa-solid fa-house block text-lg mb-1"></i>소개
+            </a>
+            <a href="#cpi" class="bottom-nav-link py-3 text-white/80 hover:text-yellow-300 transition" data-section="cpi">
+                <i class="fa-solid fa-coins block text-lg mb-1"></i>CPI
+            </a>
+            <a href="#employment" class="bottom-nav-link py-3 text-white/80 hover:text-yellow-300 transition" data-section="employment">
+                <i class="fa-solid fa-briefcase block text-lg mb-1"></i>고용
+            </a>
+            <a href="#quiz" class="bottom-nav-link py-3 text-yellow-300 font-bold transition" data-section="quiz">
+                <i class="fa-solid fa-circle-question block text-lg mb-1"></i>퀴즈
+            </a>
+        </div>
+    </div>
+
+    <main class="max-w-7xl mx-auto px-4 py-8 pb-24 md:pb-8 space-y-16">
         
         <!-- Intro Section -->
-        <section id="intro" class="bg-white rounded-2xl shadow-md p-8 border-t-4 border-indigo-500">
-            <h1 class="text-3xl font-bold mb-4 text-indigo-700">경제 지표, 직접 찾아보고 분석해보자!</h1>
-            <p class="text-lg mb-4 leading-relaxed text-gray-700">
-                안녕하세요! 이 웹페이지는 고등학교 2학년 경제수학을 수강하는 여러분을 위해 만들어졌습니다. 
-                뉴스와 교과서에서만 보던 <strong>소비자물가지수(CPI)</strong>와 <strong>고용 관련 지표(실업률, 고용률 등)</strong>를 통계청 KOSIS에서 직접 찾아보고, 
-                데이터를 시각화하여 경제 흐름을 분석해 볼 수 있습니다.
-            </p>
-            <div class="bg-indigo-50 rounded-lg p-6 mt-6">
-                <h3 class="font-bold text-lg mb-2 text-indigo-800"><i class="fa-solid fa-circle-info mr-2"></i>KOSIS 데이터 다운로드 방법</h3>
-                <ol class="list-decimal list-inside space-y-2 text-gray-700">
-                    <li><a href="https://kosis.kr/index/index.do" target="_blank" class="text-blue-600 font-semibold hover:underline">KOSIS 국가통계포털(kosis.kr)</a>에 접속합니다.</li>
-                    <li>주제별 통계에서 '물가' 또는 '고용' 카테고리를 찾습니다.</li>
-                    <li>원하는 통계표(예: 품목성질별 소비자물가지수, 경제활동인구총괄)를 선택합니다.</li>
-                    <li>조회 기간을 설정하고 데이터가 행(시간), 열(지표값) 형태가 되도록 조정합니다.</li>
-                    <li>다운로드 버튼을 눌러 <strong>CSV 파일</strong> 형식으로 저장합니다.</li>
-                </ol>
+        <section id="intro" class="bg-white rounded-2xl shadow-lg p-8 md:p-12 border-t-4 border-indigo-500 relative overflow-hidden">
+            <!-- Background Decoration -->
+            <div class="absolute top-0 right-0 -mt-10 -mr-10 text-indigo-50 opacity-50 hidden md:block">
+                <i class="fa-solid fa-chart-pie text-[200px]"></i>
+            </div>
+            
+            <div class="relative z-10">
+                <div class="inline-block bg-indigo-100 text-indigo-800 font-bold px-3 py-1 rounded-full text-sm mb-3">고등학교 2학년 경제수학 프로젝트</div>
+                <h1 class="text-3xl md:text-4xl font-extrabold mb-4 text-gray-900 tracking-tight">경제 지표, 직접 찾아보고 <span class="text-indigo-600">분석해보자!</span></h1>
+                <p class="text-lg md:text-xl text-gray-600 mb-10 leading-relaxed max-w-3xl">
+                    어렵게만 느껴지던 <strong>소비자물가지수(CPI)</strong>와 <strong>고용 지표</strong>를 통계청 데이터로 직접 그려보면서, 진짜 경제의 흐름을 눈으로 확인해 보세요. 수학이 두려워도 걱정 마세요, 그래프가 다 보여줄 거예요!
+                </p>
+
+                <!-- 3 Steps Cards -->
+                <div class="grid md:grid-cols-3 gap-6 mb-10">
+                    <div class="bg-white rounded-xl p-6 border border-gray-100 shadow-md hover:-translate-y-1 hover:shadow-lg transition duration-300">
+                        <div class="w-12 h-12 bg-indigo-100 text-indigo-600 rounded-full flex items-center justify-center text-xl mb-4 shadow-sm">
+                            <i class="fa-solid fa-download"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-800 mb-2">1. 데이터 준비</h3>
+                        <p class="text-gray-600 text-sm leading-relaxed">통계청 KOSIS에서 원하는 경제 지표 데이터를 CSV 파일로 직접 다운로드합니다. (다운로드가 어렵다면 공유 링크를 활용하세요!)</p>
+                    </div>
+                    <div class="bg-white rounded-xl p-6 border border-gray-100 shadow-md hover:-translate-y-1 hover:shadow-lg transition duration-300">
+                        <div class="w-12 h-12 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center text-xl mb-4 shadow-sm">
+                            <i class="fa-solid fa-chart-area"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-800 mb-2">2. 시각화 분석</h3>
+                        <p class="text-gray-600 text-sm leading-relaxed">다운받은 파일을 업로드하면 복잡한 숫자들이 한눈에 들어오는 그래프로 바뀝니다. 기간을 조절하고 비교해보세요.</p>
+                    </div>
+                    <div class="bg-white rounded-xl p-6 border border-gray-100 shadow-md hover:-translate-y-1 hover:shadow-lg transition duration-300">
+                        <div class="w-12 h-12 bg-purple-100 text-purple-600 rounded-full flex items-center justify-center text-xl mb-4 shadow-sm">
+                            <i class="fa-solid fa-lightbulb"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-800 mb-2">3. 통찰 및 퀴즈</h3>
+                        <p class="text-gray-600 text-sm leading-relaxed">그래프를 보며 배운 개념을 적용해 보고, 마지막에 준비된 100점 만점 퀴즈를 풀며 나의 실력을 테스트해 봅니다.</p>
+                    </div>
+                </div>
+
+                <!-- KOSIS Download Guide (통합 안내) -->
+                <div id="kosis-guide" class="bg-gray-50 rounded-xl p-6 md:p-8 border-2 border-indigo-200">
+                    <h3 class="font-bold text-xl mb-2 text-gray-800"><i class="fa-solid fa-magnifying-glass-chart text-indigo-500 mr-2"></i>KOSIS 데이터 다운로드 안내 <span class="text-sm font-normal text-indigo-600">(CPI·고용 공통)</span></h3>
+                    <p class="text-gray-600 mb-6">아래 순서대로 설정하면 CPI와 고용 지표 모두 같은 방식으로 CSV를 받을 수 있습니다. <strong>행렬을 세로로 전환하지 않으면</strong> 그래프가 제대로 나오지 않을 수 있으니 꼭 확인하세요!</p>
+                    
+                    <div class="grid md:grid-cols-2 gap-6 mb-6">
+                        <div class="bg-white p-5 rounded-lg shadow-sm border border-gray-200">
+                            <h4 class="font-bold text-indigo-700 mb-3">1. 행렬 전환</h4>
+                            <p class="text-sm text-gray-600 mb-4">상단 <strong>'행렬전환'</strong> 버튼 → <strong>'시점'</strong>과 항목(예: 시도별)을 모두 <strong>표측(세로)</strong>로 옮기고 [적용]을 누릅니다.</p>
+                            <div class="flex justify-center bg-gray-50 p-2 rounded">
+                                <img src="assets/44.png" alt="행렬 전환 안내" class="max-h-56 border border-gray-200 shadow-sm rounded">
+                            </div>
+                        </div>
+                        <div class="bg-white p-5 rounded-lg shadow-sm border border-gray-200">
+                            <h4 class="font-bold text-indigo-700 mb-3">2. 모든 연도 선택</h4>
+                            <p class="text-sm text-gray-600 mb-4"><strong>'시점'</strong> 클릭 → <strong>'년'</strong> 탭 → <strong>Shift 키</strong>를 누른 채 클릭하여 모든 연도를 선택합니다.</p>
+                            <div class="flex justify-center bg-gray-50 p-2 rounded">
+                                <img src="assets/66.png" alt="시점 선택 안내" class="max-h-56 border border-gray-200 shadow-sm rounded">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-indigo-50 p-5 rounded-lg border border-indigo-200 flex items-center shadow-sm mb-6">
+                        <div class="text-indigo-500 text-3xl mr-5"><i class="fa-solid fa-file-csv"></i></div>
+                        <div>
+                            <h4 class="font-bold text-indigo-800 text-lg">3. CSV 다운로드</h4>
+                            <p class="text-sm text-indigo-700 mt-1">설정 완료 후 표 우측 상단 다운로드 아이콘(<i class="fa-solid fa-download mx-1"></i>)을 눌러 <strong>CSV</strong>로 저장합니다.</p>
+                        </div>
+                    </div>
+
+                    <div class="grid sm:grid-cols-2 gap-4">
+                        <a href="https://kosis.kr/statHtml/statHtml.do?sso=ok&returnurl=https%3A%2F%2Fkosis.kr%3A443%2FstatHtml%2FstatHtml.do%3Fconn_path%3DMT_ZTITLE%26list_id%3DP2_6%26obj_var_id%3D%26seqNo%3D%26tblId%3DDT_1J22003%26vw_cd%3DMT_ZTITLE%26itm_id%3D%26language%3Dkor%26lang_mode%3Dko%26orgId%3D101%26" target="_blank" class="flex items-center justify-center gap-2 bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-3 px-6 rounded-full transition shadow-md">
+                            <i class="fa-solid fa-coins"></i> CPI 데이터 페이지
+                        </a>
+                        <a href="https://kosis.kr/statHtml/statHtml.do?sso=ok&returnurl=https%3A%2F%2Fkosis.kr%3A443%2FstatHtml%2FstatHtml.do%3Flist_id%3D%26obj_var_id%3D%26seqNo%3D%26docId%3D0290741214%26tblId%3DDT_1DA7001S%26vw_cd%3DMT_ZTITLE%26orgId%3D101%26conn_path%3DE1%26markType%3DS%26itm_id%3D%26lang_mode%3Dko%26scrId%3D%26itmNm%3D%EC%A0%84%EA%B5%AD%26" target="_blank" class="flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-full transition shadow-md">
+                            <i class="fa-solid fa-briefcase"></i> 고용 지표 데이터 페이지
+                        </a>
+                    </div>
+                </div>
             </div>
         </section>
 
@@ -82,49 +173,15 @@
                 </p>
             </div>
 
-            <!-- KOSIS 실습 가이드 및 임베딩 -->
-            <div class="mb-10 p-6 bg-gray-50 rounded-xl border border-gray-200">
-                <h3 class="font-bold text-lg mb-4 text-gray-800"><i class="fa-solid fa-download mr-2"></i>KOSIS 데이터 직접 다운로드하기</h3>
-                
-                <!-- 단계별 안내 -->
-                <div class="space-y-6 mb-8">
-                    <p class="text-gray-700">아래의 KOSIS 사이트 화면에서 안내에 따라 설정을 변경한 후 CSV 파일로 다운로드해 보세요.</p>
-                    
-                    <div class="grid md:grid-cols-2 gap-6">
-                        <div class="bg-white p-5 rounded-lg shadow-sm border border-gray-200">
-                            <h4 class="font-bold text-emerald-700 mb-3">1. 행렬 전환</h4>
-                            <p class="text-sm text-gray-600 mb-4">상단의 '행렬전환' 버튼을 누른 후, <strong>'시점'</strong>과 <strong>'시도별'</strong>을 모두 <strong>표측(세로)</strong>으로 드래그하여 옮기고 [적용]을 누릅니다.</p>
-                            <div class="flex justify-center bg-gray-50 p-2 rounded">
-                                <img src="assets/44.png" alt="행렬 전환 안내" class="max-h-72 border border-gray-200 shadow-sm rounded">
-                            </div>
-                        </div>
-                        <div class="bg-white p-5 rounded-lg shadow-sm border border-gray-200">
-                            <h4 class="font-bold text-emerald-700 mb-3">2. 모든 연도 선택</h4>
-                            <p class="text-sm text-gray-600 mb-4">상단의 <strong>'시점'</strong> 버튼 클릭 &rarr; <strong>'년'</strong> 탭 선택 &rarr; <strong>Shift 키</strong>를 누른 채로 클릭하여 모든 연도를 선택합니다.</p>
-                            <div class="flex justify-center bg-gray-50 p-2 rounded">
-                                <img src="assets/66.png" alt="시점 선택 안내" class="max-h-72 border border-gray-200 shadow-sm rounded">
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="bg-emerald-50 p-5 rounded-lg border border-emerald-200 flex items-center shadow-sm">
-                        <div class="text-emerald-500 text-3xl mr-5"><i class="fa-solid fa-file-csv"></i></div>
-                        <div>
-                            <h4 class="font-bold text-emerald-800 text-lg">3. CSV 다운로드</h4>
-                            <p class="text-sm text-emerald-700 mt-1">설정이 완료되면 표 우측 상단의 다운로드 아이콘(<i class="fa-solid fa-download mx-1"></i>)을 눌러 <strong>CSV 파일</strong> 형식으로 내 컴퓨터에 저장합니다.</p>
-                        </div>
-                    </div>
+            <!-- KOSIS 바로가기 (상세 안내는 소개 섹션에 통합) -->
+            <div class="mb-10 p-5 bg-emerald-50 rounded-xl border border-emerald-200 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+                <div>
+                    <h3 class="font-bold text-lg text-emerald-800"><i class="fa-solid fa-download mr-2"></i>CPI 데이터 받기</h3>
+                    <p class="text-sm text-emerald-700 mt-1">다운로드 방법은 <a href="#kosis-guide" class="underline font-bold hover:text-emerald-900">맨 위 소개 섹션의 KOSIS 안내</a>를 참고하세요.</p>
                 </div>
-
-                <!-- KOSIS Link -->
-                <div class="w-full bg-white border border-emerald-200 rounded-lg p-8 text-center shadow-sm">
-                    <i class="fa-solid fa-arrow-up-right-from-square text-4xl text-emerald-500 mb-4"></i>
-                    <h4 class="text-xl font-bold text-gray-800 mb-2">KOSIS 실습 페이지로 이동</h4>
-                    <p class="text-gray-600 mb-6">통계청 KOSIS 사이트는 안정적인 데이터 제공을 위해 웹페이지 내 직접 삽입(임베딩)을 제한하고 있습니다.<br>아래 버튼을 눌러 새 창에서 소비자물가지수 데이터를 직접 다운로드해 보세요!</p>
-                    <a href="https://kosis.kr/statHtml/statHtml.do?sso=ok&returnurl=https%3A%2F%2Fkosis.kr%3A443%2FstatHtml%2FstatHtml.do%3Fconn_path%3DMT_ZTITLE%26list_id%3DP2_6%26obj_var_id%3D%26seqNo%3D%26tblId%3DDT_1J22003%26vw_cd%3DMT_ZTITLE%26itm_id%3D%26language%3Dkor%26lang_mode%3Dko%26orgId%3D101%26" target="_blank" class="inline-block bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-3 px-8 rounded-full shadow-lg transition transform hover:-translate-y-1 text-lg">
-                        <i class="fa-solid fa-external-link-alt mr-2"></i>새 창에서 KOSIS 열람하기
-                    </a>
-                </div>
+                <a href="https://kosis.kr/statHtml/statHtml.do?sso=ok&returnurl=https%3A%2F%2Fkosis.kr%3A443%2FstatHtml%2FstatHtml.do%3Fconn_path%3DMT_ZTITLE%26list_id%3DP2_6%26obj_var_id%3D%26seqNo%3D%26tblId%3DDT_1J22003%26vw_cd%3DMT_ZTITLE%26itm_id%3D%26language%3Dkor%26lang_mode%3Dko%26orgId%3D101%26" target="_blank" class="shrink-0 inline-flex items-center justify-center bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-2.5 px-6 rounded-full transition shadow-md">
+                    <i class="fa-solid fa-external-link-alt mr-2"></i>CPI KOSIS 열기
+                </a>
             </div>
             
             <div class="flex flex-col gap-8">
@@ -168,15 +225,15 @@
                 </div>
 
                 <!-- Chart Area -->
-                <div class="bg-white p-6 rounded-xl border border-gray-200 shadow-inner flex flex-col items-center justify-center">
+                <div id="cpi-capture-area" class="bg-white p-6 rounded-xl border border-gray-200 shadow-inner flex flex-col items-center justify-center">
                     <p class="text-sm text-emerald-600 mb-2 font-bold"><i class="fa-regular fa-lightbulb mr-1"></i>팁: 차트 위의 이름표(범례)를 클릭하면 해당 그래프를 켜고 끌 수 있습니다.</p>
-                    <div class="w-full min-h-[450px] flex items-center justify-center">
+                    <div class="w-full min-h-[450px] flex items-center justify-center bg-white">
                         <canvas id="cpiChart"></canvas>
                         <p id="cpi-placeholder" class="text-gray-400 text-sm italic">CSV 파일을 업로드하면 이곳에 그래프가 나타납니다.</p>
                     </div>
                     
                     <!-- 데이터셋 필터 (체크박스) -->
-                    <div id="cpi-filter-container" class="hidden w-full mt-4 px-4">
+                    <div id="cpi-filter-container" class="hidden w-full mt-4 px-4" data-html2canvas-ignore>
                         <label class="block text-sm font-bold text-gray-700 mb-2">
                             <i class="fa-solid fa-filter mr-1"></i>표시할 데이터 선택:
                         </label>
@@ -186,7 +243,7 @@
                     </div>
                     
                     <!-- 스크롤 바 (Range Slider) -->
-                    <div id="cpi-slider-container" class="hidden w-full mt-6 px-4 border-t border-gray-100 pt-4">
+                    <div id="cpi-slider-container" class="hidden w-full mt-6 px-4 border-t border-gray-100 pt-4" data-html2canvas-ignore>
                         <label class="block text-sm font-bold text-gray-700 mb-2">
                             <i class="fa-solid fa-arrows-left-right mr-1"></i>시점 범위 조절: 
                             <span id="cpi-range-label" class="text-emerald-600 ml-2">전체</span>
@@ -199,12 +256,18 @@
                         </div>
                         <p class="text-xs text-gray-400 mt-2 text-center">양쪽 슬라이더를 움직여 원하는 기간만 확대해서 보세요.</p>
                     </div>
+
+                    <div class="w-full mt-6 pt-6 border-t border-gray-100">
+                        <label class="block text-lg font-bold text-gray-800 mb-3"><i class="fa-solid fa-pen mr-2"></i>나의 분석 결과 메모하기:</label>
+                        <textarea id="cpi-memo" class="w-full border border-gray-300 rounded-md shadow-sm focus:border-emerald-500 focus:ring-emerald-500 p-4 text-base bg-emerald-50/30" rows="4" placeholder="그래프를 보고 알 수 있는 점을 자유롭게 적어보세요..."></textarea>
+                    </div>
                 </div>
             </div>
             
-            <div class="mt-6">
-                <label class="block text-lg font-bold text-gray-800 mb-3"><i class="fa-solid fa-pen mr-2"></i>나의 분석 결과 메모하기:</label>
-                <textarea class="w-full border-gray-300 rounded-md shadow-sm focus:border-emerald-500 focus:ring-emerald-500 p-4 text-base" rows="4" placeholder="그래프를 보고 알 수 있는 점을 자유롭게 적어보세요..."></textarea>
+            <div class="mt-6 text-right">
+                <button id="cpi-save-btn" class="bg-gray-800 hover:bg-gray-900 text-white font-bold py-2 px-6 rounded-lg shadow transition flex items-center inline-flex">
+                    <i class="fa-solid fa-camera mr-2"></i>분석 결과 이미지로 저장
+                </button>
             </div>
         </section>
 
@@ -259,16 +322,15 @@
                 </div>
             </div>
 
-            <!-- KOSIS 실습 가이드 (고용 지표) -->
-            <div class="mb-10">
-                <div class="w-full bg-white border border-blue-200 rounded-lg p-8 text-center shadow-sm">
-                    <i class="fa-solid fa-arrow-up-right-from-square text-4xl text-blue-500 mb-4"></i>
-                    <h4 class="text-xl font-bold text-gray-800 mb-2">고용 관련 지표 KOSIS 실습 페이지로 이동</h4>
-                    <p class="text-gray-600 mb-6">아래 버튼을 눌러 통계청 KOSIS 새 창을 열고, 앞서 배운 방식(행렬 전환, 모든 연도 선택)을 활용해<br>고용 지표 데이터(경제활동인구총괄)를 CSV로 다운로드해 보세요!</p>
-                    <a href="https://kosis.kr/statHtml/statHtml.do?sso=ok&returnurl=https%3A%2F%2Fkosis.kr%3A443%2FstatHtml%2FstatHtml.do%3Flist_id%3D%26obj_var_id%3D%26seqNo%3D%26docId%3D0290741214%26tblId%3DDT_1DA7001S%26vw_cd%3DMT_ZTITLE%26orgId%3D101%26conn_path%3DE1%26markType%3DS%26itm_id%3D%26lang_mode%3Dko%26scrId%3D%26itmNm%3D%EC%A0%84%EA%B5%AD%26" target="_blank" class="inline-block bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-8 rounded-full shadow-lg transition transform hover:-translate-y-1 text-lg">
-                        <i class="fa-solid fa-external-link-alt mr-2"></i>새 창에서 고용 지표 데이터 열람하기
-                    </a>
+            <!-- KOSIS 바로가기 (상세 안내는 소개 섹션에 통합) -->
+            <div class="mb-10 p-5 bg-blue-50 rounded-xl border border-blue-200 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+                <div>
+                    <h3 class="font-bold text-lg text-blue-800"><i class="fa-solid fa-download mr-2"></i>고용 지표 데이터 받기</h3>
+                    <p class="text-sm text-blue-700 mt-1">다운로드 방법은 <a href="#kosis-guide" class="underline font-bold hover:text-blue-900">맨 위 소개 섹션의 KOSIS 안내</a>를 참고하세요.</p>
                 </div>
+                <a href="https://kosis.kr/statHtml/statHtml.do?sso=ok&returnurl=https%3A%2F%2Fkosis.kr%3A443%2FstatHtml%2FstatHtml.do%3Flist_id%3D%26obj_var_id%3D%26seqNo%3D%26docId%3D0290741214%26tblId%3DDT_1DA7001S%26vw_cd%3DMT_ZTITLE%26orgId%3D101%26conn_path%3DE1%26markType%3DS%26itm_id%3D%26lang_mode%3Dko%26scrId%3D%26itmNm%3D%EC%A0%84%EA%B5%AD%26" target="_blank" class="shrink-0 inline-flex items-center justify-center bg-blue-600 hover:bg-blue-700 text-white font-bold py-2.5 px-6 rounded-full transition shadow-md">
+                    <i class="fa-solid fa-external-link-alt mr-2"></i>고용 KOSIS 열기
+                </a>
             </div>
             
             <div class="flex flex-col gap-8">
@@ -313,15 +375,15 @@
                 </div>
 
                 <!-- Chart Area -->
-                <div class="bg-white p-6 rounded-xl border border-gray-200 shadow-inner flex flex-col items-center justify-center">
+                <div id="emp-capture-area" class="bg-white p-6 rounded-xl border border-gray-200 shadow-inner flex flex-col items-center justify-center">
                     <p class="text-sm text-blue-600 mb-2 font-bold"><i class="fa-regular fa-lightbulb mr-1"></i>팁: 차트 위의 이름표(범례)를 클릭하면 해당 그래프를 켜고 끌 수 있습니다.</p>
-                    <div class="w-full min-h-[450px] flex items-center justify-center">
+                    <div class="w-full min-h-[450px] flex items-center justify-center bg-white">
                         <canvas id="empChart"></canvas>
                         <p id="emp-placeholder" class="text-gray-400 text-sm italic">CSV 파일을 업로드하면 이곳에 그래프가 나타납니다.</p>
                     </div>
                     
                     <!-- 데이터셋 필터 (체크박스) -->
-                    <div id="emp-filter-container" class="hidden w-full mt-4 px-4 bg-gray-50 p-6 rounded-xl border border-gray-200">
+                    <div id="emp-filter-container" class="hidden w-full mt-4 px-4 bg-gray-50 p-6 rounded-xl border border-gray-200" data-html2canvas-ignore>
                         <h4 class="font-bold text-lg text-gray-800 mb-4"><i class="fa-solid fa-sliders mr-2"></i>분석 조건 선택</h4>
                         
                         <div class="grid md:grid-cols-2 gap-6">
@@ -374,14 +436,15 @@
                             <label class="block text-sm font-bold text-gray-700 mb-2">
                                 표시할 데이터 직접 선택:
                             </label>
-                            <div id="emp-filter-checkboxes" class="flex flex-wrap gap-3">
+                            <input type="search" id="emp-filter-search" placeholder="항목 이름으로 검색 (예: 실업률, 여자, 농가)" class="w-full mb-3 px-3 py-2 text-sm border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500">
+                            <div id="emp-filter-checkboxes" class="flex flex-wrap gap-3 max-h-64 overflow-y-auto">
                                 <!-- JS에서 동적으로 체크박스 생성 -->
                             </div>
                         </div>
                     </div>
                     
                     <!-- 스크롤 바 (Range Slider) -->
-                    <div id="emp-slider-container" class="hidden w-full mt-6 px-4 border-t border-gray-100 pt-4">
+                    <div id="emp-slider-container" class="hidden w-full mt-6 px-4 border-t border-gray-100 pt-4" data-html2canvas-ignore>
                         <label class="block text-sm font-bold text-gray-700 mb-2">
                             <i class="fa-solid fa-arrows-left-right mr-1"></i>시점 범위 조절: 
                             <span id="emp-range-label" class="text-blue-600 ml-2">전체</span>
@@ -394,12 +457,18 @@
                         </div>
                         <p class="text-xs text-gray-400 mt-2 text-center">양쪽 슬라이더를 움직여 원하는 기간만 확대해서 보세요.</p>
                     </div>
+
+                    <div class="w-full mt-6 pt-6 border-t border-gray-100">
+                        <label class="block text-lg font-bold text-gray-800 mb-3"><i class="fa-solid fa-pen mr-2"></i>나의 분석 결과 메모하기:</label>
+                        <textarea id="emp-memo" class="w-full border border-gray-300 rounded-md shadow-sm focus:border-blue-500 focus:ring-blue-500 p-4 text-base bg-blue-50/30" rows="4" placeholder="그래프를 보고 알 수 있는 점을 자유롭게 적어보세요..."></textarea>
+                    </div>
                 </div>
             </div>
-
-            <div class="mt-6">
-                <label class="block text-lg font-bold text-gray-800 mb-3"><i class="fa-solid fa-pen mr-2"></i>나의 분석 결과 메모하기:</label>
-                <textarea class="w-full border-gray-300 rounded-md shadow-sm focus:border-blue-500 focus:ring-blue-500 p-4 text-base" rows="4" placeholder="그래프를 보고 알 수 있는 점을 자유롭게 적어보세요..."></textarea>
+            
+            <div class="mt-6 text-right">
+                <button id="emp-save-btn" class="bg-gray-800 hover:bg-gray-900 text-white font-bold py-2 px-6 rounded-lg shadow transition flex items-center inline-flex">
+                    <i class="fa-solid fa-camera mr-2"></i>분석 결과 이미지로 저장
+                </button>
             </div>
         </section>
 
