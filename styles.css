@@ -11,6 +11,27 @@ textarea {
     resize: vertical;
 }
 
+/* 분석 메모 — 줄바꿈·긴 문장 전체 표시 */
+.analysis-memo,
+#cpi-memo,
+#emp-memo {
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    line-height: 1.6;
+    min-height: 8rem;
+    overflow: hidden;
+}
+
+.analysis-memo-capture {
+    white-space: pre-wrap !important;
+    word-break: break-word !important;
+    overflow: visible !important;
+    height: auto !important;
+    display: block;
+    box-sizing: border-box;
+}
+
 .correct-answer {
     background-color: #d1fae5; /* Tailwind emerald-100 */
     border: 1px solid #10b981; /* Tailwind emerald-500 */

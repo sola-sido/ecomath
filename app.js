@@ -772,20 +772,66 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
+    // 분석 메모 — 입력 내용만큼 높이 자동 확장
+    function autoResizeMemo(textarea) {
+        if (!textarea) return;
+        textarea.style.height = 'auto';
+        textarea.style.height = `${Math.max(textarea.scrollHeight, 128)}px`;
+    }
+
+    document.querySelectorAll('#cpi-memo, #emp-memo').forEach(el => {
+        autoResizeMemo(el);
+        el.addEventListener('input', () => autoResizeMemo(el));
+    });
+
+    // html2canvas는 textarea 줄바꿈을 잘 못 그림 → 캡처 시 div로 치환
+    function cloneMemoAsDiv(clonedDoc, originalArea, areaId) {
+        const clonedArea = clonedDoc.getElementById(areaId);
+        if (!originalArea || !clonedArea) return;
+
+        originalArea.querySelectorAll('textarea.analysis-memo, textarea[id$="-memo"]').forEach(origTa => {
+            autoResizeMemo(origTa);
+            const clonedTa = clonedArea.querySelector(`#${origTa.id}`);
+            if (!clonedTa) return;
+
+            const div = clonedDoc.createElement('div');
+            div.className = `${origTa.className} analysis-memo-capture`.replace(/\bresize-\w+\b/g, '');
+            div.textContent = origTa.value || '';
+
+            const cs = window.getComputedStyle(origTa);
+            div.style.width = cs.width;
+            div.style.padding = cs.padding;
+            div.style.font = cs.font;
+            div.style.color = cs.color;
+            div.style.border = cs.border;
+            div.style.borderRadius = cs.borderRadius;
+            div.style.background = cs.backgroundColor;
+            div.style.minHeight = `${Math.max(origTa.scrollHeight, 128)}px`;
+
+            clonedTa.parentNode.replaceChild(div, clonedTa);
+        });
+    }
+
     // 분석 결과 캡처(이미지 저장) 기능
     const captureArea = (areaId, filename) => {
         const area = document.getElementById(areaId);
         if (!area) return;
-        
-        // html2canvas 호출
+
+        area.querySelectorAll('textarea[id$="-memo"]').forEach(autoResizeMemo);
+
         html2canvas(area, {
-            scale: 2, // 고화질 저장
-            backgroundColor: '#ffffff' // 배경색 흰색 보장
+            scale: 2,
+            backgroundColor: '#ffffff',
+            useCORS: true,
+            onclone: (clonedDoc) => cloneMemoAsDiv(clonedDoc, area, areaId)
         }).then(canvas => {
             const link = document.createElement('a');
             link.download = filename;
             link.href = canvas.toDataURL('image/png');
             link.click();
+        }).catch(err => {
+            console.error('캡처 실패:', err);
+            alert('이미지 저장에 실패했습니다. 잠시 후 다시 시도해 주세요.');
         });
     };
 
