@@ -287,7 +287,7 @@ function generateLocalReply(input) {
 function generateFallbackReply(input, status) {
     const local = generateLocalReply(input);
     if (local && !local.includes('CPI · 실업률')) return local;
-    const hint = status?.hint || 'config.js에 Google API 키를 넣었는지 확인해 주세요.';
+    const hint = status?.hint || '키워드로 질문해 보세요. (CPI, 실업률, 그래프 분석, KOSIS 등)';
     return `${status?.status || 'AI 연결 안 됨'}<br><br>${hint}`;
 }
 
@@ -312,9 +312,8 @@ function initChatbot() {
 
     const showWelcomeIfEmpty = () => {
         if (messagesEl.children.length > 0) return;
-        const mode = aiEnabled ? 'Google Gemini AI' : '기본 학습 도우미';
         appendMessage(
-            `안녕하세요! <strong>경제 지표 학습 도우미</strong> (${mode}) 📈<br><br>` +
+            '안녕하세요! <strong>경제 지표 학습 도우미</strong>입니다. 📈<br><br>' +
             'CPI·고용 지표 개념, 그래프 해석, KOSIS 활용 등 무엇이든 물어보세요.<br>' +
             '그래프를 올린 뒤 <strong>"내 그래프 분석"</strong>이라고도 질문해 보세요!',
             'bot'
@@ -344,9 +343,13 @@ function initChatbot() {
     window.toggleChatbot = () => setChatState(chatState === 'open' ? 'closed' : 'open');
 
     if (statusEl) {
-        statusEl.textContent = keyStatus.ok
-            ? keyStatus.status
-            : keyStatus.status + (keyStatus.hint ? ' — ' + keyStatus.hint : '');
+        if (keyStatus.ok) {
+            statusEl.textContent = keyStatus.status;
+            statusEl.classList.remove('hidden');
+        } else {
+            statusEl.textContent = '';
+            statusEl.classList.add('hidden');
+        }
     }
 
     const appendMessage = (html, role, extraClass = '') => {
