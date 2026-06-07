@@ -51,8 +51,8 @@ function getApiKeyStatus() {
         return {
             ok: false,
             code: 'missing',
-            status: '⚠️ config.js를 읽지 못했습니다',
-            hint: 'index.html과 <strong>같은 폴더</strong>에 config.js가 있는지 확인하세요. GitHub Pages 주소만 열면 config.js가 없어 AI가 꺼집니다.'
+            status: '📚 기본 학습 도우미 모드',
+            hint: 'CPI·고용·그래프 분석 질문에 답해 드립니다.'
         };
     }
 
@@ -312,7 +312,7 @@ function initChatbot() {
 
     const showWelcomeIfEmpty = () => {
         if (messagesEl.children.length > 0) return;
-        const mode = aiEnabled ? 'Google Gemini AI' : '오프라인 모드';
+        const mode = aiEnabled ? 'Google Gemini AI' : '기본 학습 도우미';
         appendMessage(
             `안녕하세요! <strong>경제 지표 학습 도우미</strong> (${mode}) 📈<br><br>` +
             'CPI·고용 지표 개념, 그래프 해석, KOSIS 활용 등 무엇이든 물어보세요.<br>' +
@@ -344,9 +344,9 @@ function initChatbot() {
     window.toggleChatbot = () => setChatState(chatState === 'open' ? 'closed' : 'open');
 
     if (statusEl) {
-        statusEl.innerHTML = keyStatus.ok
+        statusEl.textContent = keyStatus.ok
             ? keyStatus.status
-            : `${keyStatus.status} — ${keyStatus.hint.replace(/<[^>]+>/g, '').slice(0, 40)}…`;
+            : keyStatus.status + (keyStatus.hint ? ' — ' + keyStatus.hint : '');
     }
 
     const appendMessage = (html, role, extraClass = '') => {
