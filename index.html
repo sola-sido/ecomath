@@ -114,8 +114,18 @@
 
                 <!-- KOSIS Download Guide (통합 안내) -->
                 <div id="kosis-guide" class="bg-gray-50 rounded-xl p-6 md:p-8 border-2 border-indigo-200">
-                    <h3 class="font-bold text-xl mb-2 text-gray-800"><i class="fa-solid fa-magnifying-glass-chart text-indigo-500 mr-2"></i>KOSIS 데이터 다운로드 안내 <span class="text-sm font-normal text-indigo-600">(CPI·고용 공통)</span></h3>
-                    <p class="text-gray-600 mb-6">아래 순서대로 설정하면 CPI와 고용 지표 모두 같은 방식으로 CSV를 받을 수 있습니다. <strong>행렬을 세로로 전환하지 않으면</strong> 그래프가 제대로 나오지 않을 수 있으니 꼭 확인하세요!</p>
+                    <h3 class="font-bold text-xl mb-2 text-gray-800"><i class="fa-solid fa-magnifying-glass-chart text-indigo-500 mr-2"></i>KOSIS(국가통계포털) 데이터 다운로드 안내 <span class="text-sm font-normal text-indigo-600">(CPI·고용 공통)</span></h3>
+                    <p class="text-gray-600 mb-4">아래 순서대로 설정하면 CPI와 고용 지표 모두 같은 방식으로 CSV를 받을 수 있습니다. <strong>행렬을 세로로 전환하지 않으면</strong> 그래프가 제대로 나오지 않을 수 있으니 꼭 확인하세요!</p>
+
+                    <div class="mb-6 rounded-xl border-2 border-sky-300 bg-sky-50 p-4 md:p-5 text-sm text-gray-800 leading-relaxed">
+                        <p class="font-bold text-sky-900 mb-2"><i class="fa-solid fa-bullhorn text-sky-600 mr-1"></i> KOSIS 공지 — 소비자물가지수 개편 (기준연도 변경)</p>
+                        <p class="mb-2">국가데이터처는 최근 소비 구조 반영을 위해 소비자물가지수 기준연도를 <strong>2020년=100</strong>에서 <strong>2025년=100</strong>으로 개편합니다.</p>
+                        <ul class="list-disc list-inside space-y-1 text-gray-700 mb-2">
+                            <li><strong>2026년 12월 18일(금)</strong> — 개편 결과 공표(대표품목·가중치·분류 등, 2026년 11월 이전 지수를 2025년 기준으로 연계)</li>
+                            <li><strong>2026년 12월 31일(목)</strong> — 2025년 기준 2026년 12월·연간 소비자물가동향 공표</li>
+                        </ul>
+                        <p class="text-sky-900 font-semibold">개편 후에는 현재의 <strong>2020년=100</strong> 통계표가 더 이상 제공되지 않습니다. CSV·분석 시 통계표에 표기된 <strong>기준연도</strong>를 확인하세요. (이 사이트 퀴즈 4번 표는 <strong>2020=100 연습용</strong>입니다.)</p>
+                    </div>
                     
                     <div class="grid md:grid-cols-2 gap-6 mb-6">
                         <div class="bg-white p-5 rounded-lg shadow-sm border border-gray-200">
@@ -157,7 +167,10 @@
         <!-- CPI Section -->
         <section id="cpi" class="bg-white rounded-2xl shadow-md p-8 border-t-4 border-emerald-500">
             <h2 class="text-2xl font-bold mb-2 text-emerald-700">1. 소비자물가지수 (CPI) 분석</h2>
-            <p class="text-gray-600 mb-6">소비자물가지수는 우리 생활에 필요한 상품과 서비스의 가격 변동을 측정하는 중요한 지표입니다.</p>
+            <p class="text-gray-600 mb-3">소비자물가지수는 우리 생활에 필요한 상품과 서비스의 가격 변동을 측정하는 중요한 지표입니다.</p>
+            <p class="text-sm md:text-base text-emerald-900/90 mb-6 pl-4 border-l-4 border-emerald-400 bg-emerald-50/60 py-3 pr-4 rounded-r-lg leading-relaxed">
+                <strong>CPI</strong>는 영어 <strong>C</strong>onsumer <strong>P</strong>rice <strong>I</strong>ndex(소비자물가지수)의 약자입니다.
+            </p>
             
             <!-- 교과서 개념 (CPI) -->
             <div class="mb-8 p-6 bg-emerald-50 rounded-xl border border-emerald-100 text-gray-800 leading-relaxed">
@@ -192,8 +205,9 @@
             <div class="flex flex-col gap-8">
                 <!-- Upload & Controls -->
                 <div class="bg-gray-50 p-6 rounded-xl border border-gray-200">
+                    <p class="text-xs font-bold uppercase tracking-wider text-emerald-600 mb-2">1단계 · 데이터 준비</p>
                     <div class="flex justify-between items-center mb-4">
-                        <h3 class="font-bold text-gray-800">데이터 업로드</h3>
+                        <h3 class="font-bold text-gray-800 text-lg">데이터 업로드</h3>
                         <a href="https://drive.google.com/drive/folders/1mHTQA1CpuG5SSameMvA8RU0XzjLxaVKS?usp=sharing" target="_blank" class="text-lg font-bold text-pink-700 hover:text-pink-900 hover:underline flex items-center bg-pink-100 px-4 py-2 rounded-full transition shadow-sm border border-pink-200">
                             <i class="fa-solid fa-cloud-arrow-down mr-2"></i>다운로드를 못했다면 이곳의 데이터를 활용하세요!
                         </a>
@@ -218,78 +232,13 @@
                     </button>
                     
                     <div id="cpi-error" class="hidden mt-4 p-3 bg-red-100 text-red-700 rounded-md text-sm"></div>
-                    
-                    <div class="mt-6">
-                        <h4 class="font-bold text-lg text-gray-800 mb-3"><i class="fa-solid fa-magnifying-glass mr-2"></i>데이터 분석 포인트</h4>
-                        <ul class="list-disc list-inside text-base text-gray-700 space-y-2 mb-4">
-                            <li>물가가 전반적으로 오르고 있나요, 내리고 있나요?</li>
-                            <li>가장 물가 상승폭이 컸던 시기는 언제이며, 그 원인은 무엇일까요?</li>
-                            <li>인플레이션이 나의 실생활에 미치는 영향은 무엇일까요?</li>
-                        </ul>
-
-                        <div class="bg-emerald-50 border-2 border-emerald-200 rounded-xl p-5 md:p-6">
-                            <h5 class="font-bold text-emerald-800 text-lg mb-2"><i class="fa-solid fa-lightbulb mr-2"></i>그래프 분석으로 알 수 있는 것 — 작성 예시</h5>
-                            <p class="text-sm text-gray-600 mb-4">그래프를 보며 아래처럼 번호를 매겨 정리해 보세요. 본인 데이터의 수치·연도는 업로드한 CSV에 맞게 바꿔 쓰면 됩니다.</p>
-
-                            <div class="bg-emerald-100/80 border border-emerald-300 rounded-lg p-4 mb-4">
-                                <p class="font-bold text-emerald-900 mb-2 text-sm"><i class="fa-solid fa-book-open mr-1"></i>종합 분석 요약 (모범 답안 예시)</p>
-                                <ul class="text-sm md:text-base text-gray-800 space-y-2 leading-relaxed list-none">
-                                    <li>• 소비자물가지수는 <strong>1965년 이후 지속적으로 상승</strong>하였다.</li>
-                                    <li>• 물가 상승 속도는 일정하지 않았으며, <strong>1980년 전후</strong>와 <strong>2021~2023년</strong>에 급격한 상승이 나타났다.</li>
-                                    <li>• 최근에도 물가는 상승하고 있지만, <strong>상승 속도는 다소 둔화</strong>되고 있다.</li>
-                                    <li>• 경제 현상을 분석할 때는 단순 <strong>증가량</strong>보다 <strong>증가율</strong>(기울기·전년 대비 변화)을 살펴보는 것이 중요하다.</li>
-                                    <li>• CPI는 <strong>화폐 가치 하락</strong>과 <strong>인플레이션</strong>을 이해하는 대표적인 경제 지표이다.</li>
-                                </ul>
-                            </div>
-
-                            <div class="space-y-4 text-sm md:text-base text-gray-800">
-                                <div class="bg-white rounded-lg p-4 border border-emerald-100 shadow-sm">
-                                    <p class="font-bold text-emerald-700 mb-1">① 전체 추세 (장기)</p>
-                                    <p class="text-gray-700 leading-relaxed">1965년 이후 CPI 그래프는 전반적으로 <strong>우상향</strong>합니다. 지수가 한 번도 크게 꺾이지 않고 올라갔다면, 우리나라 물가는 장기간 <strong>지속적으로 상승</strong>해 왔다고 말할 수 있습니다. 다만 선이 곧게만 오른 것은 아니고, 구간마다 <strong>기울기(상승 속도)</strong>가 달라집니다.</p>
-                                </div>
-
-                                <div class="bg-white rounded-lg p-4 border border-emerald-100 shadow-sm">
-                                    <p class="font-bold text-emerald-700 mb-2">② 급격한 상승 구간 — 1980년 전후 &amp; 2021~2023년</p>
-                                    <p class="text-gray-700 mb-3">물가는 항상 같은 속도로 오르지 않습니다. 그래프에서 기울기가 특히 가파른 구간을 찾아 번호를 매겨 보세요.</p>
-                                    <p class="font-semibold text-gray-800 mb-1">▸ 1980년 전후</p>
-                                    <p class="text-gray-700 mb-3 leading-relaxed">1970~80년대 <strong>오일 쇼크</strong>·세계적 인플레이션 등으로 국내 물가도 크게 요동친 시기입니다. 슬라이더로 이 구간을 확대해 1970년대 말~1980년대 초의 급등을 관찰해 보세요.</p>
-                                    <p class="font-semibold text-gray-800 mb-1">▸ 2021~2023년 (최근 급상승)</p>
-                                    <ul class="list-none space-y-1.5 text-gray-700 mb-2">
-                                        <li><i class="fa-solid fa-calculator text-emerald-500 mr-2 w-4"></i><strong>수치 예:</strong> 2020년 <strong>100</strong> → 2023년 <strong>111.59</strong></li>
-                                        <li><i class="fa-solid fa-percent text-emerald-500 mr-2 w-4"></i><strong>변화:</strong> 약 3년 동안 <strong>11% 이상</strong> 상승 (111.59 − 100 = 11.59p)</li>
-                                    </ul>
-                                    <p class="font-bold text-gray-800 mt-2 mb-1.5">가능한 원인 (추정 — 뉴스·교과서와 연결)</p>
-                                    <ul class="list-disc list-inside text-gray-700 space-y-1 ml-1">
-                                        <li>코로나19 이후 <strong>공급망 차질</strong></li>
-                                        <li><strong>에너지·유가</strong> 급등</li>
-                                        <li><strong>러시아-우크라이나 전쟁</strong> 등 지정학적 요인</li>
-                                    </ul>
-                                </div>
-
-                                <div class="bg-white rounded-lg p-4 border border-emerald-100 shadow-sm">
-                                    <p class="font-bold text-emerald-700 mb-1">③ 최근 추세 — 상승은 지속, 속도는 둔화</p>
-                                    <p class="text-gray-700 leading-relaxed">2023년 이후 그래프를 보면 CPI는 여전히 오르지만, 2021~2023년만큼 <strong>가파르지 않을</strong> 수 있습니다. "물가가 안 오른다"가 아니라 <strong>"오르는 속도가 느려진다"</strong>고 표현하는 것이 정확합니다. 이때는 연도별 <strong>증가율</strong>(전년 대비 몇 % 올랐는지)을 비교해 보세요.</p>
-                                </div>
-
-                                <div class="bg-white rounded-lg p-4 border border-emerald-100 shadow-sm">
-                                    <p class="font-bold text-emerald-700 mb-1">④ 분석 포인트 — 증가량 vs 증가율</p>
-                                    <p class="text-gray-700 leading-relaxed">CPI가 100→110→120으로 올랐다면, 두 번 모두 <strong>10p 증가</strong>지만 100→110은 <strong>10%</strong>, 110→120은 약 <strong>9.1%</strong>입니다. 그래프의 <strong>기울기</strong>와 <strong>증가율</strong>을 함께 보면 "물가 압력이 강해지는지·약해지는지"를 더 정확히 설명할 수 있습니다.</p>
-                                </div>
-
-                                <div class="bg-white rounded-lg p-4 border border-emerald-100 shadow-sm">
-                                    <p class="font-bold text-emerald-700 mb-1">⑤ 의미 정리 — CPI가 알려 주는 것</p>
-                                    <p class="text-gray-700 leading-relaxed">CPI가 꾸준히 오르면 같은 돈으로 살 수 있는 재화·서비스가 줄어듭니다. 즉 <strong>화폐 가치 하락</strong>과 <strong>인플레이션</strong>을 눈으로 확인하는 대표 지표입니다. 마트·교통비 등 <strong>체감 물가</strong>와 그래프의 급등·둔화 구간이 겹치는지도 연결해 보세요.</p>
-                                </div>
-                            </div>
-
-                            <p class="text-xs text-emerald-700 mt-4 pt-3 border-t border-emerald-200"><i class="fa-solid fa-pen mr-1"></i>위 예시를 참고해 오른쪽 메모란에 본인 분석을 적어 보세요. 슬라이더로 <strong>1980년 전후</strong>, <strong>2021~2023</strong>, <strong>최근 구간</strong>을 각각 확대해 비교하면 더 풍부한 분석이 됩니다.</p>
-                        </div>
-                    </div>
                 </div>
 
-                <!-- Chart Area -->
-                <div id="cpi-capture-area" class="bg-white p-6 rounded-xl border border-gray-200 shadow-inner flex flex-col items-center justify-center">
-                    <p class="text-sm text-emerald-600 mb-2 font-bold"><i class="fa-regular fa-lightbulb mr-1"></i>팁: 차트 위의 이름표(범례)를 클릭하면 해당 그래프를 켜고 끌 수 있습니다.</p>
+                <!-- Chart Area (그래프 그리기 직후 시각화) -->
+                <div id="cpi-capture-area" class="bg-white p-6 rounded-xl border-2 border-emerald-200 shadow-md flex flex-col items-center justify-center">
+                    <p class="w-full text-center text-xs font-bold uppercase tracking-wider text-emerald-600 mb-1">2단계 · 시각화</p>
+                    <h3 class="w-full text-center text-xl md:text-2xl font-extrabold text-emerald-900 mb-4"><i class="fa-solid fa-chart-line mr-2"></i>그래프로 데이터를 확인해 보세요</h3>
+                    <p class="text-sm text-emerald-600 mb-2 font-bold w-full text-center"><i class="fa-regular fa-lightbulb mr-1"></i>팁: 차트 위의 이름표(범례)를 클릭하면 해당 그래프를 켜고 끌 수 있습니다.</p>
                     <div class="w-full min-h-[450px] flex items-center justify-center bg-white">
                         <canvas id="cpiChart"></canvas>
                         <p id="cpi-placeholder" class="text-gray-400 text-sm italic">CSV 파일을 업로드하면 이곳에 그래프가 나타납니다.</p>
@@ -323,6 +272,82 @@
                     <div class="w-full mt-6 pt-6 border-t border-gray-100">
                         <label class="block text-lg font-bold text-gray-800 mb-3"><i class="fa-solid fa-pen mr-2"></i>나의 분석 결과 메모하기:</label>
                         <textarea id="cpi-memo" class="analysis-memo w-full border border-gray-300 rounded-md shadow-sm focus:border-emerald-500 focus:ring-emerald-500 p-4 text-base bg-emerald-50/30" rows="7" placeholder="예) 1965년 이후 지속 상승, 1980년 전후·2021~2023 급등, 최근 속도 둔화&#10;증가량보다 증가율(기울기) 비교&#10;CPI = 화폐가치 하락·인플레이션 지표"></textarea>
+                    </div>
+                </div>
+
+                <!-- 분석 안내 (그래프 아래) -->
+                <div id="cpi-analysis-help" class="rounded-2xl border-2 border-emerald-300 bg-gradient-to-br from-emerald-50 via-white to-emerald-50/40 p-6 md:p-8 shadow-sm">
+                    <div class="text-center mb-6 pb-4 border-b border-emerald-200">
+                        <p class="text-sm font-bold text-emerald-600 uppercase tracking-wider">3단계 · 해석</p>
+                        <h3 class="text-2xl md:text-4xl font-extrabold text-emerald-900 mt-2 leading-tight">
+                            <i class="fa-solid fa-magnifying-glass-chart mr-2"></i>그래프를 보고 <span class="text-emerald-600">데이터를 분석해 보자!</span>
+                        </h3>
+                        <p class="text-base md:text-lg text-gray-700 mt-4 max-w-3xl mx-auto leading-relaxed">위 그래프의 <strong>추세·급등 구간·기울기</strong>를 먼저 관찰한 뒤, 아래 질문과 예시를 참고해 메모를 작성하세요.</p>
+                    </div>
+
+                    <h4 class="font-bold text-lg md:text-xl text-gray-800 mb-3"><i class="fa-solid fa-circle-question mr-2 text-emerald-600"></i>데이터 분석 포인트 — 스스로 물어보기</h4>
+                    <ul class="list-none md:list-disc md:list-inside text-base md:text-lg text-gray-800 space-y-2 mb-6 font-medium">
+                        <li>물가가 전반적으로 오르고 있나요, 내리고 있나요?</li>
+                        <li>가장 물가 상승폭이 컸던 시기는 언제이며, 그 원인은 무엇일까요?</li>
+                        <li>인플레이션이 나의 실생활에 미치는 영향은 무엇일까요?</li>
+                    </ul>
+
+                    <div class="bg-white/80 border-2 border-emerald-200 rounded-xl p-5 md:p-6">
+                        <h5 class="font-bold text-emerald-800 text-lg md:text-xl mb-2"><i class="fa-solid fa-lightbulb mr-2"></i>그래프 분석으로 알 수 있는 것 — 작성 예시</h5>
+                        <p class="text-sm md:text-base text-gray-600 mb-4">그래프를 보며 아래처럼 번호를 매겨 정리해 보세요. 본인 데이터의 수치·연도는 업로드한 CSV에 맞게 바꿔 쓰면 됩니다.</p>
+
+                        <div class="bg-emerald-100/80 border border-emerald-300 rounded-lg p-4 mb-4">
+                            <p class="font-bold text-emerald-900 mb-2 text-sm md:text-base"><i class="fa-solid fa-book-open mr-1"></i>종합 분석 요약 (모범 답안 예시)</p>
+                            <ul class="text-sm md:text-base text-gray-800 space-y-2 leading-relaxed list-none">
+                                <li>• 소비자물가지수는 <strong>1965년 이후 지속적으로 상승</strong>하였다.</li>
+                                <li>• 물가 상승 속도는 일정하지 않았으며, <strong>1980년 전후</strong>와 <strong>2021~2023년</strong>에 급격한 상승이 나타났다.</li>
+                                <li>• 최근에도 물가는 상승하고 있지만, <strong>상승 속도는 다소 둔화</strong>되고 있다.</li>
+                                <li>• 경제 현상을 분석할 때는 단순 <strong>증가량</strong>보다 <strong>증가율</strong>(기울기·전년 대비 변화)을 살펴보는 것이 중요하다.</li>
+                                <li>• CPI는 <strong>화폐 가치 하락</strong>과 <strong>인플레이션</strong>을 이해하는 대표적인 경제 지표이다.</li>
+                            </ul>
+                        </div>
+
+                        <div class="space-y-4 text-sm md:text-base text-gray-800">
+                            <div class="bg-white rounded-lg p-4 border border-emerald-100 shadow-sm">
+                                <p class="font-bold text-emerald-700 mb-1">① 전체 추세 (장기)</p>
+                                <p class="text-gray-700 leading-relaxed">1965년 이후 CPI 그래프는 전반적으로 <strong>우상향</strong>합니다. 지수가 한 번도 크게 꺾이지 않고 올라갔다면, 우리나라 물가는 장기간 <strong>지속적으로 상승</strong>해 왔다고 말할 수 있습니다. 다만 선이 곧게만 오른 것은 아니고, 구간마다 <strong>기울기(상승 속도)</strong>가 달라집니다.</p>
+                            </div>
+
+                            <div class="bg-white rounded-lg p-4 border border-emerald-100 shadow-sm">
+                                <p class="font-bold text-emerald-700 mb-2">② 급격한 상승 구간 — 1980년 전후 &amp; 2021~2023년</p>
+                                <p class="text-gray-700 mb-3">물가는 항상 같은 속도로 오르지 않습니다. 그래프에서 기울기가 특히 가파른 구간을 찾아 번호를 매겨 보세요.</p>
+                                <p class="font-semibold text-gray-800 mb-1">▸ 1980년 전후</p>
+                                <p class="text-gray-700 mb-3 leading-relaxed">1970~80년대 <strong>오일 쇼크</strong>·세계적 인플레이션 등으로 국내 물가도 크게 요동친 시기입니다. 슬라이더로 이 구간을 확대해 1970년대 말~1980년대 초의 급등을 관찰해 보세요.</p>
+                                <p class="font-semibold text-gray-800 mb-1">▸ 2021~2023년 (최근 급상승)</p>
+                                <ul class="list-none space-y-1.5 text-gray-700 mb-2">
+                                    <li><i class="fa-solid fa-calculator text-emerald-500 mr-2 w-4"></i><strong>수치 예(2020=100 기준):</strong> 2020년 <strong>100</strong> → 2023년 <strong>111.59</strong> <span class="text-xs text-gray-500">— 개편 후에는 2025=100 기준 수치가 달라질 수 있음</span></li>
+                                    <li><i class="fa-solid fa-percent text-emerald-500 mr-2 w-4"></i><strong>변화:</strong> 약 3년 동안 <strong>11% 이상</strong> 상승 (111.59 − 100 = 11.59p)</li>
+                                </ul>
+                                <p class="font-bold text-gray-800 mt-2 mb-1.5">가능한 원인 (추정 — 뉴스·교과서와 연결)</p>
+                                <ul class="list-disc list-inside text-gray-700 space-y-1 ml-1">
+                                    <li>코로나19 이후 <strong>공급망 차질</strong></li>
+                                    <li><strong>에너지·유가</strong> 급등</li>
+                                    <li><strong>러시아-우크라이나 전쟁</strong> 등 지정학적 요인</li>
+                                </ul>
+                            </div>
+
+                            <div class="bg-white rounded-lg p-4 border border-emerald-100 shadow-sm">
+                                <p class="font-bold text-emerald-700 mb-1">③ 최근 추세 — 상승은 지속, 속도는 둔화</p>
+                                <p class="text-gray-700 leading-relaxed">2023년 이후 그래프를 보면 CPI는 여전히 오르지만, 2021~2023년만큼 <strong>가파르지 않을</strong> 수 있습니다. "물가가 안 오른다"가 아니라 <strong>"오르는 속도가 느려진다"</strong>고 표현하는 것이 정확합니다. 이때는 연도별 <strong>증가율</strong>(전년 대비 몇 % 올랐는지)을 비교해 보세요.</p>
+                            </div>
+
+                            <div class="bg-white rounded-lg p-4 border border-emerald-100 shadow-sm">
+                                <p class="font-bold text-emerald-700 mb-1">④ 분석 포인트 — 증가량 vs 증가율</p>
+                                <p class="text-gray-700 leading-relaxed">CPI가 100→110→120으로 올랐다면, 두 번 모두 <strong>10p 증가</strong>지만 100→110은 <strong>10%</strong>, 110→120은 약 <strong>9.1%</strong>입니다. 그래프의 <strong>기울기</strong>와 <strong>증가율</strong>을 함께 보면 "물가 압력이 강해지는지·약해지는지"를 더 정확히 설명할 수 있습니다.</p>
+                            </div>
+
+                            <div class="bg-white rounded-lg p-4 border border-emerald-100 shadow-sm">
+                                <p class="font-bold text-emerald-700 mb-1">⑤ 의미 정리 — CPI가 알려 주는 것</p>
+                                <p class="text-gray-700 leading-relaxed">CPI가 꾸준히 오르면 같은 돈으로 살 수 있는 재화·서비스가 줄어듭니다. 즉 <strong>화폐 가치 하락</strong>과 <strong>인플레이션</strong>을 눈으로 확인하는 대표 지표입니다. 마트·교통비 등 <strong>체감 물가</strong>와 그래프의 급등·둔화 구간이 겹치는지도 연결해 보세요.</p>
+                            </div>
+                        </div>
+
+                        <p class="text-sm text-emerald-800 mt-4 pt-3 border-t border-emerald-200 font-medium"><i class="fa-solid fa-pen mr-1"></i>위 예시를 참고해 <strong>위 메모란</strong>에 본인 분석을 적어 보세요. 슬라이더로 <strong>1980년 전후</strong>, <strong>2021~2023</strong>, <strong>최근 구간</strong>을 각각 확대해 비교하면 더 풍부한 분석이 됩니다.</p>
                     </div>
                 </div>
             </div>
@@ -363,33 +388,168 @@
                     <div class="my-6 flex justify-center bg-gray-50 p-4 rounded-lg">
                         <img src="assets/33.png" alt="고용 지표 계산 공식" class="w-[60%] h-auto">
                     </div>
-                    <div class="text-gray-700 leading-relaxed space-y-3">
-                        <p>
-                            <strong>경제 활동 참가율</strong>은 15세 이상 인구 중 경제 활동 인구의 비율로 경제 주체들의 경제 활동 현황을 파악할 수 있는 지표이다. 
-                        </p>
-                        <p>
-                            <strong>실업률</strong>은 경제 활동 인구 중 실업자의 비율로, 경제의 안정 상태를 판단할 수 있는 중요한 지표이다. 
-                        </p>
-                        <p>
-                            <strong>고용률</strong>은 15세 이상 인구 중 취업자의 비율로, 경제의 생산성과 일자리 창출 능력, 일자리 수요와 노동 시장의 안정성을 나타낸다.
-                        </p>
+                    <p class="text-sm text-blue-700 text-center">공식을 확인한 뒤, 아래에서 <strong>CSV를 업로드하고 그래프</strong>를 그려 보세요. 지표 설명·탐구 가이드는 그래프 아래에 있습니다.</p>
+                </div>
+            </div>
+
+            <!-- KOSIS 바로가기 (상세 안내는 소개 섹션에 통합) -->
+            <div class="mb-10 p-5 bg-blue-50 rounded-xl border border-blue-200 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+                <div>
+                    <h3 class="font-bold text-lg text-blue-800"><i class="fa-solid fa-download mr-2"></i>고용 지표 데이터 받기</h3>
+                    <p class="text-sm text-blue-700 mt-1">다운로드 방법은 <a href="#kosis-guide" class="underline font-bold hover:text-blue-900">맨 위 소개 섹션의 KOSIS 안내</a>를 참고하세요.</p>
+                </div>
+                <a href="https://kosis.kr/statHtml/statHtml.do?sso=ok&returnurl=https%3A%2F%2Fkosis.kr%3A443%2FstatHtml%2FstatHtml.do%3Flist_id%3D%26obj_var_id%3D%26seqNo%3D%26docId%3D0290741214%26tblId%3DDT_1DA7001S%26vw_cd%3DMT_ZTITLE%26orgId%3D101%26conn_path%3DE1%26markType%3DS%26itm_id%3D%26lang_mode%3Dko%26scrId%3D%26itmNm%3D%EC%A0%84%EA%B5%AD%26" target="_blank" class="shrink-0 inline-flex items-center justify-center bg-blue-600 hover:bg-blue-700 text-white font-bold py-2.5 px-6 rounded-full transition shadow-md">
+                    <i class="fa-solid fa-external-link-alt mr-2"></i>고용 KOSIS 열기
+                </a>
+            </div>
+            
+            <div class="flex flex-col gap-8">
+                <!-- Upload & Controls -->
+                <div class="bg-gray-50 p-6 rounded-xl border border-gray-200">
+                    <p class="text-xs font-bold uppercase tracking-wider text-blue-600 mb-2">1단계 · 데이터 준비</p>
+                    <div class="flex justify-between items-center mb-4">
+                        <h3 class="font-bold text-gray-800 text-lg">데이터 업로드</h3>
+                        <a href="https://drive.google.com/drive/folders/1mHTQA1CpuG5SSameMvA8RU0XzjLxaVKS?usp=sharing" target="_blank" class="text-lg font-bold text-pink-700 hover:text-pink-900 hover:underline flex items-center bg-pink-100 px-4 py-2 rounded-full transition shadow-sm border border-pink-200">
+                            <i class="fa-solid fa-cloud-arrow-down mr-2"></i>다운로드를 못했다면 이곳의 데이터를 활용하세요!
+                        </a>
+                    </div>
+                    <div class="mb-4">
+                        <label class="block text-lg font-bold text-blue-800 mb-2"><i class="fa-solid fa-file-csv mr-2"></i>[고용 관련 지표] KOSIS에서 다운로드한 CSV 파일</label>
+                        <div class="flex items-center gap-2">
+                            <input type="file" id="emp-file" accept=".csv" class="block w-full text-sm text-gray-500
+                                file:mr-4 file:py-2 file:px-4
+                                file:rounded-md file:border-0
+                                file:text-sm file:font-semibold
+                                file:bg-blue-50 file:text-blue-700
+                                hover:file:bg-blue-100
+                                cursor-pointer border border-gray-300 rounded-md p-1" />
+                            <button id="emp-clear-btn" class="hidden shrink-0 bg-white hover:bg-red-50 text-red-500 font-bold py-1.5 px-3 rounded-md text-sm transition border border-red-200 shadow-sm">
+                                <i class="fa-solid fa-trash-can mr-1"></i>삭제
+                            </button>
+                        </div>
+                    </div>
+                    <button id="emp-process-btn" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition">
+                        <i class="fa-solid fa-chart-line mr-2"></i>그래프 그리기
+                    </button>
+                    
+                    <div id="emp-error" class="hidden mt-4 p-3 bg-red-100 text-red-700 rounded-md text-sm"></div>
+                </div>
+
+                <!-- Chart Area -->
+                <div id="emp-capture-area" class="bg-white p-6 rounded-xl border-2 border-blue-200 shadow-md flex flex-col items-center justify-center">
+                    <p class="w-full text-center text-xs font-bold uppercase tracking-wider text-blue-600 mb-1">2단계 · 시각화</p>
+                    <h3 class="w-full text-center text-xl md:text-2xl font-extrabold text-blue-900 mb-4"><i class="fa-solid fa-chart-line mr-2"></i>그래프로 데이터를 확인해 보세요</h3>
+                    <p class="text-sm text-blue-600 mb-2 font-bold w-full text-center"><i class="fa-regular fa-lightbulb mr-1"></i>팁: 차트 위의 이름표(범례)를 클릭하면 해당 그래프를 켜고 끌 수 있습니다.</p>
+                    <div class="w-full min-h-[450px] flex items-center justify-center bg-white">
+                        <canvas id="empChart"></canvas>
+                        <p id="emp-placeholder" class="text-gray-400 text-sm italic">CSV 파일을 업로드하면 이곳에 그래프가 나타납니다.</p>
+                    </div>
+                    
+                    <!-- 분석 조건 (지표·탐구 질문) -->
+                    <div id="emp-filter-container" class="hidden w-full mt-4 px-4 bg-gray-50 p-6 rounded-xl border border-gray-200" data-html2canvas-ignore>
+                        <h4 class="font-bold text-lg text-gray-800 mb-4"><i class="fa-solid fa-sliders mr-2"></i>분석 조건 선택</h4>
+                        
+                        <div class="grid md:grid-cols-2 gap-6">
+                            <!-- 분석할 지표 선택 -->
+                            <div>
+                                <label class="block text-sm font-bold text-gray-700 mb-2">분석할 지표 선택</label>
+                                <select id="emp-indicator-select" class="block w-full text-sm text-gray-700 bg-white border border-red-400 rounded-md p-2 focus:ring-red-500 focus:border-red-500">
+                                    <option value="경제활동참가율">경제활동참가율</option>
+                                    <option value="실업률">실업률</option>
+                                    <option value="고용률">고용률</option>
+                                    <option value="취업자">취업자 수</option>
+                                    <option value="실업자">실업자 수</option>
+                                </select>
+                            </div>
+
+                            <!-- 탐구 질문 선택 -->
+                            <div>
+                                <label class="block text-sm font-bold text-gray-700 mb-2">탐구 질문 선택</label>
+                                <div class="space-y-2">
+                                    <label class="flex items-center space-x-2 cursor-pointer">
+                                        <input type="radio" name="emp-explore-radio" value="all" checked class="form-radio text-red-500 focus:ring-red-500">
+                                        <span class="text-sm text-gray-700">전체 추세 보기</span>
+                                    </label>
+                                    <label class="flex items-center space-x-2 cursor-pointer">
+                                        <input type="radio" name="emp-explore-radio" value="gender" class="form-radio text-red-500 focus:ring-red-500">
+                                        <span class="text-sm text-gray-700">남녀 비교</span>
+                                    </label>
+                                    <label class="flex items-center space-x-2 cursor-pointer">
+                                        <input type="radio" name="emp-explore-radio" value="gender_diff" class="form-radio text-red-500 focus:ring-red-500">
+                                        <span class="text-sm text-gray-700">남녀 격차 보기 (남성 - 여성)</span>
+                                    </label>
+                                    <label class="flex items-center space-x-2 cursor-pointer">
+                                        <input type="radio" name="emp-explore-radio" value="farm" class="form-radio text-red-500 focus:ring-red-500">
+                                        <span class="text-sm text-gray-700">농가와 비농가 비교</span>
+                                    </label>
+                                    <label class="flex items-center space-x-2 cursor-pointer">
+                                        <input type="radio" name="emp-explore-radio" value="farm_diff" class="form-radio text-red-500 focus:ring-red-500">
+                                        <span class="text-sm text-gray-700">농가와 비농가 격차 보기 (비농가 - 농가)</span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- 스크롤 바 (Range Slider) -->
+                    <div id="emp-slider-container" class="hidden w-full mt-6 px-4 border-t border-gray-100 pt-4" data-html2canvas-ignore>
+                        <label class="block text-sm font-bold text-gray-700 mb-2">
+                            <i class="fa-solid fa-arrows-left-right mr-1"></i>시점 범위 조절: 
+                            <span id="emp-range-label" class="text-blue-600 ml-2">전체</span>
+                        </label>
+                        <div class="flex items-center space-x-4">
+                            <span class="text-xs font-bold text-gray-500">처음</span>
+                            <input type="range" id="emp-slider-start" min="0" value="0" class="w-full accent-blue-600 h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer">
+                            <input type="range" id="emp-slider-end" min="0" value="0" class="w-full accent-blue-600 h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer">
+                            <span class="text-xs font-bold text-gray-500">끝</span>
+                        </div>
+                        <p class="text-xs text-gray-400 mt-2 text-center">양쪽 슬라이더를 움직여 원하는 기간만 확대해서 보세요.</p>
+                    </div>
+
+                    <div class="w-full mt-6 pt-6 border-t border-gray-100">
+                        <label class="block text-lg font-bold text-gray-800 mb-3"><i class="fa-solid fa-pen mr-2"></i>나의 분석 결과 메모하기:</label>
+                        <textarea id="emp-memo" class="analysis-memo w-full border border-gray-300 rounded-md shadow-sm focus:border-blue-500 focus:ring-blue-500 p-4 text-base bg-blue-50/30" rows="7" placeholder="예) ① 고용률: 남녀 격차 감소, 여성 고용률 상승&#10;② 실업률: 2020년 코로나 충격&#10;③ 참가율·취업자·사회 변화 연결"></textarea>
                     </div>
                 </div>
 
-                <!-- 3. 중요 (실업률과 고용률 비교) -->
+                <div id="emp-analysis-help" class="rounded-2xl border-2 border-blue-300 bg-gradient-to-br from-blue-50 via-white to-blue-50/40 p-6 md:p-8 shadow-sm">
+                    <div class="text-center mb-6 pb-4 border-b border-blue-200">
+                        <p class="text-sm font-bold text-blue-600 uppercase tracking-wider">3단계 · 해석</p>
+                        <h3 class="text-2xl md:text-4xl font-extrabold text-blue-900 mt-2 leading-tight">
+                            <i class="fa-solid fa-magnifying-glass-chart mr-2"></i>그래프를 보고 <span class="text-blue-600">데이터를 분석해 보자!</span>
+                        </h3>
+                        <p class="text-base md:text-lg text-gray-700 mt-4 max-w-3xl mx-auto leading-relaxed">위 그래프에서 <strong>추세·코로나 구간·남녀 격차</strong>를 먼저 확인한 뒤, 아래 질문과 탐구 가이드를 활용하세요.</p>
+                    </div>
+
+                    <h4 class="font-bold text-lg md:text-xl text-gray-800 mb-3"><i class="fa-solid fa-circle-question mr-2 text-blue-600"></i>데이터 분석 포인트 — 스스로 물어보기</h4>
+                    <ul class="list-none md:list-disc md:list-inside text-base md:text-lg text-gray-800 space-y-2 mb-6 font-medium">
+                        <li>지표별(고용률·실업률·참가율·취업자)로 그래프를 바꿔 가며 비교해 보세요.</li>
+                        <li>「남녀 비교」「남녀 격차」 탐구 질문으로 성별 분석을 시작해 보세요.</li>
+                        <li>2020년 전후 구간을 슬라이더로 확대해 코로나 충격을 관찰하세요.</li>
+                    </ul>
+                    <a href="#emp-analysis-guide" class="inline-flex items-center text-base font-bold text-blue-800 hover:text-blue-950 bg-blue-100 px-5 py-3 rounded-xl border-2 border-blue-300 transition shadow-sm">
+                        <i class="fa-solid fa-book-open mr-2 text-lg"></i>①~⑤ 탐구 가이드·프로젝트 주제 보기
+                    </a>
+                </div>
+            </div>
+            <div class="mt-10 space-y-6">
+                <div class="p-6 bg-white rounded-xl border border-blue-200 shadow-sm text-gray-800">
+                    <h3 class="font-bold text-lg mb-4 text-blue-800"><i class="fa-solid fa-book mr-2"></i>지표별 계산 공식 설명</h3>
+                    <div class="text-gray-700 leading-relaxed space-y-3 text-base">
+                        <p><strong>경제 활동 참가율</strong>은 15세 이상 인구 중 경제 활동 인구의 비율로 경제 주체들의 경제 활동 현황을 파악할 수 있는 지표이다.</p>
+                        <p><strong>실업률</strong>은 경제 활동 인구 중 실업자의 비율로, 경제의 안정 상태를 판단할 수 있는 중요한 지표이다.</p>
+                        <p><strong>고용률</strong>은 15세 이상 인구 중 취업자의 비율로, 경제의 생산성과 일자리 창출 능력, 일자리 수요와 노동 시장의 안정성을 나타낸다.</p>
+                    </div>
+                </div>
                 <div class="p-6 bg-yellow-50 rounded-xl border-l-4 border-yellow-400 text-gray-800">
                     <h3 class="font-bold text-lg mb-2 text-yellow-800"><i class="fa-solid fa-triangle-exclamation mr-2 text-yellow-600"></i>중요: 실업률과 고용률의 관계</h3>
-                    <p class="leading-relaxed">
-                        실업률과 고용률은 함께 살펴볼 필요가 있다. 실업률이 떨어진다고 해서 고용 상황이 안정되는 것이 아닐 수 있기 때문이다. 예를 들어 취업난이 장기간 지속되어 실업자 중 상당수가 일자리 찾기를 포기하면 이들은 실업자가 아니라 비경제 활동 인구로 분류하고, 이때 실업률은 낮아지지만 고용률은 높아지지 않는다.
-                    </p>
+                    <p class="leading-relaxed text-base">실업률과 고용률은 함께 살펴볼 필요가 있다. 실업률이 떨어진다고 해서 고용 상황이 안정되는 것이 아닐 수 있기 때문이다. 예를 들어 취업난이 장기간 지속되어 실업자 중 상당수가 일자리 찾기를 포기하면 이들은 실업자가 아니라 비경제 활동 인구로 분류하고, 이때 실업률은 낮아지지만 고용률은 높아지지 않는다.</p>
                 </div>
-
-                <!-- 고용 지표 탐구·분석 가이드 -->
                 <div id="emp-analysis-guide" class="p-6 md:p-8 bg-gradient-to-br from-blue-50 to-indigo-50 rounded-2xl border-2 border-blue-200 shadow-sm">
                     <h3 class="font-bold text-xl md:text-2xl text-blue-900 mb-2"><i class="fa-solid fa-compass mr-2"></i>고용 지표 탐구·분석 가이드</h3>
                     <p class="text-gray-600 mb-6 text-sm md:text-base">KOSIS 데이터를 업로드한 뒤, 아래 질문과 예시를 참고해 그래프를 해석하고 메모에 정리해 보세요. CPI 분석과 연결하면 경제 전반을 설명할 수 있습니다.</p>
 
-                    <!-- ① 고용률 -->
+<!-- ① 고용률 -->
                     <div class="bg-white rounded-xl p-5 md:p-6 border border-blue-100 shadow-sm mb-5">
                         <h4 class="font-bold text-lg text-blue-800 mb-3">① 고용률 변화 추이</h4>
                         <div class="grid md:grid-cols-2 gap-4 mb-4 text-sm">
@@ -398,7 +558,7 @@
                                 <ul class="text-gray-700 space-y-1 list-none">
                                     <li>• 유형: <strong>선그래프</strong></li>
                                     <li>• X축: 연도 / Y축: 고용률(%)</li>
-                                    <li>• 선 3개: <strong>계, 남자, 여자</strong> (체크박스·탐구 질문 「남녀 비교」 활용)</li>
+                                    <li>• 선 3개: <strong>전체, 남자, 여자</strong> (탐구 질문 「남녀 비교」 선택)</li>
                                 </ul>
                             </div>
                             <div class="bg-amber-50 rounded-lg p-4 border border-amber-100">
@@ -539,159 +699,15 @@
                             <p class="text-gray-800 font-semibold mb-2">남녀 고용률 비교</p>
                             <ul class="text-gray-700 text-sm space-y-1 list-none">
                                 <li>① 지표: <strong>고용률</strong> 선택</li>
-                                <li>② 탐구 질문: <strong>남녀 비교</strong> 또는 체크박스에서 계·남·여 선택</li>
+                                <li>② 탐구 질문: <strong>남녀 비교</strong> 선택</li>
                                 <li>③ 슬라이더로 2000년대~현재 구간 확대 → 격차·추세 관찰</li>
                             </ul>
                         </div>
                     </div>
+
+
                 </div>
             </div>
-
-            <!-- KOSIS 바로가기 (상세 안내는 소개 섹션에 통합) -->
-            <div class="mb-10 p-5 bg-blue-50 rounded-xl border border-blue-200 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-                <div>
-                    <h3 class="font-bold text-lg text-blue-800"><i class="fa-solid fa-download mr-2"></i>고용 지표 데이터 받기</h3>
-                    <p class="text-sm text-blue-700 mt-1">다운로드 방법은 <a href="#kosis-guide" class="underline font-bold hover:text-blue-900">맨 위 소개 섹션의 KOSIS 안내</a>를 참고하세요.</p>
-                </div>
-                <a href="https://kosis.kr/statHtml/statHtml.do?sso=ok&returnurl=https%3A%2F%2Fkosis.kr%3A443%2FstatHtml%2FstatHtml.do%3Flist_id%3D%26obj_var_id%3D%26seqNo%3D%26docId%3D0290741214%26tblId%3DDT_1DA7001S%26vw_cd%3DMT_ZTITLE%26orgId%3D101%26conn_path%3DE1%26markType%3DS%26itm_id%3D%26lang_mode%3Dko%26scrId%3D%26itmNm%3D%EC%A0%84%EA%B5%AD%26" target="_blank" class="shrink-0 inline-flex items-center justify-center bg-blue-600 hover:bg-blue-700 text-white font-bold py-2.5 px-6 rounded-full transition shadow-md">
-                    <i class="fa-solid fa-external-link-alt mr-2"></i>고용 KOSIS 열기
-                </a>
-            </div>
-            
-            <div class="flex flex-col gap-8">
-                <!-- Upload & Controls -->
-                <div class="bg-gray-50 p-6 rounded-xl border border-gray-200">
-                    <div class="flex justify-between items-center mb-4">
-                        <h3 class="font-bold text-gray-800">데이터 업로드</h3>
-                        <a href="https://drive.google.com/drive/folders/1mHTQA1CpuG5SSameMvA8RU0XzjLxaVKS?usp=sharing" target="_blank" class="text-lg font-bold text-pink-700 hover:text-pink-900 hover:underline flex items-center bg-pink-100 px-4 py-2 rounded-full transition shadow-sm border border-pink-200">
-                            <i class="fa-solid fa-cloud-arrow-down mr-2"></i>다운로드를 못했다면 이곳의 데이터를 활용하세요!
-                        </a>
-                    </div>
-                    <div class="mb-4">
-                        <label class="block text-lg font-bold text-blue-800 mb-2"><i class="fa-solid fa-file-csv mr-2"></i>[고용 관련 지표] KOSIS에서 다운로드한 CSV 파일</label>
-                        <div class="flex items-center gap-2">
-                            <input type="file" id="emp-file" accept=".csv" class="block w-full text-sm text-gray-500
-                                file:mr-4 file:py-2 file:px-4
-                                file:rounded-md file:border-0
-                                file:text-sm file:font-semibold
-                                file:bg-blue-50 file:text-blue-700
-                                hover:file:bg-blue-100
-                                cursor-pointer border border-gray-300 rounded-md p-1" />
-                            <button id="emp-clear-btn" class="hidden shrink-0 bg-white hover:bg-red-50 text-red-500 font-bold py-1.5 px-3 rounded-md text-sm transition border border-red-200 shadow-sm">
-                                <i class="fa-solid fa-trash-can mr-1"></i>삭제
-                            </button>
-                        </div>
-                    </div>
-                    <button id="emp-process-btn" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition">
-                        <i class="fa-solid fa-chart-line mr-2"></i>그래프 그리기
-                    </button>
-                    
-                    <div id="emp-error" class="hidden mt-4 p-3 bg-red-100 text-red-700 rounded-md text-sm"></div>
-
-                    <div class="mt-6">
-                        <h4 class="font-bold text-lg text-gray-800 mb-3"><i class="fa-solid fa-magnifying-glass mr-2"></i>데이터 분석 포인트</h4>
-                        <ul class="list-disc list-inside text-base text-gray-700 space-y-2 mb-3">
-                            <li>지표별(고용률·실업률·참가율·취업자)로 그래프를 바꿔 가며 비교해 보세요.</li>
-                            <li>「남녀 비교」「남녀 격차」 탐구 질문으로 성별 분석을 시작해 보세요.</li>
-                            <li>2020년 전후 구간을 슬라이더로 확대해 코로나 충격을 관찰하세요.</li>
-                        </ul>
-                        <a href="#emp-analysis-guide" class="inline-flex items-center text-sm font-bold text-blue-700 hover:text-blue-900 bg-blue-50 px-4 py-2 rounded-lg border border-blue-200 transition">
-                            <i class="fa-solid fa-book-open mr-2"></i>①~⑤ 탐구 가이드·프로젝트 주제 보기
-                        </a>
-                    </div>
-                </div>
-
-                <!-- Chart Area -->
-                <div id="emp-capture-area" class="bg-white p-6 rounded-xl border border-gray-200 shadow-inner flex flex-col items-center justify-center">
-                    <p class="text-sm text-blue-600 mb-2 font-bold"><i class="fa-regular fa-lightbulb mr-1"></i>팁: 차트 위의 이름표(범례)를 클릭하면 해당 그래프를 켜고 끌 수 있습니다.</p>
-                    <div class="w-full min-h-[450px] flex items-center justify-center bg-white">
-                        <canvas id="empChart"></canvas>
-                        <p id="emp-placeholder" class="text-gray-400 text-sm italic">CSV 파일을 업로드하면 이곳에 그래프가 나타납니다.</p>
-                    </div>
-                    
-                    <!-- 데이터셋 필터 (체크박스) -->
-                    <div id="emp-filter-container" class="hidden w-full mt-4 px-4 bg-gray-50 p-6 rounded-xl border border-gray-200" data-html2canvas-ignore>
-                        <h4 class="font-bold text-lg text-gray-800 mb-4"><i class="fa-solid fa-sliders mr-2"></i>분석 조건 선택</h4>
-                        
-                        <div class="grid md:grid-cols-2 gap-6">
-                            <!-- 분석할 지표 선택 -->
-                            <div>
-                                <label class="block text-sm font-bold text-gray-700 mb-2">분석할 지표 선택</label>
-                                <select id="emp-indicator-select" class="block w-full text-sm text-gray-700 bg-white border border-red-400 rounded-md p-2 focus:ring-red-500 focus:border-red-500">
-                                    <option value="경제활동참가율">경제활동참가율</option>
-                                    <option value="실업률">실업률</option>
-                                    <option value="고용률">고용률</option>
-                                    <option value="취업자">취업자 (인구수)</option>
-                                    <option value="실업자">실업자 (인구수)</option>
-                                </select>
-                            </div>
-
-                            <!-- 탐구 질문 선택 -->
-                            <div>
-                                <label class="block text-sm font-bold text-gray-700 mb-2">탐구 질문 선택</label>
-                                <div class="space-y-2">
-                                    <label class="flex items-center space-x-2 cursor-pointer">
-                                        <input type="radio" name="emp-explore-radio" value="all" checked class="form-radio text-red-500 focus:ring-red-500">
-                                        <span class="text-sm text-gray-700">전체 추세 보기</span>
-                                    </label>
-                                    <label class="flex items-center space-x-2 cursor-pointer">
-                                        <input type="radio" name="emp-explore-radio" value="gender" class="form-radio text-red-500 focus:ring-red-500">
-                                        <span class="text-sm text-gray-700">남녀 비교</span>
-                                    </label>
-                                    <label class="flex items-center space-x-2 cursor-pointer">
-                                        <input type="radio" name="emp-explore-radio" value="gender_diff" class="form-radio text-red-500 focus:ring-red-500">
-                                        <span class="text-sm text-gray-700">남녀 격차 보기 (남성 - 여성)</span>
-                                    </label>
-                                    <label class="flex items-center space-x-2 cursor-pointer">
-                                        <input type="radio" name="emp-explore-radio" value="farm" class="form-radio text-red-500 focus:ring-red-500">
-                                        <span class="text-sm text-gray-700">농가와 비농가 비교</span>
-                                    </label>
-                                    <label class="flex items-center space-x-2 cursor-pointer">
-                                        <input type="radio" name="emp-explore-radio" value="farm_diff" class="form-radio text-red-500 focus:ring-red-500">
-                                        <span class="text-sm text-gray-700">농가와 비농가 격차 보기 (비농가 - 농가)</span>
-                                    </label>
-                                    <label class="flex items-center space-x-2 cursor-pointer">
-                                        <input type="radio" name="emp-explore-radio" value="custom" class="form-radio text-red-500 focus:ring-red-500">
-                                        <span class="text-sm text-gray-700">한 집단 자세히 보기 (수동 선택)</span>
-                                    </label>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- 수동 선택용 체크박스 (기본 숨김) -->
-                        <div id="emp-custom-checkbox-area" class="hidden mt-6 pt-4 border-t border-gray-200">
-                            <label class="block text-sm font-bold text-gray-700 mb-2">
-                                표시할 데이터 직접 선택:
-                            </label>
-                            <input type="search" id="emp-filter-search" placeholder="항목 이름으로 검색 (예: 실업률, 여자, 농가)" class="w-full mb-3 px-3 py-2 text-sm border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500">
-                            <div id="emp-filter-checkboxes" class="flex flex-wrap gap-3 max-h-64 overflow-y-auto">
-                                <!-- JS에서 동적으로 체크박스 생성 -->
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <!-- 스크롤 바 (Range Slider) -->
-                    <div id="emp-slider-container" class="hidden w-full mt-6 px-4 border-t border-gray-100 pt-4" data-html2canvas-ignore>
-                        <label class="block text-sm font-bold text-gray-700 mb-2">
-                            <i class="fa-solid fa-arrows-left-right mr-1"></i>시점 범위 조절: 
-                            <span id="emp-range-label" class="text-blue-600 ml-2">전체</span>
-                        </label>
-                        <div class="flex items-center space-x-4">
-                            <span class="text-xs font-bold text-gray-500">처음</span>
-                            <input type="range" id="emp-slider-start" min="0" value="0" class="w-full accent-blue-600 h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer">
-                            <input type="range" id="emp-slider-end" min="0" value="0" class="w-full accent-blue-600 h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer">
-                            <span class="text-xs font-bold text-gray-500">끝</span>
-                        </div>
-                        <p class="text-xs text-gray-400 mt-2 text-center">양쪽 슬라이더를 움직여 원하는 기간만 확대해서 보세요.</p>
-                    </div>
-
-                    <div class="w-full mt-6 pt-6 border-t border-gray-100">
-                        <label class="block text-lg font-bold text-gray-800 mb-3"><i class="fa-solid fa-pen mr-2"></i>나의 분석 결과 메모하기:</label>
-                        <textarea id="emp-memo" class="analysis-memo w-full border border-gray-300 rounded-md shadow-sm focus:border-blue-500 focus:ring-blue-500 p-4 text-base bg-blue-50/30" rows="7" placeholder="예) ① 고용률: 남녀 격차 감소, 여성 고용률 상승&#10;② 실업률: 2020년 코로나 충격&#10;③ 참가율·취업자·사회 변화 연결"></textarea>
-                    </div>
-                </div>
-            </div>
-            
             <div class="mt-6 text-right">
                 <button id="emp-save-btn" class="bg-gray-800 hover:bg-gray-900 text-white font-bold py-2 px-6 rounded-lg shadow transition flex items-center inline-flex">
                     <i class="fa-solid fa-camera mr-2"></i>분석 결과 이미지로 저장
@@ -1008,8 +1024,9 @@
         
     </main>
 
-    <footer class="bg-gray-800 text-white py-6 text-center">
+    <footer class="bg-gray-800 text-white py-6 text-center text-sm space-y-2">
         <p>고등학교 경제수학 프로젝트 - 경제 지표 분석</p>
+        <p><a href="privacy.html" class="text-indigo-300 hover:text-white underline">개인정보 처리방침</a></p>
     </footer>
 
     <!-- 학습 도우미 챗봇 -->
@@ -1022,6 +1039,7 @@
             <div class="flex items-center gap-2 font-bold text-sm md:text-base">
                 <i class="fa-solid fa-robot"></i>
                 <span>경제 지표 학습 도우미</span>
+                <span class="hidden sm:inline text-[10px] font-normal opacity-90">· 선생님 검토 자료 안내</span>
             </div>
             <div class="flex items-center gap-1" onclick="event.stopPropagation()">
                 <button id="chatbot-minimize" type="button" class="p-1.5 rounded-lg hover:bg-white/20 transition" aria-label="최소화" title="최소화">
@@ -1036,17 +1054,17 @@
             <div id="chatbot-messages"></div>
             <div class="px-3 py-2 border-t border-gray-100 bg-white shrink-0">
                 <div class="flex flex-wrap gap-1.5 mb-2 max-h-16 overflow-y-auto">
-                    <button type="button" class="chatbot-chip" data-prompt="CPI가 뭐야?">CPI란?</button>
-                    <button type="button" class="chatbot-chip" data-prompt="2021~2023년 CPI 급상승 구간을 어떻게 분석해?">CPI 급상승 예시</button>
-                    <button type="button" class="chatbot-chip" data-prompt="내 그래프 분석">내 그래프 분석</button>
-                    <button type="button" class="chatbot-chip" data-prompt="고용 탐구 가이드 ①부터 ⑤까지 알려줘">고용 탐구 가이드</button>
-                    <button type="button" class="chatbot-chip" data-prompt="남녀 고용률 그래프는 어떻게 분석해?">남녀 고용률</button>
-                    <button type="button" class="chatbot-chip" data-prompt="코로나19가 노동시장에 미친 영향은?">코로나·노동</button>
-                    <button type="button" class="chatbot-chip" data-prompt="경제활동참가율은 어떻게 분석해?">참가율</button>
-                    <button type="button" class="chatbot-chip" data-prompt="실업률 변화 추이는 어떻게 분석해?">실업률</button>
-                    <button type="button" class="chatbot-chip" data-prompt="고용 탐구 프로젝트 주제 추천해줘">탐구 주제</button>
-                    <button type="button" class="chatbot-chip" data-prompt="구직단논자가 뭐예요?">구직단논자</button>
-                    <button type="button" class="chatbot-chip" data-prompt="KOSIS 다운로드 방법">KOSIS 안내</button>
+                    <button type="button" class="chatbot-chip" data-entry-id="cpi" data-prompt="CPI가 뭐야?">CPI란?</button>
+                    <button type="button" class="chatbot-chip" data-entry-id="cpi-spike" data-prompt="2021~2023년 CPI 급상승 구간을 어떻게 분석해?">CPI 급상승 예시</button>
+                    <button type="button" class="chatbot-chip" data-entry-id="my-graph" data-prompt="내 그래프 분석">내 그래프 분석</button>
+                    <button type="button" class="chatbot-chip" data-entry-id="emp-guide" data-prompt="고용 탐구 가이드 ①부터 ⑤까지 알려줘">고용 탐구 가이드</button>
+                    <button type="button" class="chatbot-chip" data-entry-id="gender-employment" data-prompt="남녀 고용률 그래프는 어떻게 분석해?">남녀 고용률</button>
+                    <button type="button" class="chatbot-chip" data-entry-id="covid-labor" data-prompt="코로나19가 노동시장에 미친 영향은?">코로나·노동</button>
+                    <button type="button" class="chatbot-chip" data-entry-id="participation" data-prompt="경제활동참가율은 어떻게 분석해?">참가율</button>
+                    <button type="button" class="chatbot-chip" data-entry-id="unemployment-rate" data-prompt="실업률 변화 추이는 어떻게 분석해?">실업률</button>
+                    <button type="button" class="chatbot-chip" data-entry-id="project-topics" data-prompt="고용 탐구 프로젝트 주제 추천해줘">탐구 주제</button>
+                    <button type="button" class="chatbot-chip" data-entry-id="discouraged" data-prompt="구직단논자가 뭐예요?">구직단논자</button>
+                    <button type="button" class="chatbot-chip" data-entry-id="kosis" data-prompt="KOSIS 다운로드 방법">KOSIS 안내</button>
                 </div>
                 <div class="flex gap-2">
                     <input type="text" id="chatbot-input" placeholder="궁금한 것을 입력하세요..." class="flex-1 text-sm border border-gray-300 rounded-lg px-3 py-2 focus:ring-indigo-500 focus:border-indigo-500" autocomplete="off">
@@ -1054,14 +1072,13 @@
                         <i class="fa-solid fa-paper-plane"></i>
                     </button>
                 </div>
-                <p id="chatbot-status" class="text-[10px] text-gray-400 mt-1.5 text-center">연결 상태 확인 중...</p>
+                <p id="chatbot-disclaimer" class="text-[10px] text-gray-500 mt-1.5 text-center leading-snug"></p>
             </div>
         </div>
     </div>
 
-    <script>window.ECOMATH_CONFIG = window.ECOMATH_CONFIG || {};</script>
-    <script src="config.js"></script>
-    <script src="app.js?v=3"></script>
-    <script src="chatbot.js?v=7"></script>
+    <script src="app.js?v=9"></script>
+    <script src="chatbot-knowledge.js?v=6"></script>
+    <script src="chatbot.js?v=13"></script>
 </body>
 </html>

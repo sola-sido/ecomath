@@ -5,10 +5,34 @@ let empChartInstance = null;
 let cpiGlobalData = { labels: [], datasets: [] };
 let empGlobalData = { labels: [], datasets: [] };
 
+/** KOSIS 「계」(종합) 표기를 학생용 「전체」로 표시 */
+function formatDatasetLabel(label) {
+    if (label == null) return label;
+    const s = String(label);
+    return s.replace(/^계\s+/, '전체 ').replace(/^계(?=[가-힣])/u, '전체');
+}
+
+function isTotalAggregateLabel(label) {
+    const s = String(label);
+    return s.startsWith('전체 ') || s.startsWith('계 ') || /^계[가-힣]/u.test(s);
+}
+
+/** 격차 그래프 단위: % 지표는 %p, 인구 수 지표는 KOSIS와 동일(천 명) */
+function getEmpGapUnit(indicator) {
+    if (['경제활동참가율', '실업률', '고용률'].includes(indicator)) return '%p';
+    return '천 명';
+}
+
+function formatEmpGapLabel(indicator, kind) {
+    const unit = getEmpGapUnit(indicator);
+    if (kind === 'gender') return `${indicator} 차이(남성−여성, ${unit})`;
+    return `${indicator} 차이(비농가−농가, ${unit})`;
+}
+
 // 데이터셋 라벨 정렬 우선순위 (지표 종류 → 세부 분류)
 function getDatasetSortKey(label) {
     const indicatorOrder = ['경제활동참가율', '실업률', '고용률', '취업자', '실업자', '경제활동인구', '비경제활동인구'];
-    const groupOrder = ['계', '남자', '여자', '농가', '비농가'];
+    const groupOrder = ['전체', '계', '남자', '여자', '농가', '비농가'];
 
     let indicatorIdx = indicatorOrder.findIndex(k => label.includes(k));
     if (indicatorIdx === -1) indicatorIdx = 99;
@@ -26,7 +50,7 @@ function sortDatasets(datasets) {
 }
 
 function categorizeDataset(label) {
-    if (label.startsWith('계') || label.includes(' 계 ')) return '전체 종합';
+    if (isTotalAggregateLabel(label) || label.includes(' 계 ')) return '전체 종합';
     if (label.startsWith('남자') || label.startsWith('여자')) return '성별 (남자/여자)';
     if (label.startsWith('농가')) return '농가';
     if (label.startsWith('비농가')) return '비농가';
@@ -64,7 +88,7 @@ function renderFilterCheckboxes(containerId, datasets, updateCallback, colorClas
             // 비율(%) 지표 중 '전체 종합(계)'인 것만 기본으로 몇 개 켜둡니다.
             let isChecked = false;
             if (datasets.length > 3) {
-                if (ds.label.includes('계') && (ds.label.includes('%') || ds.label.includes('율'))) {
+                if (isTotalAggregateLabel(ds.label) && (ds.label.includes('%') || ds.label.includes('율'))) {
                     isChecked = true;
                 }
             } else {
@@ -150,7 +174,7 @@ function sortTimeLabels(labels) {
 function makeDataset(label, values, colorIdx, defaultColor, fill = false) {
     const color = CHART_COLORS[colorIdx % CHART_COLORS.length] || defaultColor;
     return {
-        label,
+        label: formatDatasetLabel(label),
         data: values,
         borderColor: color,
         backgroundColor: color + '33',
@@ -353,24 +377,13 @@ function updateEmpChart() {
     const indicator = document.getElementById('emp-indicator-select').value;
     const exploreType = document.querySelector('input[name="emp-explore-radio"]:checked').value;
     
-    // 수동 선택 영역 표시 제어
-    const customArea = document.getElementById('emp-custom-checkbox-area');
-    if (exploreType === 'custom') {
-        customArea.classList.remove('hidden');
-    } else {
-        customArea.classList.add('hidden');
-    }
-
     let targetDatasets = [];
     const allDatasets = empGlobalData.datasets;
 
     // 분석 조건에 따른 데이터셋 필터링 및 생성
-    if (exploreType === 'custom') {
-        targetDatasets = getFilteredDatasets('emp-filter-checkboxes', allDatasets);
-    } 
-    else if (exploreType === 'all') {
+    if (exploreType === 'all') {
         // '계' + 선택한 지표
-        const ds = allDatasets.find(d => d.label.includes('계') && d.label.includes(indicator));
+        const ds = allDatasets.find(d => isTotalAggregateLabel(d.label) && d.label.includes(indicator));
         if (ds) targetDatasets.push(ds);
         // 만약 '계'가 없다면 그냥 지표 이름이 포함된 첫번째 것 선택
         else {
@@ -401,7 +414,7 @@ function updateEmpChart() {
                 return parseFloat((val - femaleDs.data[idx]).toFixed(2));
             });
             targetDatasets.push({
-                label: `남녀 격차 (남자 - 여자) [${indicator}]`,
+                label: formatEmpGapLabel(indicator, 'gender'),
                 data: diffData,
                 borderColor: '#8b5cf6', // 보라색
                 backgroundColor: '#8b5cf633',
@@ -439,7 +452,7 @@ function updateEmpChart() {
                 return parseFloat((val - farmDs.data[idx]).toFixed(2));
             });
             targetDatasets.push({
-                label: `농가와 비농가 격차 (비농가 - 농가) [${indicator}]`,
+                label: formatEmpGapLabel(indicator, 'farm'),
                 data: diffData,
                 borderColor: '#ef4444', // 빨간색
                 backgroundColor: '#ef444433',
@@ -556,7 +569,6 @@ document.addEventListener('DOMContentLoaded', () => {
         // 분석 조건 UI 초기화 (옵션)
         document.getElementById('emp-indicator-select').value = '경제활동참가율';
         document.querySelector('input[name="emp-explore-radio"][value="all"]').checked = true;
-        document.getElementById('emp-custom-checkbox-area').classList.add('hidden');
     });
 
     // CPI 차트 그리기 버튼
@@ -646,10 +658,6 @@ document.addEventListener('DOMContentLoaded', () => {
                     startSlider.value = 0;
                     endSlider.max = maxIdx;
                     endSlider.value = maxIdx;
-
-                    // 체크박스 필터 렌더링
-                    renderFilterCheckboxes('emp-filter-checkboxes', parsed.datasets, updateEmpChart, 'blue');
-                    setupFilterSearch('emp-filter-search', 'emp-filter-checkboxes');
 
                     document.getElementById('emp-placeholder').classList.add('hidden');
                     document.getElementById('emp-slider-container').classList.remove('hidden');
@@ -853,12 +861,7 @@ window.getEcomathContext = function() {
     let empDatasets = [];
     if (empHas) {
         const indicator = document.getElementById('emp-indicator-select')?.value || '';
-        const exploreType = document.querySelector('input[name="emp-explore-radio"]:checked')?.value || 'all';
-        if (exploreType === 'custom') {
-            empDatasets = getFilteredDatasets('emp-filter-checkboxes', empGlobalData.datasets);
-        } else {
-            empDatasets = empGlobalData.datasets.filter(d => d.label.includes(indicator)).slice(0, 3);
-        }
+        empDatasets = empGlobalData.datasets.filter(d => d.label.includes(indicator)).slice(0, 3);
     }
 
     const cpiLabels = cpiGlobalData.labels;
