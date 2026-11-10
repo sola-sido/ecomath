@@ -8,10 +8,14 @@ let empGlobalData = { labels: [], datasets: [] };
 /** CPI 그래프 범례: KOSIS 「데이터」 열 이름 → 소비자 물가지수 */
 function formatCpiDatasetLabel(label) {
     const s = String(label ?? '').trim();
-    if (!s || s === '데이터' || /^데이터\s*\d*$/.test(s)) return '소비자 물가지수';
-    if (/^소비자\s*물가지수$/i.test(s) || s === '소비자물가지수') return '소비자 물가지수';
-    if (/CPI|물가지수/i.test(s) && !/고용|실업/.test(s)) return '소비자 물가지수';
+    if (!s || s === '데이터' || /^데이터\s*\d*$/.test(s) || /^data$/i.test(s)) return '소비자 물가지수';
+    if (/^소비자\s*물가\s*지수$/i.test(s) || s === '소비자물가지수') return '소비자 물가지수';
+    if ((/CPI|물가지수|물가\s*지수/i.test(s) || s === '지수') && !/고용|실업/.test(s)) return '소비자 물가지수';
     return s;
+}
+
+function normalizeCpiDatasets(datasets) {
+    return datasets.map(ds => ({ ...ds, label: formatCpiDatasetLabel(ds.label) }));
 }
 
 /** KOSIS 「계」(종합) 표기를 학생용 「전체」로 표시 */
@@ -346,11 +350,19 @@ function updateCpiChart() {
     const slicedLabels = cpiGlobalData.labels.slice(startIdx, endIdx + 1);
     
     // 1. 선택된 체크박스에 따라 데이터셋 필터링
-    let filteredDatasets = getFilteredDatasets('cpi-filter-checkboxes', cpiGlobalData.datasets);
+    const normalizedCpi = normalizeCpiDatasets(cpiGlobalData.datasets);
+    let filteredDatasets = getFilteredDatasets('cpi-filter-checkboxes', normalizedCpi);
+    if (!filteredDatasets.length) {
+        filteredDatasets = normalizedCpi;
+    }
     
     // 2. 데이터셋 배열의 데이터들도 슬라이더에 맞춰 잘라줌
     const slicedDatasets = filteredDatasets.map(ds => {
-        return { ...ds, data: ds.data.slice(startIdx, endIdx + 1) };
+        return {
+            ...ds,
+            label: formatCpiDatasetLabel(ds.label),
+            data: ds.data.slice(startIdx, endIdx + 1)
+        };
     });
 
     // 라벨 텍스트 업데이트
@@ -614,10 +626,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     
                     // 파싱 로직 호출 (#10b981 : emerald-500)
                     const parsed = parseKosisData(data, meta, '#10b981');
-                    parsed.datasets = parsed.datasets.map(ds => ({
-                        ...ds,
-                        label: formatCpiDatasetLabel(ds.label)
-                    }));
+                    parsed.datasets = normalizeCpiDatasets(parsed.datasets);
                     cpiGlobalData = parsed;
 
                     // 슬라이더 초기화
