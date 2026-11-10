@@ -5,6 +5,15 @@ let empChartInstance = null;
 let cpiGlobalData = { labels: [], datasets: [] };
 let empGlobalData = { labels: [], datasets: [] };
 
+/** CPI 그래프 범례: KOSIS 「데이터」 열 이름 → 소비자 물가지수 */
+function formatCpiDatasetLabel(label) {
+    const s = String(label ?? '').trim();
+    if (!s || s === '데이터' || /^데이터\s*\d*$/.test(s)) return '소비자 물가지수';
+    if (/^소비자\s*물가지수$/i.test(s) || s === '소비자물가지수') return '소비자 물가지수';
+    if (/CPI|물가지수/i.test(s) && !/고용|실업/.test(s)) return '소비자 물가지수';
+    return s;
+}
+
 /** KOSIS 「계」(종합) 표기를 학생용 「전체」로 표시 */
 function formatDatasetLabel(label) {
     if (label == null) return label;
@@ -47,6 +56,15 @@ function getDatasetSortKey(label) {
 
 function sortDatasets(datasets) {
     return [...datasets].sort((a, b) => getDatasetSortKey(a.label).localeCompare(getDatasetSortKey(b.label), 'ko'));
+}
+
+function revealChartPanel(captureAreaId) {
+    const panel = document.getElementById(captureAreaId);
+    if (!panel) return;
+    panel.classList.remove('hidden');
+    requestAnimationFrame(() => {
+        panel.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    });
 }
 
 function categorizeDataset(label) {
@@ -549,6 +567,7 @@ document.addEventListener('DOMContentLoaded', () => {
         document.getElementById('cpi-file').value = '';
         if (cpiChartInstance) cpiChartInstance.destroy();
         document.getElementById('cpi-placeholder').classList.remove('hidden');
+        document.getElementById('cpi-capture-area').classList.add('hidden');
         document.getElementById('cpi-slider-container').classList.add('hidden');
         document.getElementById('cpi-filter-container').classList.add('hidden');
         document.getElementById('cpi-clear-btn').classList.add('hidden');
@@ -561,6 +580,7 @@ document.addEventListener('DOMContentLoaded', () => {
         document.getElementById('emp-file').value = '';
         if (empChartInstance) empChartInstance.destroy();
         document.getElementById('emp-placeholder').classList.remove('hidden');
+        document.getElementById('emp-capture-area').classList.add('hidden');
         document.getElementById('emp-slider-container').classList.add('hidden');
         document.getElementById('emp-filter-container').classList.add('hidden');
         document.getElementById('emp-clear-btn').classList.add('hidden');
@@ -594,6 +614,10 @@ document.addEventListener('DOMContentLoaded', () => {
                     
                     // 파싱 로직 호출 (#10b981 : emerald-500)
                     const parsed = parseKosisData(data, meta, '#10b981');
+                    parsed.datasets = parsed.datasets.map(ds => ({
+                        ...ds,
+                        label: formatCpiDatasetLabel(ds.label)
+                    }));
                     cpiGlobalData = parsed;
 
                     // 슬라이더 초기화
@@ -613,6 +637,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     document.getElementById('cpi-slider-container').classList.remove('hidden');
                     document.getElementById('cpi-filter-container').classList.remove('hidden');
                     document.getElementById('cpi-clear-btn').classList.remove('hidden'); // 추가: 삭제 버튼 표시
+                    revealChartPanel('cpi-capture-area');
                     
                     // 차트 렌더링
                     updateCpiChart();
@@ -663,6 +688,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     document.getElementById('emp-slider-container').classList.remove('hidden');
                     document.getElementById('emp-filter-container').classList.remove('hidden');
                     document.getElementById('emp-clear-btn').classList.remove('hidden'); // 추가: 삭제 버튼 표시
+                    revealChartPanel('emp-capture-area');
                     
                     // 차트 렌더링
                     updateEmpChart();

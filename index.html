@@ -232,10 +232,9 @@
                     </button>
                     
                     <div id="cpi-error" class="hidden mt-4 p-3 bg-red-100 text-red-700 rounded-md text-sm"></div>
-                </div>
 
-                <!-- Chart Area (그래프 그리기 직후 시각화) -->
-                <div id="cpi-capture-area" class="bg-white p-6 rounded-xl border-2 border-emerald-200 shadow-md flex flex-col items-center justify-center">
+                    <!-- 그래프 그리기 직후 바로 아래 표시 -->
+                    <div id="cpi-capture-area" class="hidden mt-6 pt-6 border-t-2 border-emerald-200 bg-white p-6 rounded-xl border border-emerald-100 shadow-sm flex flex-col items-center justify-center">
                     <p class="w-full text-center text-xs font-bold uppercase tracking-wider text-emerald-600 mb-1">2단계 · 시각화</p>
                     <h3 class="w-full text-center text-xl md:text-2xl font-extrabold text-emerald-900 mb-4"><i class="fa-solid fa-chart-line mr-2"></i>그래프로 데이터를 확인해 보세요</h3>
                     <p class="text-sm text-emerald-600 mb-2 font-bold w-full text-center"><i class="fa-regular fa-lightbulb mr-1"></i>팁: 차트 위의 이름표(범례)를 클릭하면 해당 그래프를 켜고 끌 수 있습니다.</p>
@@ -272,6 +271,7 @@
                     <div class="w-full mt-6 pt-6 border-t border-gray-100">
                         <label class="block text-lg font-bold text-gray-800 mb-3"><i class="fa-solid fa-pen mr-2"></i>나의 분석 결과 메모하기:</label>
                         <textarea id="cpi-memo" class="analysis-memo w-full border border-gray-300 rounded-md shadow-sm focus:border-emerald-500 focus:ring-emerald-500 p-4 text-base bg-emerald-50/30" rows="7" placeholder="예) 1965년 이후 지속 상승, 1980년 전후·2021~2023 급등, 최근 속도 둔화&#10;증가량보다 증가율(기울기) 비교&#10;CPI = 화폐가치 하락·인플레이션 지표"></textarea>
+                    </div>
                     </div>
                 </div>
 
@@ -433,10 +433,9 @@
                     </button>
                     
                     <div id="emp-error" class="hidden mt-4 p-3 bg-red-100 text-red-700 rounded-md text-sm"></div>
-                </div>
 
-                <!-- Chart Area -->
-                <div id="emp-capture-area" class="bg-white p-6 rounded-xl border-2 border-blue-200 shadow-md flex flex-col items-center justify-center">
+                    <!-- 그래프 그리기 직후 바로 아래 표시 -->
+                    <div id="emp-capture-area" class="hidden mt-6 pt-6 border-t-2 border-blue-200 bg-white p-6 rounded-xl border border-blue-100 shadow-sm flex flex-col items-center justify-center">
                     <p class="w-full text-center text-xs font-bold uppercase tracking-wider text-blue-600 mb-1">2단계 · 시각화</p>
                     <h3 class="w-full text-center text-xl md:text-2xl font-extrabold text-blue-900 mb-4"><i class="fa-solid fa-chart-line mr-2"></i>그래프로 데이터를 확인해 보세요</h3>
                     <p class="text-sm text-blue-600 mb-2 font-bold w-full text-center"><i class="fa-regular fa-lightbulb mr-1"></i>팁: 차트 위의 이름표(범례)를 클릭하면 해당 그래프를 켜고 끌 수 있습니다.</p>
@@ -509,6 +508,7 @@
                     <div class="w-full mt-6 pt-6 border-t border-gray-100">
                         <label class="block text-lg font-bold text-gray-800 mb-3"><i class="fa-solid fa-pen mr-2"></i>나의 분석 결과 메모하기:</label>
                         <textarea id="emp-memo" class="analysis-memo w-full border border-gray-300 rounded-md shadow-sm focus:border-blue-500 focus:ring-blue-500 p-4 text-base bg-blue-50/30" rows="7" placeholder="예) ① 고용률: 남녀 격차 감소, 여성 고용률 상승&#10;② 실업률: 2020년 코로나 충격&#10;③ 참가율·취업자·사회 변화 연결"></textarea>
+                    </div>
                     </div>
                 </div>
 
@@ -1077,7 +1077,7 @@
         </div>
     </div>
 
-    <script src="app.js?v=9"></script>
+    <script src="app.js?v=11"></script>
     <script src="chatbot-knowledge.js?v=6"></script>
     <script src="chatbot.js?v=13"></script>
 </body>
