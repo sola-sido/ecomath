@@ -62,6 +62,60 @@ function sortDatasets(datasets) {
     return [...datasets].sort((a, b) => getDatasetSortKey(a.label).localeCompare(getDatasetSortKey(b.label), 'ko'));
 }
 
+function parseYouTubeVideoId(input) {
+    const s = String(input ?? '').trim();
+    if (!s) return '';
+    if (/^[a-zA-Z0-9_-]{11}$/.test(s)) return s;
+    const m = s.match(/(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|shorts\/|live\/)|[?&]v=)([a-zA-Z0-9_-]{11})/);
+    return m ? m[1] : '';
+}
+
+function getYouTubeEmbedOrigin() {
+    const configured = String(window.ECOMATH_SITE_ORIGIN || '').trim();
+    if (configured) return configured.replace(/\/$/, '');
+    const origin = window.location.origin || '';
+    if (origin && origin !== 'null' && !origin.startsWith('file')) return origin;
+    return '';
+}
+
+function buildYouTubeEmbedSrc(videoId) {
+    const params = new URLSearchParams({
+        rel: '0',
+        modestbranding: '1',
+        playsinline: '1',
+    });
+    const origin = getYouTubeEmbedOrigin();
+    if (origin) params.set('origin', origin);
+    return `https://www.youtube.com/embed/${videoId}?${params.toString()}`;
+}
+
+function initUsageVideo() {
+    const videoInput = window.ECOMATH_USAGE_VIDEO;
+    const videoId = parseYouTubeVideoId(videoInput);
+    const iframe = document.getElementById('usage-video-iframe');
+    const extLink = document.getElementById('usage-video-youtube-link');
+    if (!videoId || !iframe) return;
+
+    iframe.src = buildYouTubeEmbedSrc(videoId);
+    if (extLink) {
+        extLink.href = `https://www.youtube.com/watch?v=${videoId}`;
+    }
+
+    const fileWarnId = 'usage-video-file-warn';
+    let fileWarn = document.getElementById(fileWarnId);
+    if (window.location.protocol === 'file:') {
+        if (!fileWarn && iframe.parentElement?.parentElement) {
+            fileWarn = document.createElement('p');
+            fileWarn.id = fileWarnId;
+            fileWarn.className = 'mt-3 text-center text-sm text-amber-800 bg-amber-50 border border-amber-200 rounded-lg px-3 py-2';
+            fileWarn.textContent = 'PC에서 파일로 바로 열면 영상이 재생되지 않을 수 있습니다. GitHub Pages 주소로 접속하거나 「유튜브에서 크게 보기」를 이용하세요.';
+            iframe.parentElement.parentElement.appendChild(fileWarn);
+        }
+    } else if (fileWarn) {
+        fileWarn.remove();
+    }
+}
+
 function revealChartPanel(captureAreaId) {
     const panel = document.getElementById(captureAreaId);
     if (!panel) return;
@@ -559,6 +613,7 @@ function setupNavigation() {
 
 document.addEventListener('DOMContentLoaded', () => {
     setupNavigation();
+    initUsageVideo();
 
     // CPI 슬라이더 이벤트
     document.getElementById('cpi-slider-start').addEventListener('input', updateCpiChart);
